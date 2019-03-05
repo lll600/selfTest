@@ -123,4 +123,14 @@ setTimeout(function(){
 
 网站性能优化:http://www.ruanyifeng.com/blog/2015/09/web-page-performance-in-depth.html(阮一峰)
 
+git提交到github上:
+
+一个弹框的关闭效果:根元素写个点击事件:
+<div class="customer-contain" @click="hideEmoji"></div>
+    hideEmoji() {
+      if (this.emojiShow) {
+        this.emojiShow = false;
+      }
+    },
+
 
