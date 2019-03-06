@@ -133,4 +133,87 @@ git提交到github上:
       }
     },
 
+子组件中写的方法,父组件可以通过ref直接调用:
+this.$refs.showImg.indexFn(childIndex);
 
+监听元素尺寸的变化:https://juejin.im/post/5b4f0c56e51d4518ef2cda0f(使用ResizeObserver)
+函数节流:https://blog.csdn.net/ruby_xc/article/details/81080918
+        https://www.npmjs.com/package/throttle-debounce(安装)
+
+element 跑马灯源代码学到的:
+1.es6的filter():https://blog.csdn.net/bossxu_/article/details/80756563
+  this.items = this.$children.filter(child => child.$options.name === 'ElCarouselItem');
+  filter参数:http://www.cnblogs.com/echolun/p/8530984.html
+  var arr = [1, 2, 2, 3, 4, 5, 5, 6, 7, 7,8,8,0,8,6,3,4,56,2];
+    var arr2 = arr.filter(
+        (x, index,self)=>{
+            x:值每一项的值
+            index:每一项的下标
+            self:要过滤的原数组
+            console.log(x,'kkkkk');
+            console.log(index,'22222');
+            console.log(self,'jjjjj');
+            
+            self.indexOf(x)===index
+        }
+    )
+
+2.this.$el:指页面上的dom元素,不能写在created里,因为此时dom树还未渲染成功
+<div class="test">
+  <span></span>
+</div>
+mounted(){
+    this.$nextTick(()=>{
+        console.log(this.$el) // <div class="test"><span></span></div>
+    })
+} 
+和定时器的区别:https://www.jb51.net/article/57882.htm            ????
+
+3.计算属性:computed:https://www.w3cplus.com/vue/vue-computed-intro.html 
+                 https://blog.csdn.net/yangkaige111/article/details/80574858
+
+4.数组的some()方法:http://www.runoob.com/jsref/jsref-some.html
+
+5.element样式没有出来:因为样式文件没被引入:
+全局引入element:
+import ElementUI from 'element-ui';
+import 'element-ui/lib/theme-chalk/index.css';//不能忘记引入
+Vue.use(ElementUI);
+tips:导致自己弄了两天也没效果
+
+6.函数节流和防抖动:throttle-debounce  https://juejin.im/post/5b88a54751882542ea13d253
+
+7.用npm安装一个模块throttle-debounce,引用时一直在报错:"export 'default' (imported as 'throttle') was not found in 'throttle-debounce'
+引用在需要的页面: import throttle from 'throttle-debounce';一直在报上面的错误.
+正确的引用:import { throttle } from 'throttle-debounce'
+两者区别:https://www.cnblogs.com/mei1234/p/9151922.html
+具体了解就看es6语法问题.
+
+8.父子组件中$parent和$children
+
+9.父组件的created > 父组件的computed > 子组件调用父组件的方法 > 父组件的mounted
+
+10.箭头函数:不同表示方法不同的写法
+https://blog.csdn.net/zgrkaka/article/details/76836759
+tips:加不加函数体有时候很重要!!!
+
+11.子组件调用父组件的方法:this.$parent.updateItems()
+   父组件调用子组件的方法:item.translateItem(index, this.activeIndex, oldIndex);
+
+12.要关闭某个页面时,需要将该页面的定时器,监听器等销毁.
+
+13.有的页面会声明name:
+b.vue:  
+    export default {
+        name: 'ElCarouselItem',
+    }
+
+a.vue:(是b的父组件)
+this.$children[0].$options.name == 'ElCarouselItem'
+可以用这个判断
+this.items = this.$children.filter(
+    child => child.$options.name === 'ElCarouselItem'
+    // child => {
+    //   return child.$options.name === 'ElCarouselItem'
+    // }
+);

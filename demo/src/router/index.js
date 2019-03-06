@@ -14,6 +14,10 @@ const routes = [
       // { path: '/home', name: '首页2', component: _import('Home/index') },
     ]
   },
+  {
+    path: '/indexNew',
+    component: _import('home/indexNew'),
+  }
 ]
 export default new Router({
   mode: 'history',
