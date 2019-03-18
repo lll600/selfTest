@@ -1,0 +1,372 @@
+<template>
+    <div class="problemDetail">
+      <search-bar></search-bar>
+      <article :class="isshare!=true&&isshare!='true'?'isShow':'noShow'">
+              <scroll-view class="showList" scroll-y="true"> 
+                  <div style="min-height:800px">
+         <!-- <div class="Internet" v-show='isInter==false' @click='newLoad()'>网络未连接，点击刷新</div> -->
+     
+          <div class="proDescibe">
+         <div style='margin-top:15px;'><p class='topicP'><span @click="toTopic(item.topicID)" v-for="(item,index) in topicList" :key="index" class="topic">{{item.topicName}}</span></p></div>
+            <div class="pro"><h4>{{pageList.title}}</h4></div> 
+            <div class="pro proTitle"><p v-html="pageList.describe" class='describe'></p>
+            <!-- <p class='describe' v-if="pageList.describe==null?true:false">{{'暂无问题描述' | translate}}</p> -->
+            </div> 
+            <div class="pro">
+            <div class='invite'><span @click="toCare">{{pageList.attentionCount}} 关注</span><p class="inviteAnswer" @click="inviteAnswer">邀请回答</p></div>
+            </div> 
+          </div>
+          <div class="attention">
+              <p @click='getNowAttention()' :class="isAttention==true?'orange':''"><i class="icon-gzwt " :class="isAttention==true?'orange':''"></i>{{isAttention==true?'取消关注':'关注问题'}}</p>
+               <div></div>
+               <p  @click="toWriteAnswer(pageList)"><i class="icon-xhd  "></i>{{writeAnswer}}</p>
+          </div>
+          <answer-List></answer-List>
+          <down-load :showModal='showModal' @hideModal='hideModal'></down-load>
+          </div>
+          </scroll-view>
+      </article>   
+      
+    </div>
+</template>
+<script>
+ import AnswerList from '@/components/AnswerDetailList'
+ import searchBar from "@/components/searchBar";
+  import downLoad from "@/components/download";
+//  import { downLoad} from '@/common.js';
+ 
+// import { attention,getAttention,translate, fileUrl, clientUrl} from '@/common/common.js';
+// import { MessageBox,Indicator } from 'mint-ui';
+// import wx from 'weixin-js-sdk';
+export default {
+    components: {
+    'answer-List':AnswerList,
+     "search-bar": searchBar,
+     'down-load':downLoad
+  },
+  data () {
+      return {
+        //   clientUrl: clientUrl,
+        // fileUrl: fileUrl,
+        topicName:[],
+          topicID:[],
+          topicList:[],
+          value:'',
+          titleId: '',
+          userId:wx.getStorageSync('userId')?wx.getStorageSync('userId'):0,
+          flag:'',
+            questionPerID:'',
+          isAttention:'',
+          pageList: [],
+          dataID:'',
+          writeAnswer:'',
+          answer:'',
+          revertID:'',
+          allAnswer:'',
+           isshare:'',
+           isInter:'',
+           IsAnon:'',
+           attentionClick: true,
+            showModal:false
+      }
+  },
+     //转发
+  onShareAppMessage: function (tr) {
+    let that =this;
+    var pages = getCurrentPages() //获取加载的页面
+    var currentPage = pages[pages.length-1] //获取当前页面的对象
+    var url = currentPage.route //当前页面url
+    console.log(url)
+      return {
+        title: '能答', // 转发后 所显示的title
+        path: url, // 相对的路径
+        success: (res)=>{    // 成功后要做的事情
+          console.log(res.shareTickets[0])
+          // console.log
+         
+          wx.getShareInfo({
+            shareTicket: res.shareTickets[0],
+            success: (res)=> { 
+              that.setData({
+                isShow:true
+              }) 
+              console.log(that.setData.isShow)
+             },
+            fail: function (res) { console.log(res) },
+            complete: function (res) { console.log(res) }
+          })
+        },
+        fail: function (res) {
+          // 分享失败
+          console.log(res)
+        }
+      }
+    },
+  mounted() {
+        this.titleId=this.$root.$mp.query.titleId
+          this.flag=this.$root.$mp.query.flag
+            this.questionPerID=this.$root.$mp.query.questionPerID
+        this.$http.get('/ForumList/IsRevert',{
+            titleID:this.titleId,
+            'ID':this.userId
+            }).then((response) => {
+                    if(response.data.result.length>0)
+                    {
+                      this.writeAnswer='编辑答案'
+                      this.answer=response.data.result[0].content
+                      this.revertID=response.data.result[0].revertID
+                      this.allAnswer=response.data.result[0].remark1;
+                       this.IsAnon=response.data.result[0].IsAnon;
+                    }else{
+                        this.writeAnswer='写答案'
+                        this.answer=''
+                    }
+                   console.log(response)
+
+                }).catch((error) => {
+                    
+    })
+    this.getProblem()
+ 
+  },
+  methods:{
+        hideModal(){
+         this.showModal=false
+      },
+      inviteAnswer(){
+       this.showModal=true
+      },
+      toCare(){
+        this.showModal=true
+      },
+      getNowAttention(){
+           this.showModal=true
+      },
+      toWriteAnswer(){
+           this.showModal=true
+      },
+     toTopic(m){
+        // this.$router.push({path: '/topic', query: {topicID:m}})
+      },
+     
+    getProblem:function() {
+         this.$http.get('/ForumList/ProblemList',{
+            titleID:this.titleId,
+            'ID':this.userId
+            }).then((response) => {
+                    if(response.data.status==1){
+                        if(response.data.result[0].topicName){
+                      this.topicName = response.data.result[0].topicName.split(",")
+                      this.topicID=response.data.result[0].topicID.split(",")
+                        }
+                        this.topicList=[]
+                        for(var i in this.topicName){
+                            this.topicList.push({topicName:this.topicName[i],topicID:this.topicID[i]})
+                        }
+                        this.pageList=response.data.result[0]
+                        //  this.toShare(this.pageList.title,this.pageList.remark1?this.pageList.remark1:'')
+                    }
+             
+
+                }).catch((error) => {
+                    
+    })
+    }
+  }
+}
+</script>
+<style lang="scss" >
+    // @import '../../style/common.less';
+.problemDetail{
+    font-size: 28rpx;
+    h4{
+        font-weight: bold;
+    }
+    .wxParse {
+
+word-wrap:break-word;
+
+}
+
+}
+    .problemDetail .isShow{
+        top: 45px;
+    }
+    .problemDetail .noShow{
+        top: 0px;
+    }
+    // .problemDetail .icon-ss{
+    //     position: absolute;
+    //     left: 35%;
+    //     top:15px;
+    // }
+ .problemDetail article{
+    position: absolute;
+    top:52px;
+    width: 100%;
+    bottom: 0px;
+    width:100%;
+    // overflow: auto;
+    // bottom: 45px;
+    .showList{
+        height:100%;
+        // min-height: 800px;
+        overflow: auto;
+    }
+    // padding-left: 10px;
+    // padding-right: 10px;
+    // box-sizing: border-box;
+       .topic{
+           background: #eaeaea;
+           padding: 5px 10px;
+           border-radius: 10px;
+           margin: 0 10px 5px 0;
+           display: inline-block;
+       }
+       .topicP{
+           overflow-x: auto;
+    white-space: nowrap;
+       }
+       ::-webkit-scrollbar {
+        display: none;
+        
+        /* 或者这样
+        width: 0;
+        height: 0;
+        */
+    }
+    .invite{
+        display: inline-flex;justify-content: space-between;
+        width: 100%;
+        align-items: center;
+        font-size: 0.26rem;
+    }
+    .inviteAnswer{
+        width:1.5rem;
+        height:0.4rem;
+        border: 1px solid #c4c4c4;
+        padding: 5px 0;
+        text-align: center;
+        line-height: 0.4rem;
+        border-radius: 5px;
+        font-size: 0.28rem;
+    }
+      .Internet{
+        font-size:0.4rem;
+        top:200px;
+        left:50%;
+        margin-left: -100px;
+        color:gray;
+        position: absolute
+    }
+    .list{
+        // margin-bottom: 20px;
+    }
+      .orange{
+    color:#fe9500
+    }
+       .orange:before{
+    color:#fe9500
+    }
+    .divFixed{
+        position: fixed;
+        z-index: 100;
+        background: white;
+        width:100%
+    }
+    .proDescibe{
+        padding: 10px;
+        background: white;
+        z-index: 100;
+        a{
+            text-decoration: underline
+        }
+    }
+    .user{
+        span{
+            font-weight: bold;
+            font-size: 14px;
+        }
+    }
+    .pro{
+        img{
+            width:100%;
+            height: 150px;
+        }
+    }
+    .pro p span{
+      padding-right: 20px;
+      font-size: 0.28rem;
+      color: #9a9a9a;
+    }
+    .attention{
+        // position: absolute;
+        top:120px;
+        z-index: 100;
+        display: flex;
+        display: -webkit-flex; 
+        -webkit-justify-content: space-around;
+        -webkit-align-items: center;
+        width:100%;
+        height:38px;
+        background: white;
+        border-top: 3px solid #eaeaea;
+        div{
+            height: 100%;
+            border: 1px solid  #eaeaea;
+        }
+        p{
+            width: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        p:nth-of-type(1){
+        // padding-right: 0.7rem;
+        //  border-right: 1px solid #99999a;
+        }
+        i:before{
+            padding-right:10px;
+        }
+    }
+   .mint-loadmore{
+         margin-top: -10px;
+    }
+}
+ .problemDetail .answerList{
+     position: absolute;
+    //  top:160px;
+     li{
+         padding-top: 10px;
+     }
+ }
+ .icon-home_active:before{
+      color:#ee781b;
+ }
+  .proDescibe .pro{
+        margin-bottom: 10px;
+        .describe{
+            font-size: 16px;
+            word-wrap: break-word;
+        }
+        h4{
+            font-size: 16px;
+            word-wrap: break-word;
+        }
+
+    }
+    .icon-arrow_left:before{
+       color: #99999a
+    }
+    .pro.lastLine {
+        color:#99999a;
+        // border-bottom: 1px solid #cccc;
+        padding-bottom: 10px;
+        span{
+          font-weight: inherit!important;
+        }
+        
+    }
+</style>
+
+

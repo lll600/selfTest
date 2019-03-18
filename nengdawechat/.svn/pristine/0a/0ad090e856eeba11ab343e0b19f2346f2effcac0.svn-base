@@ -1,0 +1,498 @@
+<template>
+  <div class="problemList">
+    <ul class="list" v-for="(item, index) in pageList" :key="index">
+      <li v-if="item.flag!=3 && item.flag!=6">
+        <div class="delete-div" v-if="isShowDelete">
+          <span></span>
+          <span
+            class="icon-close"
+            @click="$emit('updateCollect',item.flag=='0'?item.titleID:item.revertID,item.flag=='0'?'2':'5')"
+          ></span>
+        </div>
+        <div class="art">
+          <div class="articleLeft">
+            <div class="pro">
+              <div class="title-line">
+                <span @click="toDetail(item)" class="changeColor" v-html="item.title"></span>
+              </div>
+            </div>
+            <div class="pro remark1">
+              <p @click=" toSinglePro(item)" class="changeColor" v-html="item.remark1"></p>
+            </div>
+          </div>
+          <div class="articleRight" v-if="item.pic&&item.pic!='null'" @click=" toSinglePro(item)">
+            <img :src="item.pic">
+          </div>
+        </div>
+        <div class="operate" v-if="!item.revertID&&item.flag==1">暂无回答</div>
+        <div class="operate" v-if="item.revertID||item.flag!=1">
+          <div
+            class="user"
+            v-if="item.revertIsAnon=='True'||item.revertIsAnon==true||item.revertIsAnon==1"
+          >
+            <div class="user-img">
+              <img :src="'../../static/img/user_pic.png'" alt class="userPic">
+            </div>
+            <div class="user-name">
+              <span>匿名用户</span>
+            </div>
+          </div>
+          <div class="user" @click="toPersonal(item)" v-else>
+            <div class="user-img" style="position:relative">
+              <img
+                :src="(item.userPic&&item.userPic!='/forum/common/userPic.jpg')?item.userPic:'../../static/img/user_pic.png'"
+                class="userPic"
+              >
+              <img v-if="item.grade==1" src="../../static/img/vip.png" alt class="vip">
+              <img
+                v-if="item.grade==5"
+                src="../../static/img/guanfang.png"
+                class="vip"
+              >
+              <img v-if="item.grade==6" src="../../static/img/center.png" alt class="vip">
+            </div>
+            <div class="user-name">
+              <span class="user-name-style" v-html="item.accountnumber"></span>
+            </div>
+          </div>
+          <p class="marRight">
+            <span
+              class="spanPad"
+              @click="toSinglePro(item)"
+            >{{item.revertCount?item.revertCount:0}} 评论</span>·
+            <span
+              class="spanPad"
+              @click="toSinglePro(item)"
+            >{{item.supportCounts?item.supportCounts:0}} 赞</span>
+          </p>
+        </div>
+      </li>
+      <li v-else-if="item.flag==6">
+        <div class="introduce">
+          <div class="introduceLeft" @click="toPersonal(item)">
+            <img
+              :src="(item.userPic&&item.userPic!='/forum/common/userPic.jpg')?item.userPic:'../../static/img/user_pic.png'"
+            >
+            <div>
+              <h5 class="changeColor" v-html="item.accountnumber"></h5>
+              <span>{{item.introduce==null?'暂无用户介绍':item.introduce}}</span>
+            </div>
+          </div>
+          <div
+            class="attention"
+            @click="savePerson(item)"
+            :class="item.IsAttention==true?'isSave':'noSave'"
+          >
+            <i class="icon-gzwt"></i>
+            <span class="attention-tips">{{item.IsAttention==true?'已关注':'关注'}}</span>
+          </div>
+        </div>
+        <div class="attentionCount">{{item.fansCount?item.fansCount:0}} 个人关注他</div>
+      </li>
+      <li v-else>
+        <div class="introduce">
+          <div class="introduceLeft" @click="toPersonal(item)">
+            <img
+              :src="(item.userPic&&item.userPic!='/forum/common/userPic.jpg')?item.userPic:'../../static/img/user_pic.png'"
+            >
+            <div>
+              <h5 class="changeColor" v-html="item.accountnumber"></h5>
+              <span>{{item.introduce==null?'暂无用户介绍':item.introduce}}</span>
+            </div>
+          </div>
+          <div
+            class="attention"
+            @click="savePerson(item)"
+            :class="item.IsAttention==true?'isSave':'noSave'"
+          >
+            <i class="icon-gzwt"></i>
+            <span class="attention-tips">{{item.IsAttention==true?'已关注':'关注'}}</span>
+          </div>
+        </div>
+        <div class="attentionCount">{{item.attentionCount?item.attentionCount:0}} 个人关注他</div>
+      </li>
+    </ul>
+    <div v-if="pageList.length==0 && hasNoData" class="has-nodata">
+      <img src="../../static/img/no_data_page.png" alt class="has-nodata-img">
+      <p>暂无搜索数据</p>
+    </div>
+  </div>
+</template>
+<script>
+import { downLoad} from '@/common.js';
+
+export default {
+  data: function() {
+    return {
+      userId: wx.getStorageSync("userId") ? wx.getStorageSync("userId") : 0,
+      supportCounts: ""
+    };
+  },
+  props: {
+    pageList: [],
+    pageTotal: "",
+    expert: "",
+    flag: "",
+    searchValue: String,
+    searchCondition: Object,
+    hasNoData: {
+      type: Boolean,
+      default: false
+    },
+    isShowDelete: {
+      type: Boolean,
+      default: false
+    }
+  },
+  methods: {
+    savePerson(m) {
+      if (this.userId == "0") {
+        // wx.showModal({
+        //   title: '提示',
+        //   content: '这是一个模态弹窗',
+        //   success(res) {
+        //     if (res.confirm) {
+        //       console.log('用户点击确定')
+        //     } else if (res.cancel) {
+        //       console.log('用户点击取消')
+        //     }
+        //   }
+        // })
+        downLoad()
+      } else {
+        if (m.IsAttention == true) {
+          this.$http({
+            url: "UserInfo/attentionDelete",
+            method: "delete",
+            params: {
+              operatorID: this.userId,
+              dataID: m.flag == "6" ? m.operatorID : m.userID,
+              flag: 3
+            }
+          }).then(function(res) {
+            m.IsAttention = false;
+            m.attentionCount -= 1;
+          });
+        } else {
+          this.$http({
+            url: "UserInfo/attentionAdd",
+            method: "put",
+            data: {
+              attentionID: 0,
+              titleID: 0,
+              operatorID: this.userId,
+              otherID: m.flag == "6" ? m.operatorID : m.userID,
+              flag: 3,
+              favoriteID: 0,
+              revertID: 0,
+              datetime: getNowFormatDate(),
+              remark1: null,
+              remark2: null
+            }
+          }).then(function(res) {
+            m.IsAttention = true;
+            m.attentionCount += 1;
+            // console.log(vm.isAttention)
+          });
+        }
+      }
+    },
+    toPersonal(m) {
+      let url = ''
+      if (m.flag == "6") {
+        url = "/pages/mine/main?userID=" + m.operatorID
+      } else if (!m.flag || m.flag == "0") {
+        url = "/pages/mine/main?userID=" + m.ID
+      } else {
+        url = "/pages/mine/main?userID=" + m.userID
+      }
+      wx.navigateTo({url})
+    },
+    toDetail(m) {
+      if (m.flag == "0" || m.flag == 2) {
+        var url = "/pages/article/main?titleId=" + m.titleID+"&flag="+m.flag+"&authorID="+m.ID
+        wx.navigateTo({url})    
+      } else {
+        var url = "/pages/problemDetail/main?titleId=" + m.titleID+"&flag="+m.flag+"&questionPerID="+m.ID
+        wx.navigateTo({url})
+      }
+    },
+    toSinglePro(m) {
+      if (m.flag == "0" || m.flag == 2) {
+        var url = "/pages/article/main?titleId=" + m.titleID+"&flag="+m.flag+"&authorID="+m.ID
+        wx.navigateTo({url}) 
+      } else {
+        var url = "/pages/singleAnswer/main?titleId=" + m.titleID+"&flag="+m.flag+"&authorID="+m.userID+"&revertID="+m.revertID+"&questionPerID="+m.ID
+        wx.navigateTo({url})
+      }
+    },
+  }
+};
+</script>
+<style lang="scss" >
+.problemList {
+  .has-nodata {
+    text-align: center;
+    padding-top: 50%;
+    font-size: 0.3rem;
+    .has-nodata-img {
+      width: 26%;
+      height: 2rem;
+      padding-bottom: 0.4rem;
+    }
+  }
+  .user-img-container {
+    height: 1.7rem;
+    .userPic1 {
+      width: 0.88rem;
+      height: 0.88rem;
+      border-radius: 50%;
+    }
+
+    .vip1 {
+      width: 0.25rem;
+      height: 0.25rem;
+      position: absolute;
+      top: 0.54rem;
+      right: 0.28rem;
+    }
+    .vip3 {
+      width: 0.32rem;
+      height: 0.32rem;
+      position: absolute;
+      top: 0.54rem;
+      right: 0.28rem;
+    }
+    .user-img-list {
+      background: #f5f5f5;
+      width: 100%;
+      height: 1.5rem;
+      white-space: nowrap;
+      overflow-x: auto !important;
+      padding-top: 0.2rem;
+      .user-img-item {
+        display: inline-block;
+        text-align: center;
+        width: 18%;
+        p {
+          width: 90%;
+          margin: 0 auto;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+      }
+    }
+  }
+  .vip {
+    width: 0.25rem;
+    height: 0.25rem;
+    position: absolute;
+    top: 0.34rem;
+    left: 0.42rem;
+  }
+}
+.list {
+  .spanPad {
+    padding-right: 5px;
+  }
+  .introduce {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.2rem;
+    width: 100%;
+    height: 1.14rem;
+    box-sizing: border-box;
+    border-bottom: 1px solid #eaeaea;
+    .isSave {
+      color: #99999a;
+      border: 0.02rem solid #99999a;
+      border-radius: 0.1rem;
+      padding: 5px;
+      .icon-gzwt:before {
+        font-size: 0.3rem;
+        color: #99999a;
+      }
+    }
+    .noSave {
+      color: #ee781b;
+      border: 0.02rem solid #ee781b;
+      border-radius: 0.1rem;
+      padding: 5px;
+      .icon-gzwt:before {
+        color: #ee781b;
+      }
+    }
+    .icon-gzwt{
+      display: inline;
+      font-size: 0.3rem;
+    }
+    .attention-tips{
+      font-size: 0.3rem;
+    }
+    .introduceLeft {
+      width: 80%;
+      display: inline-flex;
+      align-items: center;
+      h5 {
+        font-size: 0.28rem;
+      }
+      span {
+        font-size: 0.26rem;
+        color: #99999a;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 1;
+      }
+    }
+    img {
+      width: 0.9rem;
+      height: 0.9rem;
+      margin-right: 0.2rem;
+      border-radius: 50%;
+    }
+  }
+  .attentionCount {
+    font-size: 0.24rem;
+    color: #99999a;
+    padding-left: 0.2rem;
+    height: 0.54rem;
+    line-height: 0.54rem;
+  }
+  li {
+    background: white;
+    margin-top: 0.12rem;
+    padding-left: 0.2rem;
+    padding-right: 0.2rem;
+    padding-top: 0.2rem;
+    margin-left: 0.08rem;
+    margin-right: 0.08rem;
+    border-radius: 0.06rem;
+    box-shadow: #7c7c7c;
+    box-sizing: border-box;
+    .delete-div {
+      padding-top: 0.1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+  }
+  .pro {
+    .icon-zkjt {
+      float: right;
+      padding-top: 0.1rem;
+      font-size: 0.24rem;
+    }
+    .title-line {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
+    }
+    span {
+      font-size: 0.32rem;
+      font-family: "Helvetica Neue";
+      font-weight: bold;
+      word-wrap: break-word;
+    }
+  }
+  .user {
+    .user-img {
+      float: left;
+      height: 0.58rem;
+      line-height: 0.58rem;
+      .userPic {
+        width: 0.58rem;
+        height: 0.58rem;
+        border-radius: 50%;
+        margin-right: 0.2rem;
+      }
+    }
+    .user-name {
+      font-size: 0.28rem;
+      float: left;
+      width: 2rem;
+    }
+  }
+  .marRight {
+    padding-left: 0.1rem;
+    padding-right: 0.1rem;
+    padding-top: 0.05rem;
+    padding-bottom: 0.01rem;
+    font-size: 0.28rem;
+  }
+  .operate {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 0.15rem;
+    padding-bottom: 0.2rem;
+    height: 0.58rem;
+    color: #929292;
+    font-size: 0.3rem;
+    i {
+      margin-right: 0.1rem;
+    }
+  }
+  .iconFont {
+    font-size: 0.28rem;
+    background-color: #eaeaea;
+    border-radius: 0.1rem;
+    padding-left: 0.1rem;
+    padding-right: 0.1rem;
+    padding-top: 0.05rem;
+    padding-bottom: 0.01rem;
+  }
+
+  .remark1 {
+    font-size: 0.3rem;
+    margin-top: 0.1rem;
+    p {
+      color: #636363;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 3;
+      word-wrap: break-word;
+    }
+  }
+}
+.art {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+.articleLeft {
+  flex: 1;
+  width: 100%;
+}
+.articleRight {
+  width: 2.1rem;
+  height: 2.1rem;
+  margin-left: 0.2rem;
+  img {
+    width: 100%;
+    height: 100%;
+    border-radius: 0.1rem;
+  }
+}
+.user {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  width: 3rem;
+  .user-name {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+}
+.orange:before {
+  color: #fe9500;
+}
+</style>

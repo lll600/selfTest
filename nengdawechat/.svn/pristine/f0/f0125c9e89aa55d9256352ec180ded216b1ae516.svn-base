@@ -1,0 +1,110 @@
+<template name="AttentionTo$eb2e1a82">
+  <view class="_div data-v-2773ae15 attentionTo">
+    <view class="_div data-v-2773ae15 good-expert-container" wx:if="{{pageList.length>0}}">
+      <view class="_div data-v-2773ae15 good-expert-title" bindtap="handleProxy" data-eventid="{{'0'}}" data-comkey="{{$k}}">推荐关注
+        <image hidden="{{!(!showA)}}" src="../../static/img/xia.png" class="_img data-v-2773ae15"></image>
+        <image hidden="{{!(showA)}}" src="../../static/img/shang.png" class="_img data-v-2773ae15"></image>
+      </view>
+      <view class="_div data-v-2773ae15 good-expert-list" hidden="{{!(showA)}}">
+        <view wx:key="index" key="{{index}}" class="_div data-v-2773ae15 good-expert-item" wx:for="{{experts}}" wx:for-index="index" wx:for-item="item">
+          <view class="_div data-v-2773ae15 user-img1" style="position:relative" bindtap="handleProxy" data-eventid="{{'1-'+index}}" data-comkey="{{$k}}">
+            <image src="{{(item.pic&&item.pic!='/forum/common/userPic.jpg')?item.pic:'../../static/img/user_pic.png'}}" alt class="_img data-v-2773ae15 userPic1"></image>
+            <image hidden="{{!(item.ExpertType==1)}}" src="../../static/img/vip.png" alt class="_img data-v-2773ae15 vip2"></image>
+            <image hidden="{{!(item.ExpertType==2)}}" src="../../static/img/center.png" alt class="_img data-v-2773ae15 vip3"></image>
+          </view>
+          <view class="_p data-v-2773ae15 expert-item-name" bindtap="handleProxy" data-eventid="{{'2-'+index}}" data-comkey="{{$k}}">{{item.accountnumber}}</view>
+          <view class="_p data-v-2773ae15 expert-item-introduce">{{item.introduce}}</view>
+          <view class="_div data-v-2773ae15 attention-btn" wx:if="{{item.IsAttention==0 && item.type == 0}}" bindtap="handleProxy" data-eventid="{{'3-'+index}}" data-comkey="{{$k}}">关注</view>
+          <view class="_div data-v-2773ae15 attention-btn" wx:if="{{item.IsAttention==0 && item.type == 1}}" bindtap="handleProxy" data-eventid="{{'4-'+index}}" data-comkey="{{$k}}">关注</view>
+          <view class="_div data-v-2773ae15 no-attention-btn" wx:if="{{item.IsAttention==1}}" bindtap="handleProxy" data-eventid="{{'5-'+index}}" data-comkey="{{$k}}">已关注</view>
+        </view>
+      </view>
+    </view>
+    <view class="_ul data-v-2773ae15 list" wx:key="index" key="{{index}}" wx:if="{{pageList.length>0}}" wx:for="{{pageList}}" wx:for-index="index" wx:for-item="item">
+      <view class="_li data-v-2773ae15">
+        <view class="_div data-v-2773ae15 first-name" hidden="{{!(item.cfrom==2)}}">
+          <view class="_div data-v-2773ae15 topic-container">
+            <view class="_div data-v-2773ae15 topic-title">来自话题:</view>
+            <view class="_div data-v-2773ae15 topic-contents">
+              <label class="_span data-v-2773ae15 topicN" wx:key="index1" key="{{index1}}" bindtap="handleProxy" data-eventid="{{'6-'+index+'-'+index1}}" data-comkey="{{$k}}" wx:for="{{item.topicName.split(',')}}" wx:for-index="index1" wx:for-item="item1">{{item1}}</label>
+            </view>
+          </view>
+        </view>
+        <view class="_div data-v-2773ae15 first-name">
+          <view class="_div data-v-2773ae15 user-img" bindtap="handleProxy" wx:if="{{item.cfrom!=2}}" data-eventid="{{'8-'+index}}" data-comkey="{{$k}}">
+            <image src="{{(item.userPic&&item.userPic!='/forum/common/userPic.jpg')?item.userPic:'../../static/img/user_pic.png'}}" alt class="_img data-v-2773ae15 userPic"></image>
+            <image wx:if="{{item.grade==1}}" src="../../static/img/vip.png" alt class="_img data-v-2773ae15 vip"></image>
+            <image wx:if="{{item.grade==5}}" src="../../static/img/guanfang.png" alt class="_img data-v-2773ae15 vip"></image>
+            <image wx:if="{{item.grade==6}}" src="../../static/img/center.png" alt class="_img data-v-2773ae15 vip"></image>
+          </view>
+          <view class="_div data-v-2773ae15 user-img userImg2" wx:else bindtap="handleProxy" data-eventid="{{'7-'+index}}" data-comkey="{{$k}}">
+            <image src="{{(item.userPic&&item.userPic!='/forum/common/userPic.jpg')?item.userPic:'../../static/img/user_pic.png'}}" alt class="_img data-v-2773ae15 userPic"></image>
+            <image wx:if="{{item.grade==1}}" src="../../static/img/vip.png" alt class="_img data-v-2773ae15 vip"></image>
+            <image wx:if="{{item.grade==5}}" src="../../static/img/guanfang.png" alt class="_img data-v-2773ae15 vip"></image>
+            <image wx:if="{{item.grade==6}}" src="../../static/img/center.png" alt class="_img data-v-2773ae15 vip"></image>
+          </view>
+          <view class="_p data-v-2773ae15 first-user-name" hidden="{{!(item.cfrom==2)}}" bindtap="handleProxy" data-eventid="{{'9-'+index}}" data-comkey="{{$k}}">{{item.accountnumber}}</view>
+          <view hidden="{{!(item.cfrom==3)}}" class="_p data-v-2773ae15 article-author" bindtap="handleProxy" data-eventid="{{'10-'+index}}" data-comkey="{{$k}}"> {{item.accountnumber}} 回答了 </view>
+          <view hidden="{{!(item.cfrom==1&&item.flag == 1)}}" class="_p data-v-2773ae15 article-author" bindtap="handleProxy" data-eventid="{{'11-'+index}}" data-comkey="{{$k}}"> {{item.accountnumber}} 提出了问题 </view>
+          <view hidden="{{!(item.cfrom==1&&item.flag != 1)}}" class="_p data-v-2773ae15 article-author" bindtap="handleProxy" data-eventid="{{'12-'+index}}" data-comkey="{{$k}}"> {{item.accountnumber}} 发布了文章 </view>
+          <view class="_div data-v-2773ae15">
+            <label wx:if="{{item.currenttime && item.cfrom!=2}}" class="_span data-v-2773ae15 vip-dot">·</label>
+            <label wx:if="{{item.currenttime && item.cfrom!=2}}" class="_span data-v-2773ae15">{{item.currenttime}}</label>
+          </view>
+        </view>
+        <view class="_div data-v-2773ae15 art">
+          <view class="_div data-v-2773ae15 articleLeft">
+            <view class="_div data-v-2773ae15 pro">
+              <view class="_div data-v-2773ae15 title-line">
+                <label bindtap="handleProxy" class="_span data-v-2773ae15 changeColor" data-eventid="{{'13-'+index}}" data-comkey="{{$k}}">{{item.title}}</label>
+              </view>
+            </view>
+            <view class="_div data-v-2773ae15 pro remark1" hidden="{{!((item.cfrom==1&&item.flag != '1') || item.cfrom==3 || item.cfrom==2)}}">
+              <rich-text bindtap="handleProxy" class="_p data-v-2773ae15 changeColor" nodes="{{item.remark1}}" data-eventid="{{'14-'+index}}" data-comkey="{{$k}}"></rich-text>
+            </view>
+          </view>
+          <view class="_div data-v-2773ae15 articleRight" wx:if="{{(item.pic && item.pic!=null)&& !(item.cfrom==1&&item.flag == 1)}}" bindtap="handleProxy" data-eventid="{{'15-'+index}}" data-comkey="{{$k}}">
+            <image src="{{item.pic}}" class="_img data-v-2773ae15"></image>
+          </view>
+        </view>
+        <view class="_div data-v-2773ae15 operate-attention" hidden="{{!(!item.revertID&&item.flag==1)}}"> 暂无回答 </view>
+        <view class="_div data-v-2773ae15 operate-attention {{item.tag == '1' ? 'operate-attention-has' : 'operate-attention-no'}}" hidden="{{!(item.revertID||item.flag!=1)}}">
+          <view wx:if="{{item.tag == '1'}}" class="_div data-v-2773ae15 first-width"> 此问题来源于能答网设备平台 </view>
+          <view class="_div data-v-2773ae15 second-width">
+            <view class="_p data-v-2773ae15 marRight">
+              <label class="_span data-v-2773ae15 spanPad" bindtap="handleProxy" data-eventid="{{'16-'+index}}" data-comkey="{{$k}}">{{item.revertCount?item.revertCount:0}} 评论 </label>·
+              <label class="_span data-v-2773ae15 spanPad">{{item.supportCounts?item.supportCounts:0}} 赞 </label>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class="_div data-v-2773ae15 no-attention-one">
+      <view class="_div data-v-2773ae15 null-data">
+        <image src="../../static/img/nullicon.png" alt class="_img data-v-2773ae15"></image>
+        <view class="_div data-v-2773ae15 have-no-attention"> 你还没有任何关注 </view>
+      </view>
+      <view class="_div data-v-2773ae15 have-attention-container">
+        <view class="_div data-v-2773ae15 have-attention-title"> 大家都在关注 </view>
+        <view class="_div data-v-2773ae15 have-attention-item">
+          <view wx:key="index" key="{{index}}" class="_div data-v-2773ae15 have-attention-items" wx:for="{{experts}}" wx:for-index="index" wx:for-item="item">
+            <view class="_div data-v-2773ae15 have-attention-item-first">
+              <view class="_div data-v-2773ae15 have-img" style="position:relative">
+                <image src="{{(item.pic&&item.pic!='/forum/common/userPic.jpg')?item.pic:'../../static/img/user_pic.png'}}" alt class="_img data-v-2773ae15 userPic1"></image>
+                <image hidden="{{!(item.ExpertType==1)}}" src="../../static/img/vip.png" alt class="_img data-v-2773ae15 vip2"></image>
+                <image hidden="{{!(item.ExpertType==2)}}" src="../../static/img/center.png" alt class="_img data-v-2773ae15 vip3"></image>
+              </view>
+              <view class="_div data-v-2773ae15 have-experts-people">
+                <view class="_p data-v-2773ae15 have-experts-people-name">{{item.accountnumber}}</view>
+                <view class="_p data-v-2773ae15 have-experts-people-project">
+                  <label wx:if="{{item.type==1}}" style="color:#ccc;" class="_span data-v-2773ae15"> 话题# </label>{{item.introduce}}</view>
+              </view>
+            </view>
+            <view class="_div data-v-2773ae15 attention-btns" bindtap="handleProxy" wx:if="{{item.IsAttention==0}}" data-eventid="{{'18-'+index}}" data-comkey="{{$k}}"> 关注 </view>
+            <view class="_div data-v-2773ae15 no-attention-btns" wx:else bindtap="handleProxy" data-eventid="{{'17-'+index}}" data-comkey="{{$k}}"> 已关注 </view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</template>

@@ -1,0 +1,94 @@
+<template>
+  <div v-if='showModal'>
+      <div class="shodow">
+         
+      </div>
+    <div class="modal">
+        <div>请扫描二维码下载app再操作</div>
+        <div class="img">
+           <img src="/static/img/load.png" alt="">
+        </div>
+        <div class='colorRed'>(仅限安卓端下载)</div>
+        <div class="cancelDiv">
+            <span class="cancel" @click="hideModal()">取消</span>
+        </div>
+     </div>
+  </div>
+</template>
+
+<script>
+ export default {
+    props:['showModal'],
+    methods:{
+       hideModal(){
+             this.$emit('hideModal',false);
+       } 
+    },
+    mounted(){
+        console.log(this.showModal)
+    }
+
+}
+</script>
+<style lang="scss" >
+.shodow{
+    width: 100%;
+    height: 100vh;
+    background: black;
+    opacity: 0.5;   
+    position: fixed;
+    z-index: 1000;  
+    top:0;
+
+}
+ .modal{
+     width: 60%;
+     height: 36vh;
+     position: fixed;
+     z-index: 99999;
+     background: white;
+     top: 50%;
+     left: 50%;
+     margin-left: -30%;
+     margin-top: -18vh;
+     font-size: 28rpx;
+     border-radius: 10px;
+     div{
+         text-align: center;
+         margin: 20px;
+     }
+     img{
+         width:100px;
+         height:100px;
+     }
+     .colorRed{
+         color:red;
+         margin: 0;
+     }
+     .img{
+         margin-bottom: 0;
+     }
+     .cancelDiv{
+        //  text-align: right;
+        border-top: 1px solid #bababa;
+        color:#fa9813;
+        height:40px;
+        line-height: 40px;
+        margin: 0;
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        font-size: 32rpx;
+     }
+    //  .cancel{
+    //        background: #eaeaea;
+    //        padding: 5px 10px;
+    //        border-radius: 5px;
+    //        margin: 0 0 5px 10px;
+    //        display: inline-block;
+    //        font-size: 28rpx;
+    //    }
+
+ }
+</style>
+

@@ -1,0 +1,286 @@
+@import "/static/css/vendor.wxss";
+
+.mine-contain {
+  background: #f3f3f5;
+}
+.mine-contain .mine-top {
+  position: absolute;
+  top: 120rpx;
+  width: 100%;
+  bottom: 0;
+}
+.mine-contain .mine-top .showList {
+  height: 100%;
+  overflow: auto;
+}
+.mine-contain .vip {
+  width: 40rpx !important;
+  height: 40rpx !important;
+  position: absolute;
+  top: 110.00000000000001rpx;
+  left: 120rpx;
+}
+.mine-contain .personal-top {
+  background: #fff;
+  padding-top: 40rpx;
+}
+.mine-contain .personal-top .personal-header {
+  padding: 10rpx 20rpx;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.mine-contain .personal-top .personal-header .avator {
+  width: 152rpx;
+  height: 152rpx;
+  margin-right: 34rpx;
+}
+.mine-contain .personal-top .personal-header .avator ._img {
+  width: 152rpx;
+  height: 152rpx;
+  border-radius: 50%;
+}
+.mine-contain .personal-top .personal-header .message .account-name {
+  font-size: 44rpx;
+  color: #464646;
+}
+.mine-contain .personal-top .personal-header .message .school-major {
+  margin: 10rpx 0;
+  font-size: 22rpx;
+  color: #878787;
+}
+.mine-contain .personal-top .personal-header .message .fan-follow {
+  font-size: 0;
+  color: #a5a5a5;
+}
+.mine-contain .personal-top .personal-header .message .fan-follow ._span {
+  display: inline-block;
+  vertical-align: middle;
+  font-size: 28.000000000000004rpx;
+}
+.mine-contain .personal-top .personal-header .message .fan-follow ._span.fan {
+  margin-right: 20rpx;
+}
+.mine-contain .personal-top .personal-header .message .fan-follow ._span ._span {
+  margin-right: 5rpx;
+}
+.mine-contain .personal-top .operate-div {
+  margin: 25rpx 20rpx 0 20rpx;
+  padding-bottom: 25rpx;
+  border-bottom: 2rpx solid #f0f0f0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.mine-contain .personal-top .operate-div .operate-btn {
+  width: 340rpx;
+  text-align: center;
+  height: 72rpx;
+  line-height: 72rpx;
+  font-size: 28.000000000000004rpx;
+  color: #464646;
+  border: 2rpx solid #464646;
+  border-radius: 36rpx;
+}
+.mine-contain .personal-top .operate-div .operate-btn ._span {
+  display: inline-block;
+  vertical-align: middle;
+}
+.mine-contain .personal-top .other-operate-div {
+  margin: 25rpx 20rpx 0 20rpx;
+  padding-bottom: 25rpx;
+  border-bottom: 2rpx solid #f0f0f0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.mine-contain .personal-top .other-operate-div .operate-btn {
+  width: 222.00000000000003rpx;
+  text-align: center;
+  height: 72rpx;
+  line-height: 72rpx;
+  font-size: 28.000000000000004rpx;
+  color: #464646;
+  border: 2rpx solid #464646;
+  border-radius: 36rpx;
+}
+.mine-contain .personal-top .other-operate-div .operate-btn ._span {
+  display: inline-block;
+  vertical-align: middle;
+}
+.mine-contain .personal-top .other-operate-div .small-operate-btn {
+  width: 150rpx;
+  text-align: center;
+  height: 72rpx;
+  line-height: 72rpx;
+  font-size: 28.000000000000004rpx;
+  color: #464646;
+  border: 2rpx solid #464646;
+  border-radius: 36rpx;
+}
+.mine-contain .personal-top .other-operate-div .small-operate-btn ._span {
+  display: inline-block;
+  vertical-align: middle;
+}
+.mine-contain .personal-top .account-mes {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 25rpx 20rpx;
+}
+.mine-contain .personal-top .account-mes .mes-list {
+  width: 30%;
+}
+.mine-contain .personal-top .account-mes .mes-list ._p {
+  text-align: center;
+}
+.mine-contain .personal-top .account-mes .mes-list ._p.number {
+  font-size: 34rpx;
+  color: #222;
+}
+.mine-contain .personal-top .account-mes .mes-list ._p.title {
+  font-size: 22rpx;
+  color: #878787;
+}
+.mine-contain .personal-content {
+  margin: 30rpx 0;
+}
+.mine-contain .personal-content .disFlex {
+  display: flex;
+  align-items: center;
+  -webkit-box-align: left;
+  margin-bottom: 20rpx;
+}
+.mine-contain .personal-content .disFlex .imgPic {
+  width: 42rpx;
+  height: 42rpx;
+  border-radius: 50%;
+}
+.mine-contain .personal-content .cHeader {
+  font-size: 24rpx;
+}
+.mine-contain .personal-content .cTitile {
+  font-size: 28.000000000000004rpx;
+}
+.mine-contain .personal-content .cArticle {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  font-size: 24rpx;
+}
+.mine-contain .personal-content ._ul ._li {
+  height: auto;
+  background: white;
+  margin-top: 20rpx;
+  padding: 20rpx;
+  box-sizing: border-box;
+}
+.mine-contain .personal-content ._ul ._li ._p {
+  color: #99999e;
+}
+.mine-contain .personal-content ._ul ._li .dateTime {
+  font-size: 26rpx;
+}
+.mine-contain .personal-content ._ul ._li .zan {
+  padding-left: 20rpx;
+}
+.mine-contain .personal-content ._ul ._li .operateP {
+  font-size: 28.000000000000004rpx;
+}
+.mine-contain .personal-content .cFooter {
+  justify-content: space-between;
+  margin-bottom: 0 !important;
+  font-size: 28.000000000000004rpx;
+}
+.mine-contain .personal-content .more-mes-list {
+  display: flex;
+  background: #fff;
+  align-content: center;
+  justify-content: flex-start;
+  padding: 0 20rpx;
+}
+.mine-contain .personal-content .more-mes-list .icon-div {
+  width: 48rpx;
+  height: 98rpx;
+  margin-right: 37rpx;
+}
+.mine-contain .personal-content .more-mes-list .icon-div ._img {
+  height: 48rpx;
+  margin-top: 25rpx;
+}
+.mine-contain .personal-content .more-mes-list .icon-div ._span {
+  height: 98rpx;
+  line-height: 98rpx;
+  font-size: 48rpx;
+}
+.mine-contain .personal-content .word-div {
+  width: 100%;
+  height: 96rpx;
+  line-height: 96rpx;
+  display: flex;
+  align-content: center;
+  justify-content: space-between;
+  border-bottom: 2rpx solid #f0f0f0;
+}
+.mine-contain .personal-content .word-div.no-border {
+  border: none;
+}
+.mine-contain .personal-content .word-div .word {
+  font-size: 30rpx;
+  color: #444;
+}
+.mine-contain .personal-content .word-div .number {
+  font-size: 30rpx;
+  color: #888;
+}
+.mine-contain .personal-content .word-div .number .number-span {
+  margin-right: 15rpx;
+}
+.mine-contain .more-message {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+.mine-contain .more-message .mask {
+  min-height: calc(100vh);
+  background: rgba(0, 0, 0, 0.5);
+}
+.mine-contain .more-message .message {
+  background: #fff;
+  padding: 32rpx;
+  box-sizing: border-box;
+  height: 960rpx;
+  overflow-y: auto;
+  width: 100%;
+  position: relative;
+}
+.mine-contain .more-message .message ._span.icon-close {
+  color: #464646;
+  position: absolute;
+  font-size: 40rpx;
+  top: 10rpx;
+  right: 25rpx;
+}
+.mine-contain .more-message .message ._ul ._li {
+  margin-top: 45rpx;
+}
+.mine-contain .more-message .message ._ul ._li ._p.key {
+  font-size: 28.000000000000004rpx;
+  color: #464646;
+  font-weight: 700;
+}
+.mine-contain .more-message .message ._ul ._li ._p.value {
+  font-size: 28.000000000000004rpx;
+  color: #545454;
+  margin-top: 10rpx;
+}
+.mine-contain .more-message .message ._ul ._li ._p.introduction {
+  word-wrap: break-word;
+  word-break: break-all;
+  overflow: hidden;
+}
+.mine-contain .more-message .message ._ul ._li:first-child {
+  margin-top: 0;
+}

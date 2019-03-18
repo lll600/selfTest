@@ -1,0 +1,38 @@
+<template>
+    <div class="message-contain">
+   111
+
+
+
+
+        <!-- <home-menu :menuName="menuName"></home-menu> -->
+    </div>
+    
+</template>
+<script>
+import homeMenu from "@/components/homeMenu";
+import searchBar from "@/components/searchBar";
+
+export default {
+  data() {
+    return {
+      menuName: "classification",
+    };
+  },
+  components: {
+    "home-menu": homeMenu,
+    "search-bar": searchBar
+  },
+  methods: {
+  
+  }
+};
+</script>
+<style lang="scss">
+.message-contain {
+  
+       
+}
+</style>
+
+

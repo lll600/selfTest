@@ -1,0 +1,161 @@
+<import src="searchBar$99f8a31e" />
+<template name="index$017b4d8d">
+  <view class="_div data-v-332113f6 mine-contain">
+    <template data="{{...$root[$kk+'0'], $root}}" is="searchBar$99f8a31e"></template>
+    <view class="_div data-v-332113f6 mine-top">
+      <view class="_div data-v-332113f6 personal-top">
+        <view class="_div data-v-332113f6 personal-header">
+          <view class="_div data-v-332113f6 avator" style="position:relative">
+            <image src="{{(userMessage.pic&&userMessage.pic!='/forum/common/userPic.jpg')?userMessage.pic:'/static/img/user_pic.png'}}" class="_img data-v-332113f6"></image>
+            <image hidden="{{!(userMessage.grade==1)}}" src="/static/img/vip.png" alt class="_img data-v-332113f6 vip"></image>
+            <image hidden="{{!(userMessage.grade==5)}}" src="/static/img/guanfang.png" alt class="_img data-v-332113f6 vip"></image>
+            <image hidden="{{!(userMessage.grade==6)}}" src="/static/img/center.png" alt class="_img data-v-332113f6 vip"></image>
+          </view>
+          <view class="_div data-v-332113f6 message">
+            <view class="_div data-v-332113f6 account-name">{{userMessage.accountnumber}}</view>
+            <view class="_div data-v-332113f6 school-major">
+              <label class="_span data-v-332113f6 school" wx:if="{{userMessage.remark1}}">{{userMessage.remark1}}</label>
+            </view>
+            <view class="_div data-v-332113f6 fan-follow">
+              <label class="_span data-v-332113f6 fan">
+                <label class="_span data-v-332113f6">粉丝</label>
+                <label class="_span data-v-332113f6">{{userMessage.fansCount == null? 0: userMessage.fansCount}}</label>
+              </label>
+              <label class="_span data-v-332113f6 follow">
+                <label class="_span data-v-332113f6">关注</label>
+                <label class="_span data-v-332113f6">{{userMessage.at_user_Count == null?0:userMessage.at_user_Count}}</label>
+              </label>
+            </view>
+          </view>
+        </view>
+        <view class="_div data-v-332113f6 other-operate-div">
+          <view class="_div data-v-332113f6 operate-btn edit-mes" bindtap="handleProxy" data-eventid="{{'0'}}" data-comkey="{{$k}}">
+            <label class="_span data-v-332113f6 icon-gzwt"></label> 关注 </view>
+          <view class="_div data-v-332113f6 operate-btn more-mes" bindtap="handleProxy" data-eventid="{{'1'}}" data-comkey="{{$k}}">
+            <label class="_span data-v-332113f6 icon-sx"></label> 私信 </view>
+          <view class="_div data-v-332113f6 operate-btn more-mes" bindtap="handleProxy" data-eventid="{{'2'}}" data-comkey="{{$k}}">
+            <label class="_span data-v-332113f6 icon-gdgrxx"></label> 更多 </view>
+        </view>
+        <view class="_div data-v-332113f6 account-mes">
+          <view class="_div data-v-332113f6 mes-list">
+            <view class="_p data-v-332113f6 number">{{userMessage.answerCount==null?0:userMessage.answerCount}}</view>
+            <view class="_p data-v-332113f6 title">回答</view>
+          </view>
+          <view class="_div data-v-332113f6 mes-list">
+            <view class="_p data-v-332113f6 number">{{userMessage.problemCount==null?0:userMessage.problemCount}}</view>
+            <view class="_p data-v-332113f6 title">提问</view>
+          </view>
+          <view class="_div data-v-332113f6 mes-list">
+            <view class="_p data-v-332113f6 number">{{userMessage.essayCount==null?0:userMessage.essayCount}}</view>
+            <view class="_p data-v-332113f6 title">文章</view>
+          </view>
+        </view>
+      </view>
+      <view class="_div data-v-332113f6 personal-content">
+        <view class="_div data-v-332113f6 more-mes-list">
+          <view class="_div data-v-332113f6 icon-div">
+            <label class="_span data-v-332113f6 icon-hdddz">
+              <label class="_span data-v-332113f6 path1"></label>
+              <label class="_span data-v-332113f6 path2"></label>
+            </label>
+          </view>
+          <view class="_div data-v-332113f6 word-div">
+            <view class="_div data-v-332113f6 word">获得的点赞</view>
+            <view class="_div data-v-332113f6 number">
+              <label class="_span data-v-332113f6 number-span">{{userMessage.supportCount==null?0:userMessage.supportCount}}</label>
+            </view>
+          </view>
+        </view>
+        <view class="_div data-v-332113f6 more-mes-list">
+          <view class="_div data-v-332113f6 icon-div">
+            <label class="_span data-v-332113f6 icon-hddpl">
+              <label class="_span data-v-332113f6 path1"></label>
+              <label class="_span data-v-332113f6 path2"></label>
+              <label class="_span data-v-332113f6 path3"></label>
+            </label>
+          </view>
+          <view class="_div data-v-332113f6 word-div">
+            <view class="_div data-v-332113f6 word">获得的评论</view>
+            <view class="_div data-v-332113f6 number">
+              <label class="_span data-v-332113f6 number-span">{{userMessage.revertAllCount==null?0:userMessage.revertAllCount}}</label>
+            </view>
+          </view>
+        </view>
+        <view class="_div data-v-332113f6 more-mes-list">
+          <view class="_div data-v-332113f6 icon-div">
+            <label class="_span data-v-332113f6 icon-wdgz">
+              <label class="_span data-v-332113f6 path1"></label>
+              <label class="_span data-v-332113f6 path2"></label>
+              <label class="_span data-v-332113f6 path3"></label>
+            </label>
+          </view>
+          <view class="_div data-v-332113f6 word-div">
+            <view class="_div data-v-332113f6 word">他的关注</view>
+            <view class="_div data-v-332113f6 number">
+              <label class="_span data-v-332113f6 number-span">{{hisCon}}</label>
+            </view>
+          </view>
+        </view>
+        <view class="_div data-v-332113f6 more-mes-list">
+          <view class="_div data-v-332113f6 icon-div">
+            <label class="_span data-v-332113f6 icon-sc">
+              <label class="_span data-v-332113f6 path1"></label>
+              <label class="_span data-v-332113f6 path2"></label>
+            </label>
+          </view>
+          <view class="_div data-v-332113f6 word-div no-border">
+            <view class="_div data-v-332113f6 word">收藏</view>
+            <view class="_div data-v-332113f6 number">
+              <label class="_span data-v-332113f6 number-span">{{userMessage.collectCount==null?0:userMessage.collectCount}}</label>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view hidden="{{!(isShowMoreMes)}}" class="_div data-v-332113f6 more-message">
+      <view class="_div data-v-332113f6 mask" wx:if="{{isShowMoreMes}}" bindtap="handleProxy" data-eventid="{{'3'}}" data-comkey="{{$k}}"></view>
+      <view class="_div data-v-332113f6 message" wx:if="{{isShowMoreMes}}">
+        <label class="_span data-v-332113f6 icon-close" bindtap="handleProxy" data-eventid="{{'4'}}" data-comkey="{{$k}}"></label>
+        <view class="_ul data-v-332113f6">
+          <view class="_li data-v-332113f6">
+            <view class="_p data-v-332113f6 key">邮箱</view>
+            <view class="_p data-v-332113f6 value">{{userMessage.email?userMessage.email:'暂无'}}</view>
+          </view>
+          <view class="_li data-v-332113f6">
+            <view class="_p data-v-332113f6 key">个性签名</view>
+            <view class="_p data-v-332113f6 value">{{userMessage.remark1?userMessage.remark1:'暂无'}}</view>
+          </view>
+          <view class="_li data-v-332113f6">
+            <view class="_p data-v-332113f6 key">技能</view>
+            <label wx:if="{{userMessage.ISquality && userMessage.quality!=null}}" class="_span data-v-332113f6">
+              <view class="_p data-v-332113f6 value" wx:key="index" key="{{index}}" wx:for="{{userMessage.quality}}" wx:for-index="index" wx:for-item="item">{{item}}</view>
+            </label>
+            <view class="_p data-v-332113f6 value" wx:else>暂无</view>
+          </view>
+          <view class="_li data-v-332113f6">
+            <view class="_p data-v-332113f6 key">居住地</view>
+            <view class="_p data-v-332113f6 value">{{userMessage.reside && userMessage.ISreside?userMessage.reside:'暂无'}}</view>
+          </view>
+          <view class="_li data-v-332113f6">
+            <view class="_p data-v-332113f6 key">职业经历</view>
+            <label wx:if="{{userMessage.IScorporation && userMessage.corporation!=null && userMessage.corporation.length!=0}}" class="_span data-v-332113f6">
+              <view class="_p data-v-332113f6 value" wx:key="index" key="{{index}}" wx:for="{{userMessage.corporation}}" wx:for-index="index" wx:for-item="item">{{item}}</view>
+            </label>
+            <view class="_p data-v-332113f6 value" wx:else>暂无</view>
+          </view>
+          <view class="_li data-v-332113f6">
+            <view class="_p data-v-332113f6 key">教育经历</view>
+            <label wx:if="{{userMessage.ISeducation && userMessage.education!=null && userMessage.education.length!=0}}" class="_span data-v-332113f6">
+              <view class="_p data-v-332113f6 value" wx:key="index" key="{{index}}" wx:for="{{userMessage.education}}" wx:for-index="index" wx:for-item="item">{{item}}</view>
+            </label>
+            <view class="_p data-v-332113f6 value" wx:else>暂无</view>
+          </view>
+          <view class="_li data-v-332113f6">
+            <view class="_p data-v-332113f6 key">简介</view>
+            <view class="_p data-v-332113f6 value introduction">{{userMessage.ISsummary && userMessage.summary?userMessage.summary:'暂无'}}</view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</template>

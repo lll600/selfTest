@@ -1,0 +1,89 @@
+<template name="ProblemList$1ac3a463">
+  <view class="_div data-v-9063408e problemList">
+    <view class="_ul data-v-9063408e list" wx:key="index" key="{{index}}" wx:for="{{pageList}}" wx:for-index="index" wx:for-item="item">
+      <view wx:if="{{item.flag!=3 && item.flag!=6}}" class="_li data-v-9063408e">
+        <view class="_div data-v-9063408e delete-div" wx:if="{{isShowDelete}}">
+          <label class="_span data-v-9063408e"></label>
+          <label class="_span data-v-9063408e icon-close" bindtap="handleProxy" data-eventid="{{'0-'+index}}" data-comkey="{{$k}}"></label>
+        </view>
+        <view class="_div data-v-9063408e art">
+          <view class="_div data-v-9063408e articleLeft">
+            <view class="_div data-v-9063408e pro">
+              <view class="_div data-v-9063408e title-line">
+                <rich-text bindtap="handleProxy" class="_span data-v-9063408e changeColor" nodes="{{item.title}}" data-eventid="{{'1-'+index}}" data-comkey="{{$k}}"></rich-text>
+              </view>
+            </view>
+            <view class="_div data-v-9063408e pro remark1">
+              <rich-text bindtap="handleProxy" class="_p data-v-9063408e changeColor" nodes="{{item.remark1}}" data-eventid="{{'2-'+index}}" data-comkey="{{$k}}"></rich-text>
+            </view>
+          </view>
+          <view class="_div data-v-9063408e articleRight" wx:if="{{item.pic&&item.pic!='null'}}" bindtap="handleProxy" data-eventid="{{'3-'+index}}" data-comkey="{{$k}}">
+            <image src="{{item.pic}}" class="_img data-v-9063408e"></image>
+          </view>
+        </view>
+        <view class="_div data-v-9063408e operate" wx:if="{{!item.revertID&&item.flag==1}}">暂无回答</view>
+        <view class="_div data-v-9063408e operate" wx:if="{{item.revertID||item.flag!=1}}">
+          <view class="_div data-v-9063408e user" wx:if="{{item.revertIsAnon=='True'||item.revertIsAnon==true||item.revertIsAnon==1}}">
+            <view class="_div data-v-9063408e user-img">
+              <image src="{{'../../static/img/user_pic.png'}}" alt class="_img data-v-9063408e userPic"></image>
+            </view>
+            <view class="_div data-v-9063408e user-name">
+              <label class="_span data-v-9063408e">匿名用户</label>
+            </view>
+          </view>
+          <view class="_div data-v-9063408e user" bindtap="handleProxy" wx:else data-eventid="{{'4-'+index}}" data-comkey="{{$k}}">
+            <view class="_div data-v-9063408e user-img" style="position:relative">
+              <image src="{{(item.userPic&&item.userPic!='/forum/common/userPic.jpg')?item.userPic:'../../static/img/user_pic.png'}}" class="_img data-v-9063408e userPic"></image>
+              <image wx:if="{{item.grade==1}}" src="../../static/img/vip.png" alt class="_img data-v-9063408e vip"></image>
+              <image wx:if="{{item.grade==5}}" src="../../static/img/guanfang.png" class="_img data-v-9063408e vip"></image>
+              <image wx:if="{{item.grade==6}}" src="../../static/img/center.png" alt class="_img data-v-9063408e vip"></image>
+            </view>
+            <view class="_div data-v-9063408e user-name">
+              <rich-text class="_span data-v-9063408e user-name-style" nodes="{{item.accountnumber}}"></rich-text>
+            </view>
+          </view>
+          <view class="_p data-v-9063408e marRight">
+            <label class="_span data-v-9063408e spanPad" bindtap="handleProxy" data-eventid="{{'5-'+index}}" data-comkey="{{$k}}">{{item.revertCount?item.revertCount:0}} 评论</label>·
+            <label class="_span data-v-9063408e spanPad" bindtap="handleProxy" data-eventid="{{'6-'+index}}" data-comkey="{{$k}}">{{item.supportCounts?item.supportCounts:0}} 赞</label>
+          </view>
+        </view>
+      </view>
+      <view wx:elif="{{item.flag==6}}" class="_li data-v-9063408e">
+        <view class="_div data-v-9063408e introduce">
+          <view class="_div data-v-9063408e introduceLeft" bindtap="handleProxy" data-eventid="{{'7-'+index}}" data-comkey="{{$k}}">
+            <image src="{{(item.userPic&&item.userPic!='/forum/common/userPic.jpg')?item.userPic:'../../static/img/user_pic.png'}}" class="_img data-v-9063408e"></image>
+            <view class="_div data-v-9063408e">
+              <rich-text class="_h5 data-v-9063408e changeColor" nodes="{{item.accountnumber}}"></rich-text>
+              <label class="_span data-v-9063408e">{{item.introduce==null?'暂无用户介绍':item.introduce}}</label>
+            </view>
+          </view>
+          <view class="_div data-v-9063408e attention {{item.IsAttention == true ? 'isSave' : 'noSave'}}" bindtap="handleProxy" data-eventid="{{'8-'+index}}" data-comkey="{{$k}}">
+            <view class="_i data-v-9063408e icon-gzwt"></view>
+            <label class="_span data-v-9063408e attention-tips">{{item.IsAttention==true?'已关注':'关注'}}</label>
+          </view>
+        </view>
+        <view class="_div data-v-9063408e attentionCount">{{item.fansCount?item.fansCount:0}} 个人关注他</view>
+      </view>
+      <view wx:else class="_li data-v-9063408e">
+        <view class="_div data-v-9063408e introduce">
+          <view class="_div data-v-9063408e introduceLeft" bindtap="handleProxy" data-eventid="{{'9-'+index}}" data-comkey="{{$k}}">
+            <image src="{{(item.userPic&&item.userPic!='/forum/common/userPic.jpg')?item.userPic:'../../static/img/user_pic.png'}}" class="_img data-v-9063408e"></image>
+            <view class="_div data-v-9063408e">
+              <rich-text class="_h5 data-v-9063408e changeColor" nodes="{{item.accountnumber}}"></rich-text>
+              <label class="_span data-v-9063408e">{{item.introduce==null?'暂无用户介绍':item.introduce}}</label>
+            </view>
+          </view>
+          <view class="_div data-v-9063408e attention {{item.IsAttention == true ? 'isSave' : 'noSave'}}" bindtap="handleProxy" data-eventid="{{'10-'+index}}" data-comkey="{{$k}}">
+            <view class="_i data-v-9063408e icon-gzwt"></view>
+            <label class="_span data-v-9063408e attention-tips">{{item.IsAttention==true?'已关注':'关注'}}</label>
+          </view>
+        </view>
+        <view class="_div data-v-9063408e attentionCount">{{item.attentionCount?item.attentionCount:0}} 个人关注他</view>
+      </view>
+    </view>
+    <view wx:if="{{pageList.length==0 && hasNoData}}" class="_div data-v-9063408e has-nodata">
+      <image src="../../static/img/no_data_page.png" alt class="_img data-v-9063408e has-nodata-img"></image>
+      <view class="_p data-v-9063408e">暂无搜索数据</view>
+    </view>
+  </view>
+</template>

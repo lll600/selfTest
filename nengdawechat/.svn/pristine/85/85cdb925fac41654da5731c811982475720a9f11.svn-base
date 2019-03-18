@@ -1,0 +1,109 @@
+@import "/static/css/vendor.wxss";
+
+.search ._article {
+  position: absolute;
+  top: 120rpx;
+  bottom: 0;
+  overflow: auto;
+  width: 100%;
+  background: white;
+  padding: 0 30rpx 0 30rpx;
+  box-sizing: border-box;
+}
+.search ._article .showList {
+  height: 100%;
+  overflow: auto;
+}
+.search ._article .Internet {
+  font-size: 40rpx;
+  top: 200rpx;
+  left: 50%;
+  margin-left: -200rpx;
+  color: gray;
+  position: absolute;
+}
+.search ._article .moreSearch {
+  width: 100%;
+  height: 80rpx;
+  font-size: 28.000000000000004rpx;
+  line-height: 80rpx;
+  text-align: center;
+  color: #99999a;
+}
+.search ._article .list {
+  width: 100%;
+  padding-top: 40rpx;
+}
+.search ._article .list ._h3 {
+  font-size: 34rpx;
+}
+.search ._article .list ._li {
+  width: 100%;
+  height: 94rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  border-bottom: 6rpx solid #eaeaea;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-left: 0;
+  margin-top: 0;
+  margin-left: 0;
+}
+.search ._article .list ._li ._div {
+  width: 80%;
+  display: flex;
+  align-items: center;
+}
+.search ._article .list ._li ._i {
+  font-size: 30rpx;
+}
+.search ._article .list ._li ._p {
+  padding-left: 20rpx;
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 30rpx;
+}
+.search ._article .clear {
+  height: 80rpx;
+  line-height: 80rpx;
+}
+.search ._article .clear ._i {
+  font-size: 30rpx;
+  float: left;
+  line-height: 80rpx;
+}
+.search ._article .clear ._span {
+  padding-left: 20rpx;
+  font-size: 30rpx;
+}
+.search ._article .hotName {
+  height: 66rpx;
+  background: #e3e3e3;
+  margin: 40rpx 30rpx 0 0;
+  display: inline-block;
+  line-height: 60rpx;
+  border-radius: 20rpx;
+  padding: 0 34rpx;
+  font-size: 30rpx;
+}
+.search ._article .searchAll {
+  width: 100%;
+  height: 80rpx;
+  line-height: 80rpx;
+  display: flex;
+  justify-content: space-between;
+}
+.search ._article .searchAll ._p {
+  width: 60%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 30rpx;
+}
+.search ._article .searchAll ._span {
+  font-size: 30rpx;
+}

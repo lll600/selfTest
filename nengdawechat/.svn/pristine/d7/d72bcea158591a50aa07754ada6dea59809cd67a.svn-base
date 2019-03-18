@@ -1,0 +1,57 @@
+<import src="searchBar$99f8a31e" />
+<import src="wxParse$693f1608" />
+<import src="download$66f58152" />
+<template name="index$40e72818">
+  <view class="_div data-v-711ac16e articleDetail">
+    <template data="{{...$root[$kk+'0'], $root}}" is="searchBar$99f8a31e"></template>
+    <view class="_article data-v-711ac16e {{isshare != true && isshare != 'true' ? 'isShow' : 'noShow'}}">
+      <scroll-view class="_scroll-view data-v-711ac16e showList" scroll-y="true">
+        <view class="_div data-v-711ac16e introduce1">
+          <view class="_div data-v-711ac16e introduceLeft" bindtap="handleProxy" data-eventid="{{'0'}}" data-comkey="{{$k}}">
+            <image src="{{(pageList.userPic&&pageList.userPic!='/forum/common/userPic.jpg')?pageList.userPic:'/static/img/user_pic.png'}}" class="_img data-v-711ac16e"></image>
+            <image hidden="{{!(pageList.grade==1)}}" src="/static/img/vip.png" alt class="_img data-v-711ac16e vip"></image>
+            <image hidden="{{!(pageList.grade==5)}}" src="/static/img/guanfang.png" alt class="_img data-v-711ac16e vip"></image>
+            <image hidden="{{!(pageList.grade==6)}}" src="/static/img/center.png" alt class="_img data-v-711ac16e vip"></image>
+            <view class="_div data-v-711ac16e line">
+              <view class="_h5 data-v-711ac16e">{{pageList.accountnumber}}</view>
+              <label class="_span data-v-711ac16e">{{pageList.introduce==null?'':pageList.introduce}}</label>
+            </view>
+          </view>
+          <view class="_div data-v-711ac16e attention {{isSavePerson == true ? 'isSave' : 'noSave'}}" bindtap="handleProxy" data-eventid="{{'1'}}" data-comkey="{{$k}}">
+            <view class="_i data-v-711ac16e icon-gzwt "></view>
+            <label class="_span data-v-711ac16e">{{isSavePerson==true?'已关注':'关注'}}</label>
+          </view>
+        </view>
+        <view style="margin-top:15px;" class="_div data-v-711ac16e">
+          <view class="_p data-v-711ac16e topicP">
+            <label bindtap="handleProxy" wx:key="index" key="{{index}}" class="_span data-v-711ac16e topic" data-eventid="{{'2-'+index}}" data-comkey="{{$k}}" wx:for="{{topicList}}" wx:for-index="index" wx:for-item="item">{{item.topicName}}</label>
+          </view>
+        </view>
+        <view class="_div data-v-711ac16e title">
+          <view class="_h4 data-v-711ac16e">{{pageList.title}}</view>
+        </view>
+        <view class="_div data-v-711ac16e answer">
+          <viewer images="{{images}}" class="_viewer data-v-711ac16e">
+            <template noData bindpreview="handleProxy" bindnavigate="handleProxy" data-eventid="{{'3'}}" data-comkey="{{$k}}" data="{{...$root[$kk+'1'], $root}}" is="wxParse$693f1608"></template>
+          </viewer>
+          <view style="color:gray;font-size:14px;margin-top:10px;" class="_p data-v-711ac16e">发布于 {{pageList.datetime}}</view>
+        </view>
+      </scroll-view>
+    </view>
+    <view class="_footer data-v-711ac16e">
+      <view bindtap="handleProxy" data-eventid="{{'4'}}" data-comkey="{{$k}}" class="_p data-v-711ac16e">
+        <view class="_i data-v-711ac16e icon-wshoucang {{isAttention == true ? 'orange' : ''}}"></view>
+        <label class="_span data-v-711ac16e">收藏</label>
+      </view>
+      <view bindtap="handleProxy" data-eventid="{{'5'}}" data-comkey="{{$k}}" class="_p data-v-711ac16e">
+        <view class="_i data-v-711ac16e icon-pl "></view>
+        <label class="_span data-v-711ac16e">评论 {{pageList.revertCount}}</label>
+      </view>
+      <view class="_p data-v-711ac16e noBorder" bindtap="handleProxy" data-eventid="{{'6'}}" data-comkey="{{$k}}">
+        <view class="_i data-v-711ac16e icon-dz  {{pageList.IsSupport == 1 ? 'orange' : ''}}"></view>
+        <label class="_span data-v-711ac16e">赞 {{pageList.supportCounts}}</label>
+      </view>
+    </view>
+    <template bindhideModal="handleProxy" data-eventid="{{'7'}}" data-comkey="{{$k}}" data="{{...$root[$kk+'3'], $root}}" is="download$66f58152"></template>
+  </view>
+</template>

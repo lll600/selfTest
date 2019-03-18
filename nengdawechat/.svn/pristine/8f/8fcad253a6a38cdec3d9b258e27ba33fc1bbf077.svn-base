@@ -1,0 +1,286 @@
+<template>
+  <div class='answerDetailList'>
+    <div class="answerTotal">
+		<span>{{total}} 回答</span>
+		<span ref="menu" @click="showMenu" class="sortType">
+			<span v-show="defaultShow" >{{sortType}}<i class="icon-arrow_left"></i></span>
+			<div class="submenu" v-show="isShowMenu">  
+				<p @click="timesort">按时间</p> 
+				<p @click="hotsort">按热度</p> 
+			</div> 
+		</span>
+	</div> 
+   <ul class="list" v-for="(item, index) in pageList" :key='index'> 
+    <li> 
+       <div v-if="item.result.IsAnon=='True'||item.result.IsAnon==true" class="pro user niming"><img src="../../static/img/user_pic.png" alt="" class='userPic' ><span>匿名用户</span></div> 
+     <div style='position:relative;display:flex' v-else class="pro user" @click='toPersonal(item.result)'><img :src="(item.result.pic&&item.result.pic!='/forum/common/userPic.jpg')?item.result.pic:'../../static/img/user_pic.png'" alt="" class='userPic' >
+      <img v-show='item.result.grade==1' src="../../static/img/vip.png" alt="" class='vip' >
+       <img v-show='item.result.grade==5' src="../../static/img/guanfang.png" alt="" class='vip' >
+        <img v-show='item.result.grade==6' src="../../static/img/center.png" alt="" class='vip' >
+     <span>{{item.result.accountnumber}}</span>
+     </div> 
+      <div class="pro content" @click=" toSinglePro(item.result)">   <wxParse noData="" :content="item.result.content" @preview="preview" @navigate="navigate" /></div> 
+        <div class="pro lastLine">
+            <p><span>{{item.items.length}} 评论</span>·<span>{{item.result.supportCounts}} 赞</span></p>
+            <p>{{item.result.datetime}}</p>
+        </div> 
+    </li> 
+   </ul> 
+ </div> 
+</template>
+<script>
+import wxParse from 'mpvue-wxparse'
+// import { translate} from '@/common/common.js';
+export default {
+   data:function() { 
+   return { 
+	sortType: '按时间',
+	 isShowMenu: false,
+	 defaultShow: true,
+    searchCondition:{ //分页属性 
+     pageNo:"1", 
+     pageSize:"10" 
+    }, 
+    pageList:[], 
+    total: 0,
+    allLoaded: false, //是否可以上拉属性，false可以上拉，true为禁止上拉，就是不让往上划加载数据了 
+    scrollMode:"auto", //移动端弹性滚动效果，touch为弹性滚动，auto是非弹性滚动 
+    userId:wx.getStorageSync('userId')?wx.getStorageSync('userId'):0,
+    titleId: '',
+   } 
+  }, 
+  components: { 
+        wxParse
+  //  'v-loadmore':Loadmore // 为组件起别名，vue转换template标签时不会区分大小写，例如：loadMore这种标签转换完就会变成loadmore，容易出现一些匹配问题 
+               // 推荐应用组件时用a-b形式起名 
+  }, 
+  onLoad() {
+        console.log(7777777777)
+    this.titleId=this.$root.$mp.query.titleId
+   this.loadPageList(); //初次访问查询列表 
+},
+  // mounted(){ 
+  //   console.log(66666666)
+  //   this.titleId=this.$root.$mp.query.titleId
+  //  this.loadPageList(); //初次访问查询列表 
+  // }, 
+  methods: { 
+      preview(src, e) {
+      // do something
+        },
+        navigate(href, e) {
+        // do something
+        },
+	  showMenu(){
+		  this.isShowMenu =  !this.isShowMenu ;
+		  // this.defaultShow = false;
+	  },
+	  timesort(){
+		  this.sortType = '按时间',
+		  this.loadPageList();
+	  },
+	  hotsort(){
+        this.sortType = '按热度',
+         this.$http.get('/ForumList/RevertSort',{
+              titleID:this.titleId,
+                 'ID':this.userId,
+                 type:0
+            }).then((response) => {
+                    for(let i in response.data.result)
+                  {
+                    response.data.result[i].result.datetime=response.data.result[i].result.datetime.replace('T',' ')
+                  } 
+                   this.pageList=response.data.result
+					this.isShowMenu = false;
+		  			this.defaultShow = true;
+                   this.total=response.data.total
+                }).catch((error) => {
+                    
+    			})
+	  },
+    toSinglePro (m) {
+       this.$router.push({path: '/SingleAnswer', query: {titleId: m.titleID,flag:1,authorID:m.userID,revertID:m.revertID}})
+    },
+     toPersonal(m) {
+          var url = "/pages/mine/main?userID=" +m.userID
+           wx.navigateTo({url})
+   } ,
+   toDetail (m) {
+     console.log(m);
+     this.$router.push({path: '/ProblemDetail', query: {titleId: m.titleID}})
+   } ,
+   loadPageList:function (){ 
+     this.$http.get('/ForumList/RevertSort',{
+                titleID:this.titleId,
+                 'ID':this.userId,
+                 type:1
+            }).then((response) => {
+                    for(let i in response.data.result)
+                  {
+                    response.data.result[i].result.datetime=response.data.result[i].result.datetime.replace('T',' ')
+                  } 
+				   this.pageList=response.data.result
+		  			this.isShowMenu = false;
+		  			this.defaultShow = true;
+                   this.total=response.data.total
+                }).catch((error) => {
+                    
+    })
+   }, 
+  } 
+}
+</script>
+<style lang="scss" >
+@import url("~mpvue-wxparse/src/wxParse.css");
+  .answerDetailList{
+    .niming{
+      display: flex;
+  
+    }
+    .user{
+       margin-top: 10px;
+    }
+    .sortType{
+      text-align: right;
+      padding-right: 0;
+    }
+      .vip{
+           width: 0.25rem!important;
+          height: 0.25rem!important;
+          position: absolute;
+          top: 0.34rem;
+          left: 0.28rem;
+      }
+    }
+    .answerDetailList{
+      width:100%;
+      // margin-top: 10px;
+  }
+  .boxs{
+    width:5px;
+    height:5px;
+    background: #99999a;
+    border-radius: 50%;
+    display: block;
+  }
+	.answerDetailList .answerTotal .submenu {
+        position: absolute;
+    top: 0.5rem;
+    right: 0.2rem;
+    background: #fff;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    -webkit-box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1), -1px -1px 3px rgba(0, 0, 0, 0.1);
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1), -1px -1px 3px rgba(0, 0, 0, 0.1);
+    p{
+      padding: 0 0.2rem;
+    }
+  //   // width: 60px;
+  //   font-size: 12px;
+  //   // float: right;
+  //   // z-index: 100;
+	// text-align: center;
+	// color: black;
+	// margin-top: 2px;
+  //   line-height: 19px;
+  //   height: 40px;
+  //   background-color: white;
+	}
+	.answerDetailList .answerTotal i.icon-arrow_left{
+		display: inline-block;
+    	-ms-transform: rotate(-90deg);
+    	padding: 5px 5px 5px 5px;
+    	-moz-transform: rotate(-90deg);
+    	-webkit-transform: rotate(-90deg);
+    	-o-transform: rotate(-90deg);
+	}
+    .answerDetailList .list{
+      li{
+        background: white;
+        margin-top: -10px;
+        padding-left: 10px;
+        padding-right: 10px;
+        box-sizing: border-box;
+        padding-bottom: 10px;
+        max-height: 200px;
+      }
+      .content p{
+          max-height:1.6rem;
+          font-size: 14px;
+             word-break: break-all;
+    text-overflow: ellipsis;
+    display: -webkit-box; /** 对象作为伸缩盒子模型显示 **/
+    -webkit-box-orient: vertical; /** 设置或检索伸缩盒对象的子元素的排列方式 **/
+    -webkit-line-clamp: 4; /** 显示的行数 **/
+    overflow: hidden;  /** 隐藏超出的内容 **/
+       img{
+         float:right;
+         width:50px;
+         height:50px;
+       }
+      }
+      .lastLine{
+        display:flex;
+        justify-content:space-between;
+        span{
+          padding-right: 5px!important;
+          // margin-right: 10px;
+        }
+       P{
+         font-size:0.28rem;  
+        color: #99999a;
+        display: flex;
+        align-items: center;
+       }
+      }
+   .pro{
+        padding-top: 10px;
+        // display: flex;
+        .userPic{
+        width: 0.4rem;
+        height: 0.4rem;
+        border-radius: 0.3rem;
+        // margin-top: 10px;
+        margin-right: 0.2rem;
+        }
+        .icon-tw{
+          float: right;
+          padding-top: 10px;
+        }
+      }
+      .operate{
+        display: flex;
+        justify-content:space-around;
+        margin-top: 10px;
+         i{
+          margin-right: 10px;
+        }
+      }
+    
+    }
+    .answerDetailList  .mint-loadmore{
+         margin-top: 0px!important;
+         
+    }
+    .answerDetailList .mint-loadmore-top {
+    margin-top: -5px;
+    }
+    .answerTotal{
+      position: relative;
+      z-index: 100;
+      height: 30px;
+      width: 100%;
+      background: #eaeaea;
+      line-height: 30px;
+      display: flex;
+      justify-content: space-between;
+      span{
+        padding-left: 10px;
+        padding-right: 10px;
+        font-size:0.24rem;  
+        color: #99999a;
+        // margin-right: 10px;
+             }
+
+    }
+</style>

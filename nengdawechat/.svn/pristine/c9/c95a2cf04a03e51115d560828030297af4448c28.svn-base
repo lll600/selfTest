@@ -1,0 +1,18 @@
+<template name="answerList$1015afc6">
+  <view class="_div data-v-67bb31b0 answerList">
+    <view wx:if="{{pageList}}" class="_div data-v-67bb31b0">
+      <view class="_ul data-v-67bb31b0 list" wx:key="index" key="{{index}}" wx:for="{{pageList}}" wx:for-index="index" wx:for-item="val">
+        <view class="_li data-v-67bb31b0">
+          <view class="_div data-v-67bb31b0 pro" bindtap="handleProxy" data-eventid="{{'0-'+index}}" data-comkey="{{$k}}">
+            <view class="_div data-v-67bb31b0 title-line">
+              <view class="_h4 data-v-67bb31b0">{{val.title}}</view>
+            </view>
+          </view>
+          <view class="_div data-v-67bb31b0 pro answer">
+            <view class="_p data-v-67bb31b0">{{val.answerCount}} 个回答</view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</template>

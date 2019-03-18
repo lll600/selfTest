@@ -1,0 +1,548 @@
+<template>
+  <div class="index-contain">
+    <search-bar @totalTopHeightStyles='totalTopHeightStyles' @articleStyles='articleStyles'></search-bar>
+     <div class="tabs" :style="totalTopHeightStyles2">
+            <span :class="isShow == 0 ? 'active':''" @click="getDetail(0)">最新</span>
+            <span :class="isShow == 1 ? 'active':''" @click="getDetail(1)">热门</span>
+            <span :class="isShow == 2 ? 'active':''" @click="getDetail(2)">回答</span>
+            <span :class="isShow == 3 ? 'active':''" @click="getDetail(3)">关注</span>
+        </div>
+    <article :style='articleStyles2'>
+      <scroll-view class="showList" scroll-y="true" > 
+        <!-- <div class="showList"> -->
+           <article-list :pageList='pageList' v-if="isShow==0||isShow==1"></article-list>
+           <answer-list :pageList='pageList' v-else-if="isShow==2"></answer-list>
+           <attention-to  v-else-if="isShow==3" :pageList='pageList' :pageTotal='pageTotal3' @searchCondition2='searchCondition3' :searchCondition="searchCondition" :experts="experts" :isPageList="isPageList" @isattention="isattention" @showModal2='showModal2'></attention-to>
+         <div class="load-tips" v-if="isLoading">正在加载中…</div>
+        <div class="load-tips" v-if="loadFinish">已加载完毕</div>
+       </scroll-view >
+     
+    </article>
+       <down-load :showModal='showModal' @hideModal='hideModal'></down-load>
+       <!-- <show-load></show-load> -->
+    <!-- <home-menu :menuName="menuName"></home-menu> -->
+  </div>
+</template>
+
+<script>
+import homeMenu from "@/components/homeMenu";
+import articleList from "@/components/articleList";
+import searchBar from "@/components/searchBar";
+import answerList from "@/components/answerList";
+import AttentionTo from "@/components/AttentionTo";
+ import downLoad from "@/components/download";
+  import showLoad from "@/components/showLoad";
+export default {
+  data() {
+    return {
+      menuName: 'index',
+        isShow:0,
+        pageList:'',
+        experts:'',
+        userId:wx.getStorageSync('userId')?wx.getStorageSync('userId'):0,
+        searchCondition: {
+        pageNow: 1,
+        pageSize: 20,
+        },
+           isPageList: false,
+         isLoading: false,
+      loadFinish: false,
+        showModal:false,
+        totalTopHeightStyles2:'',
+        articleStyles2:''
+    };
+  },
+
+  components: {
+    "home-menu": homeMenu,
+    "search-bar": searchBar,
+    "article-list":articleList,
+    "answer-list":answerList,
+    "attention-to": AttentionTo,
+      'down-load':downLoad,
+      'show-load':showLoad
+  },
+  created() {
+     wx.showLoading({
+      title: "加载中"
+    });
+    this.getNewList(this.searchCondition)
+  },
+     async onPullDownRefresh() {
+       this.loadFinish=false
+       if(this.isShow==3){
+          return
+        }  
+     this.searchCondition.pageNow=1
+      wx.showLoading({
+      title: "加载中"
+    });
+       if( this.isShow == 0){
+                this.getNewList(this.searchCondition)
+            }else if( this.isShow == 1){
+                 this.getHotList(this.searchCondition)
+            }else if( this.isShow == 2){
+                 this.getAnswerList(this.searchCondition)
+            }else if( this.isShow == 3){
+               this.getAttention(this.searchCondition)
+            }
+      // 停止下拉刷新
+      wx.stopPullDownRefresh();
+    },
+      onReachBottom() {
+        console.log('aaaaaaa')
+        if(this.isShow==3){
+          return
+        }
+        this.loadFinish=false
+        this.isLoading=true
+    //      wx.showLoading({
+    //   title: "加载中"
+    // });
+        this.searchCondition.pageNow++
+          if( this.isShow == 0){
+                this.getNewList(this.searchCondition)
+            }else if( this.isShow == 1){
+                 this.getHotList(this.searchCondition)
+            }else if( this.isShow == 2){
+                 this.getAnswerList(this.searchCondition)
+            }else if( this.isShow == 3){
+                  this.getAttention(this.searchCondition)
+            }
+        // 到这底部在这里需要做什么事情
+        // this.loadMore();
+      },
+     //转发
+  onShareAppMessage: function (tr) {
+    let that =this;
+    var pages = getCurrentPages() //获取加载的页面
+    var currentPage = pages[pages.length-1] //获取当前页面的对象
+    var url = currentPage.route //当前页面url
+    console.log(url)
+      return {
+        title: '能答', // 转发后 所显示的title
+        path: url, // 相对的路径
+        success: (res)=>{    // 成功后要做的事情
+          console.log(res.shareTickets[0])
+          // console.log
+         
+          wx.getShareInfo({
+            shareTicket: res.shareTickets[0],
+            success: (res)=> { 
+              that.setData({
+                isShow:true
+              }) 
+              console.log(that.setData.isShow)
+             },
+            fail: function (res) { console.log(res) },
+            complete: function (res) { console.log(res) }
+          })
+        },
+        fail: function (res) {
+          // 分享失败
+          console.log(res)
+        }
+      }
+    },
+  methods: {
+    scrollShow(e){
+        console.log(e,'hhh')
+    },
+    upperThreshold(e){
+      console.log(e,'ggggg')
+    },
+     upper(e) {
+    console.log(e)
+  },
+  lower(e) {
+    console.log(e)
+  },
+    totalTopHeightStyles(val){
+   
+       this.totalTopHeightStyles2=val
+    },
+    articleStyles(val){
+         console.log(val,22222222233333)
+      this.articleStyles2=val
+    },
+       hideModal(){
+         this.showModal=false
+      },
+      showModal2(val){
+        console.log(val)
+         this.showModal=true
+      },
+         getDetail(index){
+          wx.showLoading({
+            title: "加载中"
+          });
+          this.loadFinish=false
+           this.searchCondition= {
+            pageNow: 1,
+            pageSize: 20
+          }
+          this.pageList=''
+            if(index == 0){
+                this.isShow = 0;
+                this.getNewList(this.searchCondition)
+            }else if(index == 1){
+                 this.isShow = 1;
+                 this.getHotList(this.searchCondition)
+            }else if(index == 2){
+                 this.isShow = 2;
+                 this.getAnswerList(this.searchCondition)
+            }else if(index == 3){
+              this.isShow = 3;
+                  this.getAttention(this.searchCondition)
+               this.getExpertDatas()
+            }
+         
+        },
+        getNewList(str){
+             this.$http.get('/ForumList/ProblemList',{
+            type: 1,
+          ID: this.userId,
+          pageNow: str.pageNow,
+          pageSize: str.pageSize
+            }).then(response => {
+              this.isLoading=false
+              if(response.data.result.length<str.pageSize){
+                this.loadFinish=true
+              }
+          if (this.pageList != "" && str.pageNow != 1) {
+            this.pageList = this.pageList.concat(response.data.result);
+          } else {
+            this.pageList = response.data.result;
+ 
+          }
+          console.log(this.pageList)
+           wx.hideLoading();
+        })
+        .catch(error => {});
+        },
+         getHotList(str){
+             this.$http.get('/ForumList/ProblemList',{
+            type: 0,
+          ID: this.userId,
+          pageNow: str.pageNow,
+          pageSize: str.pageSize
+            }).then(response => {
+              this.isLoading=false
+              if(response.data.result.length<str.pageSize){
+                this.loadFinish=true
+              }
+          if (this.pageList != "" && str.pageNow != 1) {
+            this.pageList = this.pageList.concat(response.data.result);
+          } else {
+            this.pageList = response.data.result;
+ 
+          }
+          console.log(this.pageList)
+           wx.hideLoading();
+        })
+        .catch(error => {});
+        },
+        getAnswerList(str){
+             this.$http.get('/ForumList/ProblemList',{
+          ID: this.userId,
+          pageNow: str.pageNow,
+          pageSize: str.pageSize
+            }).then(response => {
+              this.isLoading=false
+             if(response.data.result.length<str.pageSize){
+                this.loadFinish=true
+              }
+          if (this.pageList != "" && str.pageNow != 1) {
+            this.pageList = this.pageList.concat(response.data.result);
+          } else {
+            this.pageList = response.data.result;
+ 
+          }
+          console.log(this.pageList)
+           wx.hideLoading();
+        })
+        .catch(error => {});
+        },
+         getAttention(str) {
+       this.$http.get('/ForumList/UserAttentionList',{
+          ID: this.userId,
+          pageNow: str.pageNow,
+          pageSize: str.pageSize
+            }).then(response => {
+              this.isLoading=false
+                if(response.data.result.length<str.pageSize){
+                this.loadFinish=true
+              }
+        if (response.data.result == null||response.data.result.length == 0 ) {
+          this.pageList= "";
+          this.isPageList = true;
+        }
+        if (response.data.status == 1) {
+          if (this.pageList!= "" && str.pageNow != 1) {
+            this.pageList = this.pageList.concat(response.data.result);
+            this.isPageList = false;
+          } else {
+            if (response.data.result.length > 0) {
+              this.isPageList = false;
+            }
+            this.pageList= response.data.result;
+          }
+           wx.hideLoading();
+        }
+      });
+    },
+     getExpertDatas() {
+      this.$http.get('/ForumList/RankRecommend',{
+          type: 2,
+          ID:this.userId,
+          count: 10
+            }).then(response => {
+        if (response.data.status == 1) {
+          if (response.data.result.length > 0) {
+            this.experts = response.data.result;
+          }
+           wx.hideLoading();
+        }
+      });
+    },
+
+  }
+};
+</script>
+
+<style lang="scss">
+.index-contain {
+  .shodow{
+    width: 100%;
+    height: 100vh;
+    background: black;
+    opacity: 0.3;   
+    position: fixed;
+    z-index: 1000;  
+    top:0;
+
+}
+ .modal{
+     width: 60%;
+     height: 36vh;
+     position: fixed;
+     z-index: 99999;
+     background: white;
+     top: 50%;
+     left: 50%;
+     margin-left: -30%;
+     margin-top: -18vh;
+     font-size: 28rpx;
+     border-radius: 10px;
+     div{
+         text-align: center;
+         margin: 20px;
+     }
+     img{
+         width:100px;
+         height:100px;
+     }
+     .colorRed{
+         color:red;
+         margin: 0;
+     }
+     .img{
+         margin-bottom: 0;
+     }
+     .cancelDiv{
+        //  text-align: right;
+        border-top: 1px solid #bababa;
+        color:#fa9813;
+        height:40px;
+        line-height: 40px;
+        margin: 0;
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        font-size: 32rpx;
+     }
+    //  .cancel{
+    //        background: #eaeaea;
+    //        padding: 5px 10px;
+    //        border-radius: 5px;
+    //        margin: 0 0 5px 10px;
+    //        display: inline-block;
+    //        font-size: 28rpx;
+    //    }
+
+ }
+  article{
+    position: absolute;
+    // // top:230rpx;
+    // height: 100%;
+    //     overflow: auto;
+    width: 100%;
+     .showList{
+        height: 100%;
+        overflow: auto;
+      }
+     .load-tips {
+      text-align: center;
+      font-size: 0.3rem;
+      color: #bbb;
+      margin: 0.2rem 0;
+     
+    }
+    // bottom: 0;
+  }
+  .tabs{
+    position: fixed;
+    // top: 120rpx;
+    width: 100%;
+    display: flex;
+    z-index: 100;
+      height: 35px;
+        span{
+          flex: 1;
+            display: inline-block;
+            padding: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            border-bottom: 2px solid transparent;
+            text-align: center;
+            height: 35px;
+            line-height: 35px;
+            background: white;
+        }
+        .active{
+            border-bottom: 2px solid #ff7b00;
+            color: #ff7b00;
+        }
+    }
+  // .search-contain {
+  //   position: fixed;
+  //   top: 0;
+  //   z-index: 1;
+  //   background: #fff;
+  //   height: 40px;
+  //   width: 100%;
+  //   line-height: 40px;
+  //   color: #666;
+  //   font-size: 16px;
+  //   box-shadow: 0px 0px  5px 0px #cfcfcf;
+  //   .search-left {
+  //     background: #f8f8f8;
+  //     height: 30px;
+  //     width: 80%;
+  //     float: left;
+  //     margin-top: 5px;
+  //     margin-left: 5%;
+  //     border-radius: 15px;
+  //     line-height: 30px;
+  //     .iconfont {
+  //       padding-left: 10px;
+  //       float: left;
+  //       width: 10%;
+  //     }
+  //     input {
+  //       height: 30px;
+  //       width: 70%;
+  //       position: absolute;
+  //       margin-left: 10%;
+  //     }
+  //   }
+  //   .search-right {
+  //     width: 15%;
+  //     text-align: center;
+  //     float: left;
+  //     .iconfont {
+  //       font-size: 20px;
+  //     }
+  //   }
+  // }
+
+  .content-title {
+    background: #fff;
+    height: 380px;
+    img {
+      width: 100%;
+      height: 150px;
+    }
+    .content-menu {
+      height: 100px;
+      width: 90%;
+      display: flex;
+      margin: auto;
+      .menu {
+        margin: auto 0;
+        width: 25%;
+        float: left;
+        text-align: center;
+        font-size: 16px;
+        color: #333;
+        img {
+          width: 50px;
+          height: 50px;
+        }
+      }
+    }
+    .content {
+      background: #eae9e4;
+      width: 90%;
+      margin: 0 auto;
+      height: 110px;
+      font-size: 16px;
+      text-align: center;
+      img {
+        width: 50%;
+        height: 80px;
+        float: left;
+        padding: 15px 5%;
+      }
+      .content-char {
+        float: left;
+        width: 30%;
+        height: 80px;
+        padding-top: 20px;
+        padding-left: 3%;
+        line-height: 23px;
+      }
+    }
+  }
+
+  .new-project {
+    margin-top: 10px;
+    background: #fff;
+    width: 90%;
+    padding: 0 5%;
+    .project-title {
+      height: 50px;
+      line-height: 50px;
+      font-size: 18px;
+      font-weight: 600;
+    }
+    .project-content {
+      height: 90px;
+      font-size: 16px;
+      color: #333;
+      border-top: 1px solid #cbcdd0;
+      position: relative;
+      div {
+        height: 60px;
+        margin: auto 0;
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        img{
+          width: 20%;
+          height: 60px;
+          float: left;
+        }
+        p{
+          margin-left: 3%;
+          float: left;
+          width: 77%;
+
+        }
+      }
+    }
+  }
+}
+</style>

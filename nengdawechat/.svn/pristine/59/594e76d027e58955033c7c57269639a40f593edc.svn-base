@@ -1,0 +1,40 @@
+{
+  "pages": [
+    "pages/index/main",
+    "pages/article/main",
+    "pages/message/main",
+    "pages/mine/main"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTextStyle": "black",
+    "enablePullDownRefresh": true
+  },
+  "tabBar": {
+    "color": "#cfcfcf",
+    "backgroundColor": "#fff",
+    "borderStyle": "1px solid #cfcfcf",
+    "selectedColor": "#66C3AA",
+    "list": [
+      {
+        "pagePath": "pages/index/main",
+        "text": "首页",
+        "iconPath": "/static/img/menu/index.png",
+        "selectedIconPath": "/static/img/menu/indexSelect.png"
+      },
+      {
+        "pagePath": "pages/message/main",
+        "text": "消息",
+        "iconPath": "/static/img/menu/classification.png",
+        "selectedIconPath": "/static/img/menu/classificationSelect.png"
+      },
+      {
+        "pagePath": "pages/mine/main",
+        "text": "我",
+        "iconPath": "/static/img/menu/personalCenter.png",
+        "selectedIconPath": "/static/img/menu/personalCenterSelect.png"
+      }
+    ]
+  }
+}

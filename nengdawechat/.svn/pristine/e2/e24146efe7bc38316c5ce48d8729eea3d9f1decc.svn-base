@@ -1,0 +1,33 @@
+<template>
+  <div class="mine-contain">
+222
+    <!-- <home-menu :menuName="menuName"></home-menu> -->
+  </div>
+</template>
+
+<script>
+import homeMenu from "@/components/homeMenu";
+
+
+export default {
+  data() {
+    return {
+      menuName: 'mine'
+    };
+  },
+
+  components: {
+    "home-menu": homeMenu,
+  },
+  created() {},
+  methods: {}
+};
+</script>
+
+<style lang="scss">
+.mine-contain {
+  min-height: 100vh;
+  background: #f3f3f5;
+ 
+}
+</style>

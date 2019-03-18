@@ -1,0 +1,688 @@
+<template>
+    <div class="singleAnswer">
+      <search-bar></search-bar>
+      <article :class="isshare!=true&&isshare!='true'?'isShow':'noShow'">
+            <!-- <div class="Internet" v-show='isInter==false' @click='newLoad()'>网络未连接，点击刷新</div> -->
+          <div style='margin-top:15px;'><p class='topicP'><span @click="toTopic(item.topicID)" v-for="(item,index) in topicList" :key="index" class="topic">{{item.topicName}}</span></p></div>
+          <div class="title"><h4>{{proList.title}}</h4>
+          <div class="answerC"><p class="writeAnswer"><i class="icon-xhd"></i><span @click="toWriteAnswer(proList)">{{writeAnswer}}</span></p><p  @click="toDetail(proList)">查看 <span>{{proList.answerCount}}</span> 个回答<i class="icon-arrow "></i></p></div></div>
+          <div class='introduce' v-if='pageList.IsAnon==true'>
+              <div class="introduceLeft" >
+              <img src="/static/img/user_pic.png" >
+              <div class="userDeatil">
+                  <h5>匿名用户</h5>
+              </div>
+              </div>
+          </div>
+          <div class='introduce' v-else>
+              <div class="introduceLeft" @click='toPersonal(pageList)' style="position:relative">
+              <img :src="(pageList.pic&&pageList.pic!='/forum/common/userPic.jpg')?pageList.pic:'/static/img/user_pic.png'" >
+                  <img v-show='pageList.grade==1' src="/static/img/vip.png" alt="" class='vip' >
+           <img v-show='pageList.grade==5' src="/static/img/guanfang.png" alt="" class='vip' >
+            <img v-show='pageList.grade==6' src="/static/img/center.png" alt="" class='vip' >
+
+              <div class="userDeatil">
+                  <h5>{{pageList.accountnumber}}</h5>
+                  <p class="overHiden">{{pageList.introduce==null?'':pageList.introduce}}</p>
+              </div>
+              </div>
+              <div class="attention" @click="savePerson()" :class="isSavePerson==true?'isSave':'noSave'"><i class="icon-gzwt "></i><span>{{isSavePerson==true?'已关注':'关注'}}</span></div>
+          </div>
+          <div class='answer'>
+               <viewer :images="images">
+                      <wxParse noData='' :content="pageList.remark1" @preview="preview" @navigate="navigate" />
+                      <!-- <img v-for="src in images" :src="src" :key="src" width="300"> -->
+                  </viewer>
+              <!-- <div v-html='pageList.remark1'></div> -->
+              <p style="color:gray;font-size:14px;margin-top:10px;">发布于 {{pageList.datetime}}</p>
+          </div>
+        
+      </article>   
+      <footer>
+          <p @click="save()"><i class=' icon-wshoucang' :class="isAttention==true?'orange':''"></i><span>收藏</span></p>
+          <p  @click="toAllAnswer()"><i class='icon-pl ' ></i><span>评论 {{pageList.revertCount}}</span></p>
+          <p class="noBorder"  @click="supportAnswer(pageList)"><i class='icon-dz ' :class="pageList.IsSupport==1?'orange':''"></i><span>赞 {{pageList.supportCounts}}</span></p>
+      </footer>
+    </div>
+</template>
+<script>
+ import searchBar from "@/components/searchBar";
+import wxParse from 'mpvue-wxparse'
+ import { downLoad} from '@/common.js';
+export default {
+  data () {
+      return {
+          topicName:[],
+             topicID:[],
+          topicList:[],
+          value:'',
+          writeAnswer:'',            
+          titleId: '',
+          revertID: '',
+          userId:wx.getStorageSync('userId')?wx.getStorageSync('userId'):0,
+          pageList: [],
+          isAttention:'',
+          isSavePerson:'',
+          favoriteID:'',
+          dataID:'',
+          proList:'',
+          allAnswer:'',
+          writeAnswer:'',
+          authorID:'',
+          questionPerID:'',
+          myRevertID:'',
+          popupVisible:false,
+          showSave:false,
+          selectValue:'',
+          options:[],
+          isshare:'',
+          isInter:'',
+           images:[],
+           IsAnon:'',
+           supportClick: true
+      }
+  },
+   components: {
+    wxParse,
+    "search-bar": searchBar,
+  },
+  mounted() {
+ this.titleId=this.$root.$mp.query.titleId
+  this.revertID=this.$root.$mp.query.revertID
+   this.authorID=this.$root.$mp.query.authorID
+    this.questionPerID=this.$root.$mp.query.questionPerID
+      this.$http.get('/ForumList/IsRevert',{
+           titleID:this.titleId,
+                 'userID':this.userId
+            }).then((response) => {
+                    if(response.data.status==1   )
+                    {
+                      this.writeAnswer='编辑答案'
+                      this.answer=response.data.result[0].content
+                      this.myRevertID=response.data.result[0].revertID
+                      this.allAnswer=response.data.result[0].remark1;
+                      this.IsAnon=response.data.result[0].IsAnon;
+                    }else{
+                        this.writeAnswer='写答案'
+                        this.answer=''
+                    }
+
+                }).catch((error) => {
+                    
+    })
+    this.getProblem()
+      if(this.flag==0)
+        {
+            this.flag=2;
+        }
+          this.$http.get('UserInfo/IsAttention',{
+             "operatorID": this.userId,
+            "dataID":this.authorID,
+            "flag": 3
+            }).then((response) => {
+        this.isSavePerson=response.data.result
+    })
+        //  setTimeout(()=>{
+        //     var len=document.getElementsByTagName('img').length
+        //     for(var i=0;i<len;i++){
+        //     document.getElementsByTagName('img')[i].addEventListener('click',()=>{
+           
+        //         //  console.log( event.currentTarget.src)
+        //          this.images.push(event.currentTarget.src)
+        //               console.log(this.images)
+        //     })
+        //     }
+        // },1000)
+  },
+  methods:{
+       preview(src, e) {
+      // do something
+        },
+        navigate(href, e) {
+        // do something
+        },
+      toFriend(){
+
+      },
+      saveAll(){
+          if(this.selectValue==''){
+              this.popupVisible=true
+                //  MessageBox({
+                //     title: '提示',
+                //     message: '请选择收藏夹',
+                //     showCancelButton: true
+                // });
+          }else{
+         getAttention(this.userId,this.revertID,this.titleId,5,this.selectValue,this.revertID,this)
+             
+                this.showSave=false
+          }
+      },
+      hideSave(){
+        this.showSave=false
+      },
+       toWriteAnswer (m) {
+           downLoad()
+    
+      },
+    toDetail (m) {
+      var url = "/pages/problemDetail/main?titleId=" + m.titleID+"&flag=1"+"&questionPerID="+m.ID
+      wx.navigateTo({url})
+   } ,
+     toPersonal(m) {
+         var url = "/pages/mine/main?userID=" + m.userID
+        wx.navigateTo({url})
+       
+   } ,
+    toSearch () {
+           this.$router.push({path: '/Search'})  
+      },
+       toAllAnswer(){
+         var url = "/pages/allAnswerList/main?titleId=" + this.titleId+"&flag=1&authorId="+this.authorID+'&revertID='+ this.revertID
+        wx.navigateTo({url})
+      },
+      savePerson () {
+           downLoad()
+         
+      },
+   getAuthorAttention(myID,dataID,titleID,flag,favoriteID,revertID,vm){
+    if( vm.isSavePerson==true ){
+        vm.$http({
+            url: 'UserInfo/attentionDelete',
+            method: 'delete',
+            params: {
+                "operatorID": myID,
+                "dataID":dataID,
+                "flag": flag
+            }
+        })
+        .then(function(res){
+            vm.isSavePerson=false;
+        })
+    }else{
+        vm.$http({
+            url: 'UserInfo/attentionAdd',
+            method: 'put',
+            data: {
+                'attentionID': 0,
+                'titleID': titleID,
+                'operatorID': myID,
+                'otherID': this.authorID,
+                'flag': flag,
+                'favoriteID': favoriteID,
+                'revertID':revertID,
+                'datetime': getNowFormatDate(),
+                'remark1': null,
+                'remark2': null
+            }
+        })
+        .then(function(res){
+            vm.isSavePerson=true;
+        })
+    }
+    },
+     save(){
+     downLoad()
+    },
+      saveDefault (){
+        if(this.isAttention==true)
+        {
+            getAttention(this.userId,this.revertID,0,5,this.favoriteID,this.revertID,this)
+        }else{
+               this.showSave=true
+                 
+         this.options=[]
+          this.$http.get('/UserInfo/Favorite?id=' + this.userId)
+                .then((response) => {
+                    if (response.status === 1) {
+                     
+                        for(let i in response.result)
+                        {
+                            response.result[i].favoriteID=response.result[i].favoriteID.toString()
+                            this.options.push({value:response.result[i].favoriteID,label:response.result[i].filename})
+                        }
+                        console.log(this.options)
+                           this.favoriteData = response.result;
+        
+                    }
+                })
+        //   this.$router.push({path:'favorite',query:{titleId:this.titleId,flag:5,revertId:this.revertID}})
+        }
+       
+      },
+    supportAnswerDefault(m){
+ 
+       var dataID='';
+    var authorID='';
+    if(m.flag=='0')
+    {
+       dataID=m.titleID;
+       authorID=m.ID;
+       m.tag=2;
+    }else{
+        dataID=m.revertID;
+        authorID=m.userID;
+    }
+     support(m,this.userId,dataID,authorID, this)
+    },
+    supportAnswer (m) {
+          downLoad()
+  
+   },
+      returnPre () {
+         this.$router.back(-1);
+        //   this.$router.push('/home')
+      },
+        toTopic(m){
+        this.$router.push({path: '/topic', query: {topicID:m}})
+      },
+    getProblem:function() {
+         this.$http.get('/ForumList/ProblemList',{
+            titleID:this.titleId,
+                 'ID':this.userId
+            }).then((response) => {
+                    if(response.data.status==1){
+                        this.isInter=true
+                       if(response.data.result[0].topicName){
+                      this.topicName = response.data.result[0].topicName.split(",")
+                      this.topicID=response.data.result[0].topicID.split(",")
+                        }
+                        this.topicList=[]
+                        for(var i in this.topicName){
+                            this.topicList.push({topicName:this.topicName[i],topicID:this.topicID[i]})
+                        }
+                        console.log(  response.data.result[0].topicName)
+                         this.proList=response.data.result[0]
+                          this.$http.get('/ForumList/RevertDetail',{
+                             revertID:this.revertID,
+                                'ID':this.userId
+                            }).then((response) => {
+                                this.pageList=response.data.result[0]
+                                    response.data.result[0].datetime=response.data.result[0].datetime.replace('T',' ')
+                                 this.toShare(this.proList.title,this.pageList.content)
+                                //    this.authorID= this.pageList.
+                                }).catch((error) => {
+                                    console.log(error)
+                                
+                    })
+                    }
+                   
+                //    this.title=response.result[0].title
+                //    this.answerCount=response.result[0].answerCount
+            
+                }).catch((error) => {
+                   
+    })
+    }
+  }
+}  
+</script>
+<style lang="scss" >
+@import url("~mpvue-wxparse/src/wxParse.css");
+      .singleAnswer{
+          font-size: 28rpx;
+              .wxParse {
+            word-wrap:break-word;
+            }
+          h4{
+              font-weight: bold;
+          }
+      .vip{
+           width: 0.3rem!important;
+          height: 0.3rem!important;
+          position: absolute;
+          top: 0.4rem;
+          left: 0.5rem;
+      }
+    }
+    .singleAnswer .mint-popup-top{
+        width: 100%;
+        height: 50px;
+        line-height: 50px;
+        text-align: center;
+        color: #fa9813;
+
+    }
+   .singleAnswer header{
+    position: fixed;
+    z-index: 111;
+    background: white;
+    top: 0;
+    height:45px;
+    width: 100%;
+    border-bottom: 5px solid #eaeaea;
+    .icon-bzh_more{
+        width: 10%;
+        text-align: center
+    }
+    div{
+        width:100%;
+        height:100%;
+        display: flex;
+        align-items: center;
+    }
+    p{
+        float: left;
+        height: 100%;
+        width:10%;
+        display: flex;
+        justify-content: center;
+        align-items: center
+    }
+    // .icon-ss{
+    //     position: absolute;
+    //     left: 35%;
+    //     top:15px;
+    // }
+    .icon-ss {
+    position: absolute;
+    left: 1rem;
+    top: 0.3rem;
+}
+ input {
+    font-size: 0.28rem;
+    width: 80%;
+    height: 0.58rem;
+    float: left;
+    border-radius: 15px;
+    padding-left: 1rem;
+     margin-left: 0rem;
+    border: none;
+    color: #888888;
+    background: #f5f5f5;
+    border-radius: 0.29rem;
+}
+    // input{
+    //     font-size: 0.32rem;
+    //     width:77%;
+    //     height: 30px;
+    //     float: left;
+    //     text-align: center;
+    //     border-radius: 5px;
+    //     margin:8px  10px;
+    //     border: 1px solid #d9d9d9;
+    //     background:#eaeaea;
+    // }
+    .icon-arrow_left:before {
+    color: #99999a;
+    }
+   }  
+    .singleAnswer .isShow{
+        top: 45px;
+    }
+    .singleAnswer .noShow{
+        top: 0px;
+    }
+   .singleAnswer article{
+       position: absolute;
+       top:55px;
+       width: 100%;
+    //    margin-bottom: 45px;
+       padding-bottom: 0!important;
+        overflow: auto;
+        bottom: 45px;
+       background: white;
+         .topic{
+           background: #eaeaea;
+           padding: 5px 10px;
+           border-radius: 10px;
+           margin: 0 0 5px 10px;
+           display: inline-block;
+       }
+       .topicP{
+           overflow-x: auto;
+    white-space: nowrap;
+       }
+       ::-webkit-scrollbar {
+        display: none;
+        
+        /* 或者这样
+        width: 0;
+        height: 0;
+        */
+    }
+         .Internet{
+        font-size:0.4rem;
+        top:100px;
+        left:50%;
+        margin-left: -100px;
+        color:gray;
+        position: absolute
+    }
+         .mint-radio-input:checked + .mint-radio-core {
+            background-color: #fa9813;
+            border-color: #fa9813;
+        }
+       .mint-radiolist{
+           height: 200px;
+           overflow-y: scroll;
+           width: 100%;
+           .mint-cell{
+               width: 100%;
+               .mint-cell-wrapper{
+                   width: 100%;
+               }
+           }
+       }
+       .mint-cell-title{
+           width: 100%;
+           .mint-radiolist-label{
+            //  width: 100%;
+           }
+       }
+       .saveBottom{
+           width:100%;
+           position: fixed;
+           bottom: 0;
+           text-align: center;
+           height:0.88rem;
+           line-height: 0.88rem;
+           z-index: 100;
+           border-top: 2px solid #eaeaea;
+           font-size: 0.34rem;
+       }
+          .showShare{
+        width:100%;
+        height:100px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        img{
+            width:50%;
+        }
+        div{
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            align-items: center
+        }
+    }
+    .showSave{
+        width:100%;
+        height: 300px;
+        .saveTop{
+            width:100%;
+            height:50px;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            // p{
+            //     width: 33%;
+            //     // text-align: center;
+            // }
+            p:nth-of-type(1){
+                color:#fa9813;
+                font-size: 0.32rem;
+            }
+             p:nth-of-type(2){
+                color:#444444;
+                font-size: 0.34rem;
+            }
+             p:nth-of-type(3){
+                color:#000;
+                font-size: 0.26rem;
+            }
+        }
+    }
+       .overHiden{
+               overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 1;
+            color:#99999a;
+            font-size: 0.28rem
+            // width:70%;
+       }
+       .isSave{
+           color: #99999a;
+            border: 1px solid #99999a;
+               .icon-gzwt:before{
+               color: #99999a
+           }
+       }
+       .noSave{
+            color: #ee781b;
+             border: 1px solid #ee781b;
+             .icon-gzwt:before{
+               color: #ee781b
+           }
+       }
+       .answer{
+          padding: 15px;
+          box-sizing: border-box;
+          overflow-x: hidden;
+          word-wrap:break-word;
+          div{
+              font-size: 16px;
+              max-width:100%;
+
+          }
+            h1,h2,h3,h4,h5,img,p{
+              margin: 10px 0;
+          }
+          img{
+             max-width:100%;
+              max-height:300px;
+
+          }
+        
+       }
+       .title{
+           padding: 15px;
+           border-bottom: 5px solid #eaeaea;
+           h4{
+           font-size: 16px;
+           word-wrap: break-word;
+           }
+           .answerC{
+               color: #99999a;
+               font-size: 0.28rem;
+               display: flex;
+               justify-content: space-between;
+               align-items: center;
+               margin-top: 10px;
+               .writeAnswer{
+                   border:1px solid #99999a;
+                   border-radius: 4px;
+                //    width: 1.6rem;
+                   height:0.58rem;
+                   display: flex;
+                   justify-content: center;
+                   align-items: center;
+                   border:1px solid #646464;
+                   padding: 0 5px;
+               }
+           }
+           .icon-arrow {
+               margin-left: 5px;
+               font-size: 0.24rem;
+               display: inline;
+           }
+       }
+       .icon-gzwt {
+           padding-right: 5px;
+       }
+       .introduce{
+           display: flex;
+           justify-content: space-between;
+           align-items: center;
+           padding: 15px;
+           width:100%;
+           height: 45px;
+           box-sizing: border-box;
+           border-bottom: 1px solid #eaeaea;
+           .introduceLeft{
+               display: inline-flex;
+            //    justify-content: center;
+               align-items: center;
+               width:70%;
+               span{
+                   font-size: 0.24rem;
+                   color: #99999a
+               }
+           }
+           img{
+               width:32px;
+               height: 32px;
+               border-radius: 50%;
+               margin-right: 10px;
+           }
+       }
+       .attention{
+        //    width:1.3rem;
+           height:30px;
+        //    border: 1px solid #ee781b;
+           border-radius: 5px;
+           display: inline-flex;
+           justify-content: center;
+           align-items: center;
+           font-size: 0.28rem;
+            padding-left: 5px;
+          padding-right: 5px;
+        //    color: #ee781b;
+        //    .icon-gzwt:before{
+        //        color: #ee781b
+        //    }
+       }
+   }
+    .singleAnswer footer{
+        width: 100%;
+        height:45px;
+        background: white;
+        position: fixed;
+        bottom: 0;
+        z-index: 100;
+        display:flex;
+        justify-content: space-between;
+        align-items: center;
+        // padding: 0 30px;
+        box-sizing: border-box; 
+        border-top:1px solid #eaeaea;
+        p{
+            // padding-right: 0.6rem;
+            border-right: 3px solid #eaeaea;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 32%;
+        }
+        .noBorder{
+            border-right: none;
+        }
+        span{
+            padding-left: 10px;
+        }
+     .orange:before{
+    color:#fe9500
+    }
+    }
+    .userDeatil {
+        width: 85%;
+        h5{
+            font-size: 16px;
+        }
+    }
+</style>
+
+

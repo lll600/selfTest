@@ -1,0 +1,56 @@
+@import "/static/css/vendor.wxss";
+
+.message-contain {
+  margin: 30rpx 0;
+  background: #fff;
+  padding: 20rpx;
+}
+.message-contain .more-mes-list {
+  display: flex;
+  align-content: center;
+  justify-content: flex-start;
+  align-items: center;
+}
+.message-contain .more-mes-list .noticeImg {
+  height: 90rpx;
+  width: 110.00000000000001rpx;
+  margin-right: 37rpx;
+}
+.message-contain .more-mes-list .icon-div {
+  margin-right: 37rpx;
+  height: 120rpx;
+}
+.message-contain .more-mes-list .icon-div ._span {
+  display: inline-block;
+  height: 120rpx;
+  line-height: 120rpx;
+  font-size: 90rpx;
+}
+.message-contain .more-mes-list .word-div {
+  width: 100%;
+  height: 98rpx;
+  line-height: 98rpx;
+  padding: 10rpx 0;
+  display: flex;
+  align-content: center;
+  justify-content: space-between;
+  border-bottom: 2rpx solid #f0f0f0;
+}
+.message-contain .more-mes-list .word-div.no-border {
+  border: none;
+}
+.message-contain .more-mes-list .word-div .word {
+  font-size: 32rpx;
+  color: #444;
+}
+.message-contain .more-mes-list .msg-box {
+  font-size: 25rpx;
+  text-align: center;
+  line-height: 30rpx;
+  height: 30rpx;
+  background-color: red;
+  width: 40rpx;
+  color: white;
+  border-radius: 40rpx;
+  margin-top: 35rpx;
+}

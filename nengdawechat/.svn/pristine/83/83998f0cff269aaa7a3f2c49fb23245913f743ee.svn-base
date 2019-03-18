@@ -1,0 +1,15 @@
+<template name="searchBar$99f8a31e">
+  <view class="_div data-v-c5dd7172 search-main-contain">
+    <view class="_div data-v-c5dd7172 search-contain-bg" style=" {{statusBarHeightStyles}}"></view>
+    <view class="_div data-v-c5dd7172 search-contain" style=" {{titleBarHeightStyles}}">
+      <view class="_p data-v-c5dd7172 search-back" bindtap="handleProxy" data-eventid="{{'0'}}" data-comkey="{{$k}}">
+        <view hidden="{{!(hasBack)}}" class="_i data-v-c5dd7172 iconfont icon-arrow_left"></view>
+      </view>
+      <view class="_div data-v-c5dd7172 search-left {{hasBack ? 'has-back' : 'no-back'}}">
+        <view class="_i data-v-c5dd7172 iconfont icon-ss"></view>
+        <input type="text" focus="{{isFocus}}" value="{{keyWords}}" bindinput="handleProxy" placeholder="搜索" bindtap="handleProxy" bindconfirm="handleProxy" disabled="{{!isFocus}}" confirm-type="search" data-eventid="{{'1'}}" data-comkey="{{$k}}"
+          class="_input data-v-c5dd7172" />
+      </view>
+    </view>
+  </view>
+</template>

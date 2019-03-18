@@ -1,0 +1,93 @@
+<import src="searchBar$99f8a31e" />
+<template name="index$af509542">
+  <view class="_div data-v-940b3ce0 Allanswer">
+    <template data="{{...$root[$kk+'0'], $root}}" is="searchBar$99f8a31e"></template>
+    <view class="_article data-v-940b3ce0">
+      <view class="_ul data-v-940b3ce0 list" wx:key="index" key="{{index}}" wx:if="{{flag=='2'}}" wx:for="{{pageList}}" wx:for-index="index" wx:for-item="item">
+        <view class="_li data-v-940b3ce0">
+          <view style="float:right" class="_div data-v-940b3ce0">
+            <view class="_i data-v-940b3ce0 icon-bzh_tc " hidden="{{!(userId==item.result.userID)}}" bindtap="handleProxy" data-eventid="{{'0-'+index}}" data-comkey="{{$k}}"></view>
+          </view>
+          <view class="_div data-v-940b3ce0 pro user">
+            <view bindtap="handleProxy" data-eventid="{{'1-'+index}}" data-comkey="{{$k}}" class="_p data-v-940b3ce0">
+              <image src="{{(item.result.pic&&item.result.pic!='/forum/common/userPic.jpg')?item.result.pic:'/static/img/user_pic.png'}}" alt class="_img data-v-940b3ce0 userPic"></image>
+              <label class="_span data-v-940b3ce0">{{item.result.accountnumber}}</label>
+            </view>
+            <label bindtap="handleProxy" hidden="{{!(isFromComment)}}" data-eventid="{{'2-'+index}}" data-comkey="{{$k}}" class="_span data-v-940b3ce0">前往文章</label>
+          </view>
+          <view class="_div data-v-940b3ce0 pro {{item.result.showAll == true ? 'remark2' : 'remark1'}}" bindtap="handleProxy" data-eventid="{{'3-'+index}}" data-comkey="{{$k}}">
+            <view class="_p data-v-940b3ce0">{{item.result.content}}</view>
+          </view>
+          <view class="_div data-v-940b3ce0 pro operated">
+            <view class="_p data-v-940b3ce0">
+              <view class="_i data-v-940b3ce0 icon-pl  " bindtap="handleProxy" data-eventid="{{'4-'+index}}" data-comkey="{{$k}}"></view>
+              <view class="_i data-v-940b3ce0 icon-dz {{item.result.IsSupport == 1 ? 'orange' : ''}}" bindtap="handleProxy" data-eventid="{{'5-'+index}}" data-comkey="{{$k}}"></view>{{item.result.supportCounts?item.result.supportCounts:0}}</view>
+            <view class="_p data-v-940b3ce0">{{item.result.datetime}}</view>
+          </view>
+        </view>
+        <view wx:key="index2" key="{{index2}}" wx:for="{{item.items}}" wx:for-index="index2" wx:for-item="item2" class="_li data-v-940b3ce0">
+          <view style="float:right" class="_div data-v-940b3ce0">
+            <view class="_i data-v-940b3ce0 icon-bzh_tc " hidden="{{!(userId==item2.ID)}}" bindtap="handleProxy" data-eventid="{{'6-'+index+'-'+index2}}" data-comkey="{{$k}}"></view>
+          </view>
+          <view class="_div data-v-940b3ce0 pro user">
+            <view class="_p data-v-940b3ce0">
+              <image bindtap="handleProxy" src="{{(item2.pic&&item2.pic!='/forum/common/userPic.jpg')?item2.pic:'/static/img/user_pic.png'}}" alt class="_img data-v-940b3ce0 userPic" data-eventid="{{'7-'+index+'-'+index2}}" data-comkey="{{$k}}"></image>
+              <label bindtap="handleProxy" data-eventid="{{'8-'+index+'-'+index2}}" data-comkey="{{$k}}" class="_span data-v-940b3ce0">{{item2.accountnumber}}</label>
+              <label class="_span data-v-940b3ce0 reply">回复</label>
+              <label hidden="{{!(!item.IsAnond)}}" class="_span data-v-940b3ce0">{{item2.revertAccount}}</label>
+              <label hidden="{{!(item.IsAnond)}}" class="_span data-v-940b3ce0">匿名用户</label>
+            </view>
+            <label bindtap="handleProxy" hidden="{{!(isFromComment)}}" data-eventid="{{'9-'+index+'-'+index2}}" data-comkey="{{$k}}" class="_span data-v-940b3ce0">前往文章</label>
+          </view>
+          <view class="_div data-v-940b3ce0 pro {{item2.showAll == true ? 'remark2' : 'remark1'}}" bindtap="handleProxy" data-eventid="{{'10-'+index+'-'+index2}}" data-comkey="{{$k}}">
+            <view class="_p data-v-940b3ce0">{{item2.content}}</view>
+          </view>
+          <view class="_div data-v-940b3ce0 pro operated">
+            <view class="_p data-v-940b3ce0">
+              <view class="_i data-v-940b3ce0 icon-pl  " bindtap="handleProxy" data-eventid="{{'11-'+index+'-'+index2}}" data-comkey="{{$k}}"></view>
+              <view class="_i data-v-940b3ce0 icon-dz {{item2.IsSupport == 1 ? 'orange' : ''}}" bindtap="handleProxy" data-eventid="{{'12-'+index+'-'+index2}}" data-comkey="{{$k}}"></view>{{item2.supportCounts?item2.supportCounts:0}}</view>
+            <view class="_p data-v-940b3ce0">{{item2.datetime}}</view>
+          </view>
+        </view>
+      </view>
+      <view class="_ul data-v-940b3ce0 list" wx:key="index" key="{{index}}" wx:if="{{flag=='1'}}" wx:for="{{pageList2}}" wx:for-index="index" wx:for-item="item">
+        <view class="_li data-v-940b3ce0">
+          <view style="float:right" class="_div data-v-940b3ce0">
+            <view class="_i data-v-940b3ce0 icon-bzh_tc " hidden="{{!(userId==item.ID)}}" bindtap="handleProxy" data-eventid="{{'13-'+index}}" data-comkey="{{$k}}"></view>
+          </view>
+          <view class="_div data-v-940b3ce0 pro user">
+            <view class="_p data-v-940b3ce0">
+              <image hidden="{{!(item.IsAnon&&item.ID==revertPerId)}}" src="/static/img/user_pic.png" alt class="_img data-v-940b3ce0 userPic"></image>
+              <label hidden="{{!(item.IsAnon&&item.ID==revertPerId)}}" class="_span data-v-940b3ce0">匿名用户(答主)</label>
+              <image hidden="{{!(!item.IsAnon||item.ID!=revertPerId)}}" bindtap="handleProxy" src="{{(item.pic&&item.pic!='/forum/common/userPic.jpg')?item.pic:'/static/img/user_pic.png'}}" alt class="_img data-v-940b3ce0 userPic" data-eventid="{{'14-'+index}}"
+                data-comkey="{{$k}}"></image>
+              <label hidden="{{!(!item.IsAnon||item.ID!=revertPerId)}}" bindtap="handleProxy" data-eventid="{{'15-'+index}}" data-comkey="{{$k}}" class="_span data-v-940b3ce0">{{item.accountnumber}}</label>
+              <label class="_span data-v-940b3ce0 reply">回复</label>
+              <label hidden="{{!(!item.IsAnond||item.superiorID!=revertPerId)}}" class="_span data-v-940b3ce0">{{item.revertAccount}}</label>
+              <label hidden="{{!(item.IsAnond&&item.superiorID==revertPerId)}}" class="_span data-v-940b3ce0">匿名用户(答主)</label>
+            </view>
+            <label hidden="{{!(questionPerID)}}" bindtap="handleProxy" data-eventid="{{'16-'+index}}" data-comkey="{{$k}}" class="_span data-v-940b3ce0">前往问题</label>
+          </view>
+          <view class="_div data-v-940b3ce0 pro {{item.showAll == true ? 'remark2' : 'remark1'}}" bindtap="handleProxy" data-eventid="{{'17-'+index}}" data-comkey="{{$k}}">
+            <view class="_p data-v-940b3ce0">{{item.content}}</view>
+          </view>
+          <view class="_div data-v-940b3ce0 pro operated">
+            <view class="_p data-v-940b3ce0">
+              <view class="_i data-v-940b3ce0 icon-pl  " bindtap="handleProxy" data-eventid="{{'18-'+index}}" data-comkey="{{$k}}"></view>
+              <view class="_i data-v-940b3ce0 icon-dz {{item.IsSupport == 1 ? 'orange' : ''}}" bindtap="handleProxy" data-eventid="{{'19-'+index}}" data-comkey="{{$k}}"></view>{{item.supportCounts?item.supportCounts:0}}</view>
+            <view class="_p data-v-940b3ce0">{{item.datetime}}</view>
+          </view>
+        </view>
+      </view>
+      <view class="_p data-v-940b3ce0 revert-folded">共有 {{revertZhedieCount}} 条评论被折叠</view>
+      <view wx:if="{{isHasRevert}}" class="_div data-v-940b3ce0 no-revert">
+        <image src="/static/img/no_data_page.png" alt class="_img data-v-940b3ce0 no-revert-img"></image>
+        <view class="_p data-v-940b3ce0">还未发表评论</view>
+      </view>
+    </view>
+    <view class="_footer data-v-940b3ce0">
+      <input id="release" value="{{value}}" bindinput="handleProxy" placeholder="{{placeholder}}" style="overflow-y: visible;" data-eventid="{{'20'}}" data-comkey="{{$k}}" class="_input data-v-940b3ce0" />
+      <label bindtap="handleProxy" data-eventid="{{'21'}}" data-comkey="{{$k}}" class="_span data-v-940b3ce0">发布</label>
+    </view>
+  </view>
+</template>

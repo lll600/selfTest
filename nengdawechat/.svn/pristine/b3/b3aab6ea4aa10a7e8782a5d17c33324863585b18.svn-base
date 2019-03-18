@@ -1,0 +1,20 @@
+<import src="searchBar$99f8a31e" />
+<import src="ProblemList$1ac3a463" />
+<template name="index$4e4bec5a">
+  <view class="_div data-v-1fb19788 searchDetail-contain">
+    <template data="{{...$root[$kk+'0'], $root}}" is="searchBar$99f8a31e"></template>
+    <view class="_div data-v-1fb19788 tabs">
+      <label bindtap="handleProxy" data-eventid="{{'0'}}" data-comkey="{{$k}}" class="_span data-v-1fb19788 {{nowselected == 0 ? 'active' : ''}}">全部</label>
+      <label bindtap="handleProxy" data-eventid="{{'1'}}" data-comkey="{{$k}}" class="_span data-v-1fb19788 {{nowselected == 2 ? 'active' : ''}}">文章</label>
+      <label bindtap="handleProxy" data-eventid="{{'2'}}" data-comkey="{{$k}}" class="_span data-v-1fb19788 {{nowselected == 3 ? 'active' : ''}}">用户</label>
+      <label bindtap="handleProxy" data-eventid="{{'3'}}" data-comkey="{{$k}}" class="_span data-v-1fb19788 {{nowselected == 1 ? 'active' : ''}}">问题</label>
+    </view>
+    <view class="_article data-v-1fb19788">
+      <view class="_div data-v-1fb19788 page1">
+        <template searchValue="searchValue" wx:if="{{isShowPage}}" data="{{...$root[$kk+'1'], $root}}" is="ProblemList$1ac3a463"></template>
+        <view class="_div data-v-1fb19788 load-tips" hidden="{{!(pageList.length>0&&isLoading)}}">正在加载中…</view>
+        <view class="_div data-v-1fb19788 load-tips" hidden="{{!(pageList.length>0&&loadFinish)}}">已加载完毕</view>
+      </view>
+    </view>
+  </view>
+</template>

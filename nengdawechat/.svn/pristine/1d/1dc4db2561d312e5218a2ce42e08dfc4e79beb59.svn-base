@@ -1,0 +1,302 @@
+<template>
+  <div class="search">
+    <search-bar></search-bar>
+
+    <article>
+      <div v-if="showHot&&isInter!=false">
+        <div class="list hotlist">
+          <h3>热搜</h3>
+          <p
+            class="hotName"
+            v-for="(hot, index) in hotList"
+            :key="index"
+            @click="findAll(hot.keyword)"
+          >{{hot.keyword}}</p>
+        </div>
+        <div class="list">
+          <h3>历史</h3>
+          <ul>
+            <li v-for="(history, index) in historyList" :key="index">
+              <div @click="findAll(history.keyword)">
+                <i class="icon-bzh_lda"></i>
+                <p>{{history.keyword}}</p>
+              </div>
+              <i class="icon-bzh_tc" @click="clearSinglerHistory(history.KeyID)"></i>
+            </li>
+          </ul>
+          <div class="clear" @click="clearHistory()">
+            <i class="icon-shijian"></i>
+            <span>清空历史搜索</span>
+          </div>
+        </div>
+      </div>
+      <ul>
+        <li
+          class="searchAll"
+          v-for="(item, index) in serarchList"
+          :key="index"
+          @click="findAll(item.dataName)"
+        >
+          <p>{{item.dataName}}</p>
+          <span>{{item.chioce}}</span>
+        </li>
+      </ul>
+      <div class="moreSearch" v-if="searchValue!=''&&serarchList" @click="findAll(searchValue)">
+        <p>查看更多搜索记录</p>
+      </div>
+      <div class="moreSearch" v-else-if="searchValue!=''">
+        <p>暂无搜索记录</p>
+      </div>
+    </article>
+  </div>
+</template>
+<script>
+import searchBar from "@/components/searchBar";
+
+export default {
+  components: {
+    "search-bar": searchBar,
+  },
+  data() {
+    return {
+      searchValue: "",
+      userId:wx.getStorageSync('userId')?wx.getStorageSync('userId'):0,
+      serarchList: [],
+      hotList: [],
+      historyList: [],
+      showHot: true,
+      isInter: ""
+    };
+  },
+  mounted() {
+    // if (navigator.onLine) {
+    //   this.isInter = true;
+    // } else {
+    //   this.isInter = false;
+    // }
+    // let focusInput = document.getElementById("searchInput").childNodes[2]
+    //   .childNodes[1].childNodes[0];
+    // //  console.log(focusInput)
+    // focusInput.focus();
+    // document.getElementById('searchInput').addEventListener('keyup',(e)=>{.focus()
+    // //点击go按钮或者搜索按钮查询
+    //    if(e.which == 13)
+    //    {
+    //        alert(11)
+    //     // var code = $("#queryInput").val();
+    //     // if(code==""||code==null){
+    //     // openPopup("请输入追溯码/条形码", 1500);
+    //     // return;
+    //     }
+
+    // })
+    this.getSearchHistory();
+    this.getSearchHot();
+  },
+//   watch: {
+//     searchValue(curVal, oldVal) {
+//       console.log(curVal, oldVal);
+//       this.showHot = curVal == "" ? true : false;
+//       this.getSearch();
+//     }
+//   },
+  methods: {
+    newLoad() {
+      if (navigator.onLine) {
+        this.isInter = true;
+      } else {
+        this.isInter = false;
+      }
+      console.log(this.isInter);
+      location.reload();
+    },
+    getSearchHot() {
+      this.$http
+        .get("/ForumList/SearchHot")
+        .then(response => {
+          let res  = response.data
+          this.hotList = res.result;
+          console.log(this.hotList);
+        })
+        .catch(error => {});
+    },
+    getSearchHistory() {
+      this.$http
+        .get("/UserInfo/SearchHistory", {
+          id: this.userId
+        })
+        .then(response => {
+          let res  = response.data
+          if (res.status == 1) {
+            this.isInter = true;
+            this.historyList = res.result.reverse();
+          }
+        })
+        .catch(error => {});
+    },
+    pushHistory() {
+      var state = {
+        title: "title",
+        url: "/"
+      };
+      window.history.pushState(state, "title", "/search");
+    },
+    findAll(m) {
+      //   m = m.replace(/\\/g,'')
+      //   if(m.trim()){
+      //     this.$router.replace({path: '/SearchDetail', query: {searchValue:m}})
+      //   }else{
+      //     this.$router.replace('/')
+      //   }
+    },
+    clearSinglerHistory(item) {
+      this.$http({
+        method: "delete",
+        url: "/UserInfo/DeleteOneHistory",
+        params: {
+          id: item
+        }
+      })
+        .then(response => {
+          this.getSearchHistory();
+        })
+        .catch(error => {});
+    },
+    clearHistory() {
+      // MessageBox.confirm('确定清空历史搜索?','提示').then(action => {
+      this.$http({
+        method: "delete",
+        url: "/UserInfo/DeleteSearchHistory",
+        params: {
+          id: this.userId
+        }
+      }).then(response => {
+        this.historyList = [];
+      });
+      // }).catch((error) => {
+
+      // })
+    },
+    returnPre() {
+      // this.$router.back(-1)
+    },
+    getSearch: function() {
+      this.$http
+        .get("/ForumList/FindAll_ComboBox", {
+          keyword: this.searchValue,
+          id: this.userId
+        })
+        .then(response => {
+          this.serarchList = response.result;
+          if (this.serarchList.length > 5) {
+            this.serarchList = this.serarchList.splice(0, 5);
+          }
+          console.log(this.serarchList);
+          for (let item = 0; item < this.serarchList.length; item++) {
+            if (this.serarchList[item].flag == 0) {
+              this.serarchList[item].chioce = "话题";
+            } else if (this.serarchList[item].flag == 1) {
+              this.serarchList[item].chioce = "问题";
+            } else if (this.serarchList[item].flag == 2) {
+              this.serarchList[item].chioce = "文章";
+            } else {
+              this.serarchList[item].chioce = "用户";
+            }
+          }
+        })
+        .catch(error => {});
+    }
+  }
+};
+</script>
+<style lang="scss">
+.search article {
+  position: absolute;
+  top: 120rpx;
+  bottom: 0;
+  overflow: auto;
+  width: 100%;
+  background: white;
+  padding: 0 0.3rem 0 0.3rem;
+  box-sizing: border-box;
+  .Internet {
+    font-size: 0.4rem;
+    top: 200rpx;
+    left: 50%;
+    margin-left: -100px;
+    color: gray;
+    position: absolute;
+  }
+  .moreSearch {
+    width: 100%;
+    height: 40px;
+    font-size: 0.28rem;
+    line-height: 40px;
+    text-align: center;
+    color: #99999a;
+  }
+  .list {
+    width: 100%;
+
+    padding-top: 20px;
+    h3 {
+      font-size: 0.34rem;
+    }
+    li {
+      width: 100%;
+      height: 47px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      border-bottom: 3px solid #eaeaea;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-left: 0;
+      margin-top: 0;
+      margin-left: 0;
+      div {
+        width: 80%;
+        display: flex;
+        align-items: center;
+      }
+      p {
+        padding-left: 10px;
+        width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+    }
+  }
+  .clear {
+    height: 40px;
+    line-height: 40px;
+    span {
+      padding-left: 10px;
+    }
+  }
+  .hotName {
+    height: 0.66rem;
+    background: #e3e3e3;
+    margin: 20px 15px 0 0;
+    display: inline-block;
+    line-height: 0.6rem;
+    border-radius: 10px;
+    padding: 0 17px 0 17px;
+  }
+  .searchAll {
+    width: 100%;
+    height: 40px;
+    line-height: 40px;
+    display: flex;
+    justify-content: space-between;
+    p {
+      width: 60%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  }
+}
+</style>

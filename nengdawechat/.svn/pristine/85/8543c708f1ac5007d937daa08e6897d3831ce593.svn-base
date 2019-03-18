@@ -1,0 +1,79 @@
+
+.homeContain .place {
+  height: 110rpx;
+}
+.homeContain .homeMenu {
+  position: fixed;
+  bottom: 0;
+  height: 110rpx;
+  width: 100%;
+  background: #fff;
+  border-top: 2rpx solid #cfcfcf;
+  box-shadow: 0 0  10rpx 0 #cfcfcf;
+}
+.homeContain .homeMenu .menuTitle {
+  width: 20%;
+  float: left;
+  height: 100%;
+  color: #cfcfcf;
+  text-align: center;
+  font-size: 28rpx;
+  margin-top: 20rpx;
+}
+.homeContain .homeMenu .menuTitle ._i {
+  font-size: 40rpx;
+}
+.homeContain .homeMenu .menuActive {
+  color: #ee781b;
+}
+.searchBar .searchFixed {
+  position: fixed;
+  top: 0;
+  z-index: 1;
+}
+.searchBar .isShadow {
+  box-shadow: 0 0 10rpx 0 #cfcfcf;
+}
+.searchBar .searchContain {
+  background: #fff;
+  height: 80rpx;
+  width: 100%;
+  line-height: 80rpx;
+  color: #666;
+  font-size: 32rpx;
+}
+.searchBar .searchContain .search-left {
+  background: #f8f8f8;
+  height: 60rpx;
+  width: 80%;
+  float: left;
+  margin-top: 10rpx;
+  margin-left: 5%;
+  border-radius: 30rpx;
+  line-height: 60rpx;
+  display: flex;
+  align-items: center;
+}
+.searchBar .searchContain .search-left .iconfont {
+  font-size: 32rpx;
+  padding-left: 20rpx;
+}
+.searchBar .searchContain .search-left ._input {
+  height: 60rpx;
+  width: 70%;
+  position: absolute;
+  margin-left: 10%;
+}
+.searchBar .searchContain .search-left .icon-clear {
+  position: absolute;
+  right: 13%;
+  color: #BFBFBF;
+}
+.searchBar .searchContain .search-right {
+  width: 15%;
+  text-align: center;
+  float: left;
+}
+.searchBar .searchContain .search-right .iconfont {
+  font-size: 40rpx;
+}

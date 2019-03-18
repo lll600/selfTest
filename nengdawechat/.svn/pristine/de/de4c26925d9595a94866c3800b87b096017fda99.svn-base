@@ -1,0 +1,25 @@
+<template name="homeMenu$624746de">
+  <view class="_div data-v-54d6748a homeContain">
+    <view class="_div data-v-54d6748a place"></view>
+    <view class="_div data-v-54d6748a homeMenu">
+      <navigator url="/pages/index/main" class="_a data-v-54d6748a">
+        <view class="_div data-v-54d6748a menuTitle {{[menuName == 'index' ? 'menuActive' : '']}}">
+          <view class="_i data-v-54d6748a iconfont icon-home"></view>
+          <label class="_span data-v-54d6748a">首页</label>
+        </view>
+      </navigator>
+      <navigator url="/pages/message/main" class="_a data-v-54d6748a">
+        <view class="_div data-v-54d6748a menuTitle {{[menuName == 'classification' ? 'menuActive' : '']}}">
+          <view class="_i data-v-54d6748a iconfont icon-classification"></view>
+          <view class="_p data-v-54d6748a">消息</view>
+        </view>
+      </navigator>
+      <navigator url="/pages/mine/main" class="_a data-v-54d6748a">
+        <view class="_div data-v-54d6748a menuTitle {{[menuName == 'mine' ? 'menuActive' : '']}}">
+          <view class="_i data-v-54d6748a iconfont icon-personal-center"></view>
+          <view class="_p data-v-54d6748a">我的</view>
+        </view>
+      </navigator>
+    </view>
+  </view>
+</template>

@@ -1,0 +1,15 @@
+<template name="download$66f58152">
+  <view wx:if="{{showModal}}" class="_div data-v-7f0675bc">
+    <view class="_div data-v-7f0675bc shodow"></view>
+    <view class="_div data-v-7f0675bc modal">
+      <view class="_div data-v-7f0675bc">请扫描二维码下载app再操作</view>
+      <view class="_div data-v-7f0675bc img">
+        <image src="/static/img/load.png" alt class="_img data-v-7f0675bc"></image>
+      </view>
+      <view class="_div data-v-7f0675bc colorRed">(仅限安卓端下载)</view>
+      <view class="_div data-v-7f0675bc cancelDiv">
+        <label class="_span data-v-7f0675bc cancel" bindtap="handleProxy" data-eventid="{{'0'}}" data-comkey="{{$k}}">取消</label>
+      </view>
+    </view>
+  </view>
+</template>

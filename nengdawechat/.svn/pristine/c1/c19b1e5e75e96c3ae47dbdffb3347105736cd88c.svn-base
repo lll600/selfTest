@@ -1,0 +1,18 @@
+{
+  "pages": [
+    "pages/index/main",
+    "pages/article/main",
+    "pages/message/main",
+    "pages/mine/main",
+    "pages/problemDetail/main",
+    "pages/search/main",
+    "pages/singleAnswer/main"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTextStyle": "black",
+    "enablePullDownRefresh": true,
+    "navigationStyle": "custom"
+  }
+}

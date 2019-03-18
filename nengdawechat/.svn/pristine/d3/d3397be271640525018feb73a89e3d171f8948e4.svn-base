@@ -1,0 +1,537 @@
+<template>
+    <div class="articleDetail">
+      <search-bar></search-bar>
+      
+      <article  :class="isshare!=true&&isshare!='true'?'isShow':'noShow'">
+             <scroll-view class="showList" scroll-y="true"> 
+         <!-- <div class="Internet" v-show='isInter==false' @click='newLoad()'>网络未连接，点击刷新</div> -->
+          <!-- <div class="topPic"><img :src="pageList.pic" ></div> -->
+          <div class='introduce1'>
+              <div class="introduceLeft" @click='toPersonal(item)'>
+              <img :src="(pageList.userPic&&pageList.userPic!='/forum/common/userPic.jpg')?pageList.userPic:'/static/img/user_pic.png'" >
+             <img v-show='pageList.grade==1' src="/static/img/vip.png" alt="" class='vip' >
+           <img v-show='pageList.grade==5' src="/static/img/guanfang.png" alt="" class='vip' >
+            <img v-show='pageList.grade==6' src="/static/img/center.png" alt="" class='vip' >
+              <div class="line"><h5>{{pageList.accountnumber}}</h5><span>{{pageList.introduce==null?'':pageList.introduce}}</span></div>
+              </div>
+              <div class="attention" @click="savePerson()" :class="isSavePerson==true?'isSave':'noSave'"><i class="icon-gzwt "></i><span>{{isSavePerson==true?'已关注':'关注'}}</span></div>
+          </div>
+          <div style='margin-top:15px;'><p class='topicP'><span @click="toTopic(item.topicID)" v-for="(item,index) in topicList" :key="index" class="topic">{{item.topicName}}</span></p></div>
+           <div class="title"><h4>{{pageList.title}}</h4></div>
+          <div class='answer'>
+               <viewer :images="images">
+                    <wxParse noData='' :content="pageList.describe" @preview="preview" @navigate="navigate" />
+                      <!-- <pre v-html='pageList.describe' style="font-family:微软雅黑;white-space: normal;line-height: 1.8;"></pre> -->
+                      <!-- <img v-for="src in images" :src="src" :key="src" width="300"> -->
+                  </viewer>
+           
+                
+                  <p style="color:gray;font-size:14px;margin-top:10px;">发布于 {{pageList.datetime}}</p>
+          </div>
+          </scroll-view>
+      </article>  
+       
+      <footer>
+          <p @click="save()"><i class='icon-wshoucang' :class="isAttention==true?'orange':''"></i><span>收藏</span></p>
+          <p @click="toAllAnswer()"><i class='icon-pl '></i><span>评论 {{pageList.revertCount}}</span></p>
+          <p class="noBorder"  @click="supportAnswer(pageList)"><i class='icon-dz ' :class="pageList.IsSupport==1?'orange':''"></i><span>赞 {{pageList.supportCounts}}</span></p>
+      </footer>
+      <down-load :showModal='showModal' @hideModal='hideModal'></down-load>
+    </div>
+</template>
+<script>
+//  import { downLoad} from '@/common.js';
+// import { Toast } from 'mint-ui';
+// import { MessageBox } from 'mint-ui';
+// import wx from 'weixin-js-sdk';
+// import { Indicator } from "mint-ui";
+ import downLoad from "@/components/download";
+ import searchBar from "@/components/searchBar";
+import wxParse from 'mpvue-wxparse'
+export default {
+    data(){
+        return {
+          topicName:[],
+          topicID:[],
+          topicList:[],
+          value:'',
+          titleId: 0,
+          authorID:'',
+          userId:wx.getStorageSync('userId')?wx.getStorageSync('userId'):0,
+          pageList: [],
+          isshare:false,
+          showModal:false
+        }
+    },
+ components: {
+    wxParse,
+    "search-bar": searchBar,
+    'down-load':downLoad
+  },
+  mounted(){
+      this.titleId=this.$root.$mp.query.titleId
+       this.authorID=this.$root.$mp.query.authorID
+     this.getProblem()
+  },
+     //转发
+  onShareAppMessage: function (tr) {
+    let that =this;
+    var pages = getCurrentPages() //获取加载的页面
+    var currentPage = pages[pages.length-1] //获取当前页面的对象
+    var url = currentPage.route //当前页面url
+    console.log(url)
+      return {
+        title: '能答', // 转发后 所显示的title
+        path: url, // 相对的路径
+        success: (res)=>{    // 成功后要做的事情
+          console.log(res.shareTickets[0])
+          // console.log
+         
+          wx.getShareInfo({
+            shareTicket: res.shareTickets[0],
+            success: (res)=> { 
+              that.setData({
+                isShow:true
+              }) 
+              console.log(that.setData.isShow)
+             },
+            fail: function (res) { console.log(res) },
+            complete: function (res) { console.log(res) }
+          })
+        },
+        fail: function (res) {
+          // 分享失败
+          console.log(res)
+        }
+      }
+    },
+  methods:{
+      hideModal(){
+         this.showModal=false
+      },
+      toPersonal(item){
+           var url = "/pages/mine/main?userID=" + this.authorID
+            wx.navigateTo({url})
+      },
+      save(){
+        this.showModal=true
+      },
+      savePerson(){
+        this.showModal=true
+      },
+      supportAnswer(){
+          this.showModal=true
+      },
+      preview(src, e) {
+      // do something
+        },
+        navigate(href, e) {
+        // do something
+        },
+    toAllAnswer(){
+      var url = "/pages/allAnswerList/main?titleId=" + this.titleId+"&flag=2&authorId="+this.authorID
+        wx.navigateTo({url})
+         
+     },
+       getProblem() {
+        this.$http.get('/ForumList/ProblemList',{
+            titleID:this.titleId,
+            'ID':this.userId
+            }).then((response) => {
+                     if(response.data.result[0].topicName){
+                      this.topicName = response.data.result[0].topicName.split(",")
+                      this.topicID=response.data.result[0].topicID.split(",")
+                        }
+                        this.topicList=[]
+                        for(var i in this.topicName){
+                            this.topicList.push({topicName:this.topicName[i],topicID:this.topicID[i]})
+                        }
+                   this.pageList=response.data.result[0]
+                //  this.pageList.describe=this.pageList.describe.replace(/ /g,'&nbsp; ')
+                   console.log(this.pageList)
+                    response.data.result[0].datetime=response.data.result[0].datetime.replace('T',' ')
+                        this.toShare(this.pageList.title,this.pageList.remark1?this.pageList.remark1:'')
+                }).catch((error) => {
+                   
+    })
+  }
+  }
+}  
+</script>
+<style lang="scss" >
+@import url("~mpvue-wxparse/src/wxParse.css");
+    .articleDetail{
+   .wxParse {
+
+word-wrap:break-word;
+
+}
+      .vip{
+           width: 0.3rem!important;
+          height: 0.3rem!important;
+          position: absolute;
+          top: 0.53rem;
+          left: 0.65rem;
+      }
+    }
+    .viewer-toolbar,.viewer-title{
+        display: none;
+    }
+    .viewer-backdrop {
+    background-color: rgba(0, 0, 0, 1)!important;
+}
+    .viewer-container{
+        img{
+            // min-width: 100%!important;
+            // margin-left: auto!important;
+        }
+    }
+      .articleDetail .mint-popup-top{
+        width: 100%;
+        height: 50px;
+        line-height: 50px;
+        text-align: center;
+        color: #fa9813;
+
+    }
+   .articleDetail header{
+    position: fixed;
+    z-index: 111;
+    background: white;
+    top: 0;
+    height:45px;
+    width: 100%;
+    border-bottom: 5px solid #eaeaea;
+
+    div{
+        width:100%;
+        height:100%;
+        display: flex;
+        align-items: center;
+    }
+    p{
+        float: left;
+        height: 100%;
+        width:10%;
+        display: flex;
+        justify-content: center;
+        align-items: center
+    }
+    // .icon-ss{
+    //     position: absolute;
+    //     left: 35%;
+    //     top:15px;
+    // }
+    // input{
+    //     font-size: 0.32rem;
+    //     width:80%;
+    //     height: 30px;
+    //     float: left;
+    //     text-align: center;
+    //     border-radius: 5px;
+    //     margin:8px  10px;
+    //     border: 1px solid #d9d9d9;
+    //     background:#eaeaea;
+    // }
+      .icon-ss {
+    position: absolute;
+    left: 1rem;
+    top: 0.3rem;
+    font-size: 32rpx;
+}
+ input {
+    font-size: 0.28rem;
+    width: 80%;
+    height: 0.58rem;
+    float: left;
+    border-radius: 15px;
+    padding-left: 1rem;
+     margin-left: 55rpx;
+    border: none;
+    color: #888888;
+    background: #f5f5f5;
+    border-radius: 0.29rem;
+}
+  .icon-bzh_more{
+        width: 10%;
+        text-align: center
+    }
+    .icon-arrow_left:before {
+    color: #99999a;
+    }
+   }  
+
+     .articleDetail .isShow{
+        top: 45px;
+    }
+    .articleDetail .noShow{
+        top: 0px;
+    }
+   .articleDetail article{
+       position: absolute;
+       top:70px;
+       width: 100%;
+    //    overflow: auto;
+      bottom: 45px;
+       background: white;
+       .showList{
+           height: 100%;
+            overflow: auto;
+       }
+       .topic{
+           background: #eaeaea;
+           padding: 5px 10px;
+           border-radius: 10px;
+           margin: 0 0 5px 10px;
+           display: inline-block;
+           font-size: 28rpx;
+       }
+       .topicP{
+           overflow-x: auto;
+    white-space: nowrap;
+       }
+       ::-webkit-scrollbar {
+        display: none;
+        
+        /* 或者这样
+        width: 0;
+        height: 0;
+        */
+    }
+
+               .Internet{
+        font-size:0.4rem;
+        top:100px;
+        left:50%;
+        margin-left: -100px;
+        color:gray;
+        position: absolute
+    }
+       .mint-radio-input:checked + .mint-radio-core {
+            background-color: #fa9813;
+            border-color: #fa9813;
+        }
+        
+        .mint-radiolist{
+           height: 200px;
+           overflow-y: scroll;
+           width: 100%;
+           .mint-cell{
+               width: 100%;
+               .mint-cell-wrapper{
+                   width: 100%;
+               }
+           }
+       }
+       .mint-cell-title{
+           width: 100%;
+           .mint-radiolist-label{
+            //  width: 100%;
+           }
+       }
+       .saveBottom{
+           width:100%;
+           position: fixed;
+           bottom: 0;
+           text-align: center;
+           height:0.88rem;
+           line-height: 0.88rem;
+           z-index: 100;
+           border-top: 2px solid #eaeaea;
+           font-size: 0.34rem;
+       }
+     .showShare{
+        width:100%;
+        height:100px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        img{
+            width:50%;
+        }
+        div{
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            align-items: center
+        }
+    }
+    .showSave{
+        width:100%;
+        height: 300px;
+        .saveTop{
+            width:100%;
+            height:50px;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            // p{
+            //     width: 33%;
+            //     // text-align: center;
+            // }
+            p:nth-of-type(1){
+                color:#fa9813;
+                font-size: 0.32rem;
+            }
+             p:nth-of-type(2){
+                color:#444444;
+                font-size: 0.34rem;
+            }
+             p:nth-of-type(3){
+                color:#000;
+                font-size: 0.26rem;
+            }
+        }
+    }
+       p{text-indent: 0!important}
+       .line{
+           width:65%;
+           h5{
+             font-size: 16px;
+             font-weight: bold;
+           }
+       }
+       .topPic{
+           width:100%;
+           height:200px;
+           padding: 10px;
+           box-sizing: border-box;
+           img{
+               width:100%;
+               height:100%;
+           }
+       }
+       .isSave{
+           color: #99999a;
+            border: 1px solid #99999a;
+               .icon-gzwt:before{
+               color: #99999a
+           }
+       }
+       .noSave{
+            color: #ee781b;
+             border: 1px solid #ee781b;
+             .icon-gzwt:before{
+               color: #ee781b
+           }
+       }
+       .answer{
+          padding: 10px;
+          box-sizing: border-box;
+          word-wrap:break-word;
+          a{
+              color:#307d74
+          }
+        //   padding-bottom: 60px;
+          div{
+              font-size: 16px;
+               max-width: 99%;
+              float:none;
+          }
+          h1,h2,h3,h4,h5,img,p{
+              margin: 10px 0;
+          }
+          img{
+              max-width:100%;
+            //   max-height:300px;
+            height: inherit;
+
+          }
+        
+       }
+       .title{
+           padding: 10px;
+           border-bottom: 1px solid #eaeaea;
+           h4{
+               font-size: 16px;
+               font-weight: bold;
+           }
+       }
+       .introduce1{
+           display: flex;
+           justify-content: space-between;
+           align-items: center;
+           padding: 10px;
+           width:100%;
+           height: 55px;
+           box-sizing: border-box;
+           border-bottom: 5px solid #eaeaea;
+           .introduceLeft{
+               display: inline-flex;
+            //    justify-content: center;
+               align-items: center;
+               width:75%;
+               span{
+                   font-size: 0.24rem;
+                   color: #99999a;
+                       overflow: hidden;
+                    text-overflow: ellipsis;
+                    display: -webkit-box;
+                    -webkit-box-orient: vertical;
+                    -webkit-line-clamp: 1;
+               }
+           }
+           img{
+               width:32px;
+               height: 32px;
+               border-radius: 50%;
+               margin-right: 10px;
+           }
+       }
+       .attention{
+        //    width:1.3rem;
+           height:30px;
+        //    border: 1px solid #ee781b;
+        border-radius: 5px;
+           display: inline-flex;
+           justify-content: center;
+           align-items: center;
+           font-size: 0.28rem;
+           padding-left: 5px;
+           padding-right: 5px;
+        //    color: #ee781b;
+        //    .icon-gzwt:before{
+        //        color: #ee781b
+        //    }
+       }
+   }
+    .articleDetail footer{
+        width: 100%;
+        height:45px;
+        background: white;
+        position: fixed;
+        bottom: 0;
+        z-index: 100;
+        display:flex;
+        justify-content: space-between;
+        align-items: center;
+        // padding: 0 30px;
+        box-sizing: border-box; 
+        border-top:1px solid #eaeaea;
+        font-size: 32rpx;
+        p{
+               border-right: 3px solid #eaeaea;
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-pack: center;
+            -ms-flex-pack: center;
+            justify-content: center;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            align-items: center;
+            width: 32%;
+        }
+        .noBorder{
+            border-right: none;
+        }
+        span{
+            padding-left: 10px;
+        }
+     .orange:before{
+    color:#fe9500
+    }
+    }
+</style>
+
+

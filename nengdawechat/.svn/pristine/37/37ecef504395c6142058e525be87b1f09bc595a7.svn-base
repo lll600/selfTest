@@ -1,0 +1,53 @@
+<template name="articleList$3eaa7351">
+  <view class="_div data-v-4cc081e7 articleList">
+    <view class="_ul data-v-4cc081e7 list" wx:key="index" key="{{index}}" wx:if="{{pageList}}" wx:for="{{pageList}}" wx:for-index="index" wx:for-item="item">
+      <view class="_li data-v-4cc081e7">
+        <view class="_div data-v-4cc081e7 delete-div" wx:if="{{isShowDelete}}">
+          <label class="_span data-v-4cc081e7"></label>
+          <label class="_span data-v-4cc081e7 icon-close" bindtap="handleProxy" data-eventid="{{'0-'+index}}" data-comkey="{{$k}}"></label>
+        </view>
+        <view class="_div data-v-4cc081e7 art">
+          <view class="_div data-v-4cc081e7 articleLeft">
+            <view class="_div data-v-4cc081e7 pro">
+              <view class="_div data-v-4cc081e7 title-line">
+                <label bindtap="handleProxy" class="_span data-v-4cc081e7 changeColor" data-eventid="{{'1-'+index}}" data-comkey="{{$k}}">{{item.title}}</label>
+              </view>
+            </view>
+            <view class="_div data-v-4cc081e7 pro remark1">
+              <rich-text bindtap="handleProxy" class="_p data-v-4cc081e7 changeColor" nodes="{{item.remark1}}" data-eventid="{{'2-'+index}}" data-comkey="{{$k}}"></rich-text>
+            </view>
+          </view>
+          <view class="_div data-v-4cc081e7 articleRight" wx:if="{{item.pic&&item.pic!='null'}}" bindtap="handleProxy" data-eventid="{{'3-'+index}}" data-comkey="{{$k}}">
+            <image src="{{item.pic}}" class="_img data-v-4cc081e7"></image>
+          </view>
+        </view>
+        <view class="_div data-v-4cc081e7 operate" wx:if="{{!item.revertID&&item.flag==1}}">暂无回答</view>
+        <view class="_div data-v-4cc081e7 operate" wx:if="{{item.revertID||item.flag!=1}}">
+          <view class="_div data-v-4cc081e7  user" wx:if="{{item.revertIsAnon=='True'||item.revertIsAnon==true||item.revertIsAnon==1}}">
+            <view class="_div data-v-4cc081e7 user-img">
+              <image src="../../static/img/user_pic.png" alt class="_img data-v-4cc081e7 userPic"></image>
+            </view>
+            <view class="_div data-v-4cc081e7 user-name">
+              <label class="_span data-v-4cc081e7">{{'匿名用户'}}</label>
+            </view>
+          </view>
+          <view class="_div data-v-4cc081e7  user" bindtap="handleProxy" wx:else data-eventid="{{'4-'+index}}" data-comkey="{{$k}}">
+            <view class="_div data-v-4cc081e7 user-img" style="position:relative">
+              <image src="{{(item.userPic&&item.userPic!='/forum/common/userPic.jpg')?item.userPic:'../../static/img/user_pic.png'}}" alt class="_img data-v-4cc081e7 userPic"></image>
+              <image wx:if="{{item.grade==1}}" src="../../static/img/vip.png" alt class="_img data-v-4cc081e7 vip"></image>
+              <image wx:if="{{item.grade==5}}" src="../../static/img/guanfang.png" alt class="_img data-v-4cc081e7 vip"></image>
+              <image wx:if="{{item.grade==6}}" src="../../static/img/center.png" alt class="_img data-v-4cc081e7 vip"></image>
+            </view>
+            <view class="_div data-v-4cc081e7 user-name">
+              <label class="_span data-v-4cc081e7 user-name-style">{{item.accountnumber}}</label>
+            </view>
+          </view>
+          <view class="_p data-v-4cc081e7 marRight">
+            <label class="_span data-v-4cc081e7 spanPad" bindtap="handleProxy" data-eventid="{{'5-'+index}}" data-comkey="{{$k}}">{{item.revertCount?item.revertCount:0}} {{'评论'}}</label>·
+            <label class="_span data-v-4cc081e7 spanPad" bindtap="handleProxy" data-eventid="{{'6-'+index}}" data-comkey="{{$k}}">{{item.supportCounts?item.supportCounts:0}} {{'赞'}}</label>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</template>

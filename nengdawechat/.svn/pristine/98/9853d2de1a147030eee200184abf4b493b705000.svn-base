@@ -1,0 +1,26 @@
+<import src="searchBar$99f8a31e" />
+<import src="articleList$7ed6a04c" />
+<import src="answerList$1015afc6" />
+<import src="AttentionTo$eb2e1a82" />
+<import src="download$66f58152" />
+<template name="index$cfd4d418">
+  <view class="_div data-v-5319b3b6 index-contain">
+    <template bindtotalTopHeightStyles="handleProxy" bindarticleStyles="handleProxy" data-eventid="{{'0'}}" data-comkey="{{$k}}" data="{{...$root[$kk+'0'], $root}}" is="searchBar$99f8a31e"></template>
+    <view class="_div data-v-5319b3b6 tabs" style=" {{totalTopHeightStyles2}}">
+      <label bindtap="handleProxy" data-eventid="{{'1'}}" data-comkey="{{$k}}" class="_span data-v-5319b3b6 {{isShow == 0 ? 'active' : ''}}">最新</label>
+      <label bindtap="handleProxy" data-eventid="{{'2'}}" data-comkey="{{$k}}" class="_span data-v-5319b3b6 {{isShow == 1 ? 'active' : ''}}">热门</label>
+      <label bindtap="handleProxy" data-eventid="{{'3'}}" data-comkey="{{$k}}" class="_span data-v-5319b3b6 {{isShow == 2 ? 'active' : ''}}">回答</label>
+      <label bindtap="handleProxy" data-eventid="{{'4'}}" data-comkey="{{$k}}" class="_span data-v-5319b3b6 {{isShow == 3 ? 'active' : ''}}">关注</label>
+    </view>
+    <view class="_article data-v-5319b3b6" style=" {{articleStyles2}}">
+      <scroll-view class="_scroll-view data-v-5319b3b6 showList" scroll-y="true">
+        <template wx:if="{{isShow==0||isShow==1}}" data="{{...$root[$kk+'3'], $root}}" is="articleList$7ed6a04c"></template>
+        <template wx:elif="{{isShow==2}}" data="{{...$root[$kk+'1'], $root}}" is="answerList$1015afc6"></template>
+        <template wx:elif="{{isShow==3}}" bindsearchCondition2="handleProxy" bindisattention="handleProxy" bindshowModal2="handleProxy" data-eventid="{{'5'}}" data-comkey="{{$k}}" data="{{...$root[$kk+'2'], $root}}" is="AttentionTo$eb2e1a82"></template>
+        <view class="_div data-v-5319b3b6 load-tips" wx:if="{{isLoading}}">正在加载中…</view>
+        <view class="_div data-v-5319b3b6 load-tips" wx:if="{{loadFinish}}">已加载完毕</view>
+      </scroll-view>
+    </view>
+    <template bindhideModal="handleProxy" data-eventid="{{'6'}}" data-comkey="{{$k}}" data="{{...$root[$kk+'4'], $root}}" is="download$66f58152"></template>
+  </view>
+</template>

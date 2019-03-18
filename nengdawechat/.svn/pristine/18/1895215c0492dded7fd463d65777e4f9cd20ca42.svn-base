@@ -1,0 +1,147 @@
+@import "/static/css/vendor.wxss";
+
+@charset "UTF-8";
+.Allanswer {
+  font-size: 28rpx;
+}
+.Allanswer ._h4 {
+  font-weight: bold;
+}
+.Allanswer ._header {
+  position: fixed;
+  z-index: 111;
+  background: white;
+  top: 0;
+  min-height: 90rpx;
+  width: 100%;
+  border-bottom: 10rpx solid #eaeaea;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #99999a;
+  padding: 0 20rpx;
+  box-sizing: border-box;
+}
+.Allanswer ._article {
+  position: absolute;
+  padding-bottom: 80rpx;
+  top: 120rpx;
+  height: 100;
+  width: 100%;
+}
+.Allanswer ._article .reply {
+  margin: 0 20rpx;
+}
+.Allanswer ._article .list .pro ._span {
+  font-size: 26rpx;
+  font-family: 'Helvetica Neue';
+  font-weight: bold;
+}
+.Allanswer ._article .revert-folded {
+  text-align: center;
+  color: #307d74;
+  margin: 20rpx 0;
+  font-size: 28rpx;
+}
+.Allanswer ._article .showAll {
+  color: #99999a;
+  font-size: 26rpx;
+  padding-left: 20rpx;
+}
+.Allanswer ._article .userPic {
+  width: 40rpx;
+  height: 40rpx;
+  border-radius: 50%;
+  margin-right: 20rpx;
+}
+.Allanswer ._article ._li {
+  background: white;
+  margin-top: 20rpx;
+  padding-left: 20rpx;
+  padding-right: 20rpx;
+  box-sizing: border-box;
+  padding-bottom: 20rpx;
+}
+.Allanswer ._article ._li .pro {
+  padding-top: 20rpx;
+  width: 100%;
+}
+.Allanswer ._article ._li .operated {
+  display: flex;
+  justify-content: space-between;
+  color: #99999a;
+  font-size: 28.000000000000004rpx;
+}
+.Allanswer ._article ._li .operated ._i {
+  display: inline;
+}
+.Allanswer ._article ._li .remark1 {
+  max-height: 160rpx;
+  font-size: 28rpx;
+  word-break: break-all;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
+  overflow: hidden;
+}
+.Allanswer ._article ._li .remark2 {
+  font-size: 28rpx;
+}
+.Allanswer ._article ._li .remark2 ._p {
+  word-wrap: break-word;
+  word-break: normal;
+}
+.Allanswer ._article ._li .icon-dz,
+.Allanswer ._article ._li .icon-pl {
+  padding-right: 20rpx;
+}
+.Allanswer ._article .mint-loadmore-top {
+  margin-top: -100rpx;
+}
+.Allanswer ._article .orange:before {
+  color: #fe9500;
+}
+.Allanswer ._article .no-revert {
+  padding-top: 50%;
+  text-align: center;
+  font-size: 30rpx;
+}
+.Allanswer ._article .no-revert .no-revert-img {
+  width: 26%;
+  height: 200rpx;
+  margin-bottom: 40rpx;
+}
+.Allanswer ._footer {
+  background: white;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.Allanswer ._footer ._input {
+  font-size: 28.000000000000004rpx;
+  width: 80%;
+  height: 60rpx;
+  float: left;
+  border-radius: 10rpx;
+  margin: 16rpx 20rpx;
+  border: 2rpx solid #d9d9d9;
+  background: #eaeaea;
+  line-height: 60rpx;
+  outline: none;
+}
+.Allanswer .user {
+  display: flex;
+  -webkit-box-pack: justify;
+  -webkit-box-align: center;
+  align-items: center;
+  justify-content: space-between;
+}
+.Allanswer .user ._p {
+  display: inline-flex;
+  align-items: center;
+}

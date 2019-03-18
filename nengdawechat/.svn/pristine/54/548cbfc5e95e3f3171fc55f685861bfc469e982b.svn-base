@@ -1,0 +1,38 @@
+<import src="searchBar$99f8a31e" />
+<import src="AnswerDetailList$1828d952" />
+<import src="download$66f58152" />
+<template name="index$32c1f11c">
+  <view class="_div data-v-177c98ba problemDetail">
+    <template data="{{...$root[$kk+'0'], $root}}" is="searchBar$99f8a31e"></template>
+    <view class="_article data-v-177c98ba {{isshare != true && isshare != 'true' ? 'isShow' : 'noShow'}}">
+      <view class="_div data-v-177c98ba proDescibe">
+        <view style="margin-top:15px;" class="_div data-v-177c98ba">
+          <view class="_p data-v-177c98ba topicP">
+            <label bindtap="handleProxy" wx:key="index" key="{{index}}" class="_span data-v-177c98ba topic" data-eventid="{{'0-'+index}}" data-comkey="{{$k}}" wx:for="{{topicList}}" wx:for-index="index" wx:for-item="item">{{item.topicName}}</label>
+          </view>
+        </view>
+        <view class="_div data-v-177c98ba pro">
+          <view class="_h4 data-v-177c98ba">{{pageList.title}}</view>
+        </view>
+        <view class="_div data-v-177c98ba pro proTitle">
+          <rich-text nodes="{{pageList.describe}}" class="_p data-v-177c98ba describe"></rich-text>
+        </view>
+        <view class="_div data-v-177c98ba pro">
+          <view class="_div data-v-177c98ba invite">
+            <label bindtap="handleProxy" data-eventid="{{'1'}}" data-comkey="{{$k}}" class="_span data-v-177c98ba">{{pageList.attentionCount}} 关注</label>
+            <view class="_p data-v-177c98ba inviteAnswer" bindtap="handleProxy" data-eventid="{{'2'}}" data-comkey="{{$k}}">邀请回答</view>
+          </view>
+        </view>
+      </view>
+      <view class="_div data-v-177c98ba attention">
+        <view bindtap="handleProxy" data-eventid="{{'3'}}" data-comkey="{{$k}}" class="_p data-v-177c98ba {{isAttention == true ? 'orange' : ''}}">
+          <view class="_i data-v-177c98ba icon-gzwt  {{isAttention == true ? 'orange' : ''}}"></view>{{isAttention==true?'取消关注':'关注问题'}}</view>
+        <view class="_div data-v-177c98ba"></view>
+        <view bindtap="handleProxy" data-eventid="{{'4'}}" data-comkey="{{$k}}" class="_p data-v-177c98ba">
+          <view class="_i data-v-177c98ba icon-xhd  "></view>{{writeAnswer}}</view>
+      </view>
+      <template data="{{...$root[$kk+'1'], $root}}" is="AnswerDetailList$1828d952"></template>
+      <template bindhideModal="handleProxy" data-eventid="{{'5'}}" data-comkey="{{$k}}" data="{{...$root[$kk+'2'], $root}}" is="download$66f58152"></template>
+    </view>
+  </view>
+</template>

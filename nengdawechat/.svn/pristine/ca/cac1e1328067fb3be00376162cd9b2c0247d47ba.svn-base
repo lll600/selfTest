@@ -1,0 +1,6 @@
+@import "/static/css/vendor.wxss";
+
+.mine-contain {
+  min-height: 100vh;
+  background: #f3f3f5;
+}

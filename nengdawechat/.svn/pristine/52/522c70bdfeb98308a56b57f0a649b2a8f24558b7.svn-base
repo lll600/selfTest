@@ -1,0 +1,42 @@
+<import src="wxParse$693f1608" />
+<template name="AnswerDetailList$1828d952">
+  <view class="_div data-v-cbc3047e answerDetailList">
+    <view class="_div data-v-cbc3047e answerTotal">
+      <label class="_span data-v-cbc3047e">{{total}} 回答</label>
+      <label ref="menu" bindtap="handleProxy" class="_span data-v-cbc3047e sortType" data-eventid="{{'2'}}" data-comkey="{{$k}}">
+        <label hidden="{{!(defaultShow)}}" class="_span data-v-cbc3047e">{{sortType}}
+          <view class="_i data-v-cbc3047e icon-arrow_left"></view>
+        </label>
+        <view class="_div data-v-cbc3047e submenu" hidden="{{!(isShowMenu)}}">
+          <view bindtap="handleProxy" data-eventid="{{'0'}}" data-comkey="{{$k}}" class="_p data-v-cbc3047e">按时间</view>
+          <view bindtap="handleProxy" data-eventid="{{'1'}}" data-comkey="{{$k}}" class="_p data-v-cbc3047e">按热度</view>
+        </view>
+      </label>
+    </view>
+    <view class="_ul data-v-cbc3047e list" wx:key="index" key="{{index}}" wx:for="{{pageList}}" wx:for-index="index" wx:for-item="item">
+      <view class="_li data-v-cbc3047e">
+        <view wx:if="{{item.result.IsAnon=='True'||item.result.IsAnon==true}}" class="_div data-v-cbc3047e pro user niming">
+          <image src="../../static/img/user_pic.png" alt class="_img data-v-cbc3047e userPic"></image>
+          <label class="_span data-v-cbc3047e">匿名用户</label>
+        </view>
+        <view style="position:relative;display:flex" wx:else class="_div data-v-cbc3047e pro user" bindtap="handleProxy" data-eventid="{{'3-'+index}}" data-comkey="{{$k}}">
+          <image src="{{(item.result.pic&&item.result.pic!='/forum/common/userPic.jpg')?item.result.pic:'../../static/img/user_pic.png'}}" alt class="_img data-v-cbc3047e userPic"></image>
+          <image hidden="{{!(item.result.grade==1)}}" src="../../static/img/vip.png" alt class="_img data-v-cbc3047e vip"></image>
+          <image hidden="{{!(item.result.grade==5)}}" src="../../static/img/guanfang.png" alt class="_img data-v-cbc3047e vip"></image>
+          <image hidden="{{!(item.result.grade==6)}}" src="../../static/img/center.png" alt class="_img data-v-cbc3047e vip"></image>
+          <label class="_span data-v-cbc3047e">{{item.result.accountnumber}}</label>
+        </view>
+        <view class="_div data-v-cbc3047e pro content" bindtap="handleProxy" data-eventid="{{'5-'+index}}" data-comkey="{{$k}}">
+          <template noData bindpreview="handleProxy" bindnavigate="handleProxy" data-eventid="{{'4-'+index}}" data-comkey="{{$k}}" data="{{...$root[$kk+'0-'+index], $root}}" is="wxParse$693f1608"></template>
+        </view>
+        <view class="_div data-v-cbc3047e pro lastLine">
+          <view class="_p data-v-cbc3047e">
+            <label class="_span data-v-cbc3047e">{{item.items.length}} 评论</label>·
+            <label class="_span data-v-cbc3047e">{{item.result.supportCounts}} 赞</label>
+          </view>
+          <view class="_p data-v-cbc3047e">{{item.result.datetime}}</view>
+        </view>
+      </view>
+    </view>
+  </view>
+</template>

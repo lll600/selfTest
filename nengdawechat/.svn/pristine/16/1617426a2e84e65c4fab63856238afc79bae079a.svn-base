@@ -1,0 +1,5 @@
+<template name="index$52c35d82">
+  <view class="_div data-v-4e1d542a">
+    <web-view src="https://sj.qq.com/myapp/detail.htm?apkName=com.yichuan.nengda" class="_web-view data-v-4e1d542a"></web-view>
+  </view>
+</template>

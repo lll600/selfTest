@@ -1,0 +1,622 @@
+<template>
+  <div class="mine-contain">
+      <search-bar></search-bar>
+        <div class="mine-top">
+          <div class="personal-top">
+            <div class="personal-header">
+                <div class="avator" style="position:relative">
+                    <img :src="(userMessage.pic&&userMessage.pic!='/forum/common/userPic.jpg')?userMessage.pic:'/static/img/user_pic.png'" />
+                    <img v-show='userMessage.grade==1' src="/static/img/vip.png" alt="" class='vip' >
+                    <img v-show='userMessage.grade==5' src="/static/img/guanfang.png" alt="" class='vip' >
+                    <img v-show='userMessage.grade==6' src="/static/img/center.png" alt="" class='vip' >
+                </div>
+                <div class="message">
+                    <div class="account-name">{{userMessage.accountnumber}}</div>
+                    <div class="school-major">
+                        <span class="school" v-if="userMessage.remark1">{{userMessage.remark1}}</span>
+                    </div>
+                    <div class="fan-follow">
+                        <span class="fan"><span>粉丝</span><span>{{userMessage.fansCount == null? 0: userMessage.fansCount}}</span></span>
+                        <span class="follow" ><span>关注</span><span>{{userMessage.at_user_Count == null?0:userMessage.at_user_Count}}</span></span>
+                    </div>
+                </div>
+            </div>
+            <div class="other-operate-div">
+                <div class="operate-btn edit-mes" @click="followPeople">
+                     <span class="icon-gzwt"></span>
+                    关注
+                </div>
+                <div class="operate-btn more-mes" @click='toMessage'>
+                    <span class="icon-sx"></span>
+                    私信
+                </div>
+                <div class="operate-btn more-mes" @click="toShowModel">
+                    <span class="icon-gdgrxx"></span>
+                    更多
+                </div>
+            </div>
+            <div class="account-mes">
+                <div class="mes-list">
+                    <p class="number">{{userMessage.answerCount==null?0:userMessage.answerCount}}</p>
+                    <p class="title">回答</p>
+                </div>
+                <div class="mes-list">
+                    <p class="number">{{userMessage.problemCount==null?0:userMessage.problemCount}}</p>
+                    <p class="title">提问</p>
+                </div>
+                <div class="mes-list">
+                    <p class="number">{{userMessage.essayCount==null?0:userMessage.essayCount}}</p>
+                    <p class="title">文章</p>
+                </div>
+            </div>
+        </div>
+        <div class="personal-content">
+            <div class="more-mes-list">
+                <div class="icon-div">
+                    <span class="icon-hdddz">
+                        <span class="path1"></span><span class="path2"></span>
+                    </span>
+                </div>
+                <div class="word-div">
+                    <div class="word">获得的点赞</div>
+                    <div class="number">
+                        <span class="number-span">{{userMessage.supportCount==null?0:userMessage.supportCount}}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="more-mes-list">
+                <div class="icon-div">
+                    <span class="icon-hddpl">
+                        <span class="path1"></span><span class="path2"></span><span class="path3"></span>
+                    </span>
+                </div>
+                <div class="word-div" >
+                    <div class="word">获得的评论</div>
+                    <div class="number">
+                        <span class="number-span">{{userMessage.revertAllCount==null?0:userMessage.revertAllCount}}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="more-mes-list">
+                <div class="icon-div">
+                    <span class="icon-wdgz">
+                        <span class="path1"></span><span class="path2"></span><span class="path3"></span>
+                    </span>
+                </div>
+                <div class="word-div">
+                    <div class="word">他的关注</div>
+                    <div class="number">
+                        <span class="number-span">{{hisCon}}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="more-mes-list">
+                <div class="icon-div">
+                    <span class="icon-sc">
+                        <span class="path1"></span><span class="path2"></span>
+                    </span>
+                </div>
+                <div class="word-div no-border">
+                    <div class="word">收藏</div>
+                    <div class="number">
+                        <span class="number-span">{{userMessage.collectCount==null?0:userMessage.collectCount}}</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+      </div>
+       <div v-show="isShowMoreMes" class="more-message">
+            <div class="mask" v-if="isShowMoreMes"  @click="isShowMoreMes = false"></div>
+            <div class="message" v-if="isShowMoreMes">
+                <span class="icon-close" @click="isShowMoreMes = false"></span>
+                <ul>
+                    <li>
+                        <p class="key">邮箱</p>
+                        <p class="value">{{userMessage.email?userMessage.email:'暂无'}}</p>
+                    </li>
+                    <li>
+                        <p class="key">个性签名</p>
+                        <p class="value">{{userMessage.remark1?userMessage.remark1:'暂无'}}</p>
+                    </li>
+                    <li>
+                        <p class="key">技能</p>
+                        <span v-if='userMessage.ISquality && userMessage.quality!=null'>
+                          <p class="value" v-for="(item, index) in userMessage.quality" :key="index">{{item}}</p>
+                       </span>
+                         <p class="value" v-else>暂无</p>
+                    </li>
+                    <li>
+                        <p class="key">居住地</p>
+                        <p class="value">{{userMessage.reside && userMessage.ISreside?userMessage.reside:'暂无'}}</p>
+                    </li>
+                    <li>
+                        <p class="key">职业经历</p>
+                        <span v-if='userMessage.IScorporation && userMessage.corporation!=null && userMessage.corporation.length!=0'>
+                        <p class="value"  v-for="(item, index) in userMessage.corporation" :key="index">{{item}}</p>
+                        </span>
+                         <p class="value" v-else>暂无</p>
+                    </li>
+                    <li>
+                        <p class="key">教育经历</p>
+                         <span v-if='userMessage.ISeducation && userMessage.education!=null && userMessage.education.length!=0'>
+                        <p class="value" v-for="(item, index) in userMessage.education" :key="index">{{item}}</p>
+                        </span>
+                         <p class="value" v-else>暂无</p>
+                    </li>
+                    <li>
+                        <p class="key">简介</p>
+                        <p class="value introduction">{{userMessage.ISsummary && userMessage.summary?userMessage.summary:'暂无'}}</p>
+                    </li>
+                </ul>
+            </div>
+       </div>
+  </div>
+</template>
+
+<script>
+import homeMenu from "@/components/homeMenu";
+import searchBar from "@/components/searchBar";
+import { downLoad } from "../../common.js"
+export default {
+  data() {
+    return {
+      menuName: 'mine',
+      userMessage: {},
+      isShowMoreMes: false,
+      isMe: false,
+      userId:0,
+      isFollow: false,
+      pageList:'',
+      totalCount:'',
+      isshare:'',
+      isInter:'',
+      banbeng:0,
+      hisCon:0,
+      animationData:{}
+    };
+  },
+
+  components: {
+    "home-menu": homeMenu,
+    "search-bar": searchBar,
+  },
+  onLoad(option){
+      this.userId = option.userID?option.userID:(wx.getStorageSync('userId')?wx.getStorageSync('userId'):0)
+      this.getUserInfo()
+  },
+  created() {
+    console.log('jiazaijiazaijiazai');
+    // this.getUserInfo()
+  },
+     //转发
+  onShareAppMessage: function (tr) {
+    let that =this;
+    var pages = getCurrentPages() //获取加载的页面
+    var currentPage = pages[pages.length-1] //获取当前页面的对象
+    var url = currentPage.route //当前页面url
+    console.log(url)
+      return {
+        title: '能答', // 转发后 所显示的title
+        path: url, // 相对的路径
+        success: (res)=>{    // 成功后要做的事情
+          console.log(res.shareTickets[0])
+          // console.log
+         
+          wx.getShareInfo({
+            shareTicket: res.shareTickets[0],
+            success: (res)=> { 
+              that.setData({
+                isShow:true
+              }) 
+              console.log(that.setData.isShow)
+             },
+            fail: function (res) { console.log(res) },
+            complete: function (res) { console.log(res) }
+          })
+        },
+        fail: function (res) {
+          // 分享失败
+          console.log(res)
+        }
+      }
+    },
+  methods: {
+     toShowModel(){
+         this.isShowMoreMes = true
+     }, 
+    getUserInfo(){
+      this.$http.get('UserInfo/UserInfo',{ID: this.userId,operaterID:wx.getStorageSync('userId')?wx.getStorageSync('userId'):0})
+      .then(res => {
+          if(res.data.status == 1){
+            this.hisCon = Number(res.data.result[0].at_pro_Count) + Number(res.data.result[0].at_user_Count)
+
+              if(res.data.result[0].quality!=null&&res.data.result[0].quality!=''){//格式化技能
+                  let arr=[];
+                  let quality=JSON.parse(res.data.result[0].quality);
+                  for(let i=0;i<quality.length;i++){
+                      let iarr=quality[i].quality[0]+'-'+quality[i].quality[1]+(quality[i].describe==''?'':'-'+quality[i].describe);
+                      arr.push(iarr);
+                  }
+                  res.data.result[0].quality=arr;
+              }
+              if(res.data.result[0].education!=null&&res.data.result[0].education!=''){//格式化教育经历
+                  let arr=[];
+                  let education=JSON.parse(res.data.result[0].education);
+                  for(let i=0;i<education.length;i++){
+                      let iarr='';
+                      if(education[i].stime&&education[i].etime){
+                          iarr=education[i].stime+'-'+education[i].etime+' '+education[i].companyName+'-'+education[i].job;
+                      }else if(education[i].stime&&!education[i].etime){
+                          iarr=education[i].stime+'-至今'+' '+education[i].companyName+'-'+education[i].job;
+                      }else{
+                          iarr=education[i].companyName+'-'+education[i].job;
+                      }
+                      arr.push(iarr);
+                  }
+                  res.data.result[0].education=arr;
+              }
+              if(res.data.result[0].corporation!=null&&res.data.result[0].corporation!=''){//格式化职业经历
+                  let arr=[];
+                  let corporation=JSON.parse(res.data.result[0].corporation);
+                  for(let i=0;i<corporation.length;i++){
+                      let iarr='';
+                      if(corporation[i].stime&&corporation[i].etime){
+                          iarr=corporation[i].stime+'-'+corporation[i].etime+' '+corporation[i].companyName+'-'+corporation[i].job;
+                      }else if(corporation[i].stime&&!corporation[i].etime){
+                          iarr=corporation[i].stime+'-至今'+' '+corporation[i].companyName+'-'+corporation[i].job;
+                      }else{
+                          iarr=corporation[i].companyName+'-'+corporation[i].job;
+                      }
+                      arr.push(iarr);
+                  }
+                  res.data.result[0].corporation=arr;
+                }
+              if(res.data.result[0].reside!=null&&res.data.result[0].reside!=''){//格式化所在地
+                  let str='';
+                  let reside=JSON.parse(res.data.result[0].reside);
+                  for(let i=0;i<reside.length;i++){
+                      str+=reside[i]+" ";
+                  }
+                  res.data.result[0].reside=str;
+              }
+              this.userMessage = res.data.result[0];
+
+              for(let i in this.userMessage.quality){
+                  let qualityArr = this.userMessage.quality[i].split('-')
+                  let qualityStr = ''
+                  for(let i in qualityArr){
+                      if(qualityArr[i] && qualityArr[i]!='undefined'){
+                          qualityStr += qualityArr[i] + '-'
+                      }
+                  }
+                  this.userMessage.quality[i] = qualityStr.slice(0, qualityStr.length-1)
+              }
+              console.log(this.userMessage,'res.data.result[0]res.data.result[0]');
+              
+              // this.toShare(this.userMessage.accountnumber+'的能答个人主页','')
+          }
+        })
+     },
+    followPeople(){
+        downLoad()
+        // wx.showModal({
+        //     title: '提示',
+        //     content: '请前去应用宝下载能答APP',
+        //     success(res) {
+        //         if (res.confirm) {
+        //             var url = '../goApp/main'
+        //             toApp(url)
+        //         } else if (res.cancel) {
+        //            console.log('用户点击取消')
+        //         }
+        //     }
+        // })
+    },
+    toMessage(){
+        downLoad()
+        // wx.showModal({
+        //     title: '提示',
+        //     content: '请前去应用宝下载能答APP',
+        //     success(res) {
+        //         if (res.confirm) {
+        //             var url = '../goApp/main'
+        //             toApp(url)
+        //         } else if (res.cancel) {
+        //            console.log('用户点击取消')
+        //         }
+        //     }
+        // })
+    },
+  }
+};
+</script>
+
+<style lang="scss">
+.mine-contain {
+  background: #f3f3f5;
+  .mine-top{
+    position: fixed;
+    top: 120rpx;
+    width: 100%;
+  }
+  .vip{
+    width: 0.4rem!important;
+    height: 0.4rem!important;
+    position: absolute;
+    top: 1.1rem;
+    left: 1.2rem;
+  }
+    .personal-top{
+        background: #fff;
+        padding-top: 20px;
+        .personal-header{
+            padding: 0.1rem 0.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            .avator{
+                width: 1.52rem;
+                height: 1.52rem;
+                margin-right: 0.34rem;
+                img{
+                    width: 1.52rem;
+                    height: 1.52rem;
+                    border-radius: 50%; 
+                }
+            }
+            .message{
+                .account-name{
+                    font-size: 0.44rem;
+                    color:#464646;
+                }
+                .school-major{
+                    margin: 5px 0;
+                    font-size: 0.22rem;
+                    color:#878787;
+                }
+                .fan-follow{
+                    font-size: 0;
+                    color:#a5a5a5;
+                    span{
+                        display: inline-block;
+                        vertical-align: middle;
+                        font-size: 0.28rem;
+                        &.fan{
+                            margin-right: 0.2rem;
+                        }
+                        span{
+                            margin-right: 0.05rem;
+                        }
+                    }
+                }
+            }
+        }
+        .operate-div{
+            margin: 0.25rem 0.2rem 0 0.2rem;
+            padding-bottom: 0.25rem; 
+            border-bottom: 1px solid #f0f0f0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            .operate-btn{
+                width: 3.4rem;
+                text-align: center;
+                height: 0.72rem;
+                line-height: 0.72rem;
+                font-size: 0.28rem;
+                color: #464646;
+                border: 1px solid #464646;
+                border-radius: 0.36rem;
+                span{
+                    display: inline-block;
+                    vertical-align: middle;
+                }
+            }
+        }
+        .other-operate-div{
+            margin: 0.25rem 0.2rem 0 0.2rem;
+            padding-bottom: 0.25rem; 
+            border-bottom: 1px solid #f0f0f0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            .operate-btn{
+                width: 2.22rem;
+                text-align: center;
+                height: 0.72rem;
+                line-height: 0.72rem;
+                font-size: 0.28rem;
+                color: #464646;
+                border: 1px solid #464646;
+                border-radius: 0.36rem;
+                span{
+                    display: inline-block;
+                    vertical-align: middle;
+                }
+            }
+            .small-operate-btn{
+                width: 1.5rem;
+                text-align: center;
+                height: 0.72rem;
+                line-height: 0.72rem;
+                font-size: 0.28rem;
+                color: #464646;
+                border: 1px solid #464646;
+                border-radius: 0.36rem;
+                span{
+                    display: inline-block;
+                    vertical-align: middle;
+                }
+            }
+        }
+        .account-mes{
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.25rem 0.2rem;
+            .mes-list{
+                width: 30%;
+                p{
+                    text-align: center;
+                    &.number{
+                        font-size: 0.34rem;
+                        color: #222;
+                    }
+                    &.title{
+                        font-size: 0.22rem;
+                        color: #878787;
+                    }
+                }
+            }
+        }
+    }
+        .personal-content{
+            margin: 0.3rem 0;
+            // height: 6.83rem;
+            .disFlex{
+                display: flex;
+                align-items: center;
+                -webkit-box-align: left;
+                margin-bottom: 10px;
+                .imgPic{
+                    width:0.42rem;
+                    height:0.42rem;
+                    border-radius: 50%;
+
+                }
+                
+            }
+            .cHeader{
+                  font-size: 0.24rem;
+            }
+            .cTitile{
+                font-size: 0.28rem;
+            }
+            .cArticle{
+                 overflow: hidden;
+                text-overflow: ellipsis;
+                display: -webkit-box;
+                -webkit-box-orient: vertical;
+                -webkit-line-clamp: 3;
+                font-size: 0.24rem;
+            }
+            ul li{
+                // width:100%;
+                height:auto;
+                background: white;
+                margin-top: 10px;
+                padding: 10px;
+                box-sizing: border-box;
+                p{
+                  color:#99999e
+                }
+                .dateTime{
+                    font-size: 0.26rem
+                }
+                .zan{
+                    padding-left: 0.2rem;
+                }
+                .operateP{
+                    font-size: 0.28rem;
+                   
+                }
+            }
+            .cFooter{
+                  justify-content: space-between; 
+                   margin-bottom: 0!important;
+                   font-size: 0.28rem;
+                }
+            .more-mes-list{
+                display: flex;
+                background: #fff;
+                align-content: center;
+                justify-content: flex-start;
+                padding: 0 0.2rem;
+                .icon-div{
+                    width: 0.48rem;
+                    height: 0.98rem;
+                    margin-right: 0.37rem;
+                    img{
+                        height: 0.48rem;
+                        margin-top: 0.25rem;
+                    }
+                    span{
+                        height: 0.98rem;
+                        line-height: 0.98rem;
+                        font-size: 0.48rem;
+                    }
+                }
+            }
+            .word-div{
+                width: 100%;
+                height: 0.96rem;
+                line-height: 0.96rem;
+                display: flex;
+                align-content: center;
+                justify-content: space-between;
+                border-bottom: 1px solid #f0f0f0;
+                &.no-border{
+                    border:none;
+                }
+                .word{
+                    font-size: 0.3rem;
+                    color: #444;
+                }
+                .number{
+                    font-size: 0.3rem;
+                    color: #888;
+                    .number-span{
+                        margin-right: 0.15rem;
+                    }
+                }
+            }
+        }
+        .more-message{
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            .mask{
+                min-height: calc(100vh);
+                background: rgba(0,0,0,0.5);
+            }
+            .message{
+                background: #fff;
+                padding: 0.32rem;
+                box-sizing: border-box;
+                height: 480px;
+                overflow-y: auto;
+                width: 100%;
+                position: relative;
+                span.icon-close{
+                    color: #464646;
+                    position: absolute;
+                    font-size: 0.4rem;
+                    top:0.1rem;
+                    right:0.25rem;
+                }
+                ul li{
+                    margin-top: 0.45rem;
+                    p.key{
+                        font-size: 0.28rem;
+                        color: #464646;
+                        font-weight: 700;
+                    }
+                    p.value{
+                        font-size: 0.28rem;
+                        color: #545454;
+                        margin-top: 0.1rem
+                    }
+                    p.introduction{
+                        word-wrap: break-word;
+                        word-break: break-all;
+                        overflow: hidden;
+                    }
+                    &:first-child{
+                        margin-top: 0;
+                    }
+                }
+            }
+        }
+}       
+</style>

@@ -1,0 +1,554 @@
+@import "/static/css/vendor.wxss";
+/**
+ * author: Di (微信小程序开发工程师)
+ * organization: WeAppDev(微信小程序开发论坛)(http://weappdev.com)
+ *         垂直微信小程序开发交流社区
+ *
+ * github地址: https://github.com/icindy/wxParse
+ *
+ * for: 微信小程序富文本解析
+ * detail : http://weappdev.com/t/wxparse-alpha0-1-html-markdown/184
+ */
+
+.wxParse {
+  width: 100%;
+  font-family: Helvetica, sans-serif;
+  font-size: 14px;
+  color: #666;
+  line-height: 1.8;
+}
+
+.wxParse view {
+  word-break: hyphenate;
+}
+
+.wxParse .inline {
+  display: inline;
+  margin: 0;
+  padding: 0;
+}
+
+.wxParse .div {
+  margin: 0;
+  padding: 0;
+}
+
+.wxParse .h1 {
+  font-size: 2em;
+  margin: 0.67em 0;
+}
+.wxParse .h2 {
+  font-size: 1.5em;
+  margin: 0.83em 0;
+}
+.wxParse .h3 {
+  font-size: 1.17em;
+  margin: 1em 0;
+}
+.wxParse .h4 {
+  margin: 1.33em 0;
+}
+.wxParse .h5 {
+  font-size: 0.83em;
+  margin: 1.67em 0;
+}
+.wxParse .h6 {
+  font-size: 0.67em;
+  margin: 2.33em 0;
+}
+
+.wxParse .h1,
+.wxParse .h2,
+.wxParse .h3,
+.wxParse .h4,
+.wxParse .h5,
+.wxParse .h6,
+.wxParse .b,
+.wxParse .strong {
+  font-weight: bolder;
+}
+
+.wxParse .p {
+  margin: 1em 0;
+}
+
+.wxParse .i,
+.wxParse .cite,
+.wxParse .em,
+.wxParse .var,
+.wxParse .address {
+  font-style: italic;
+}
+
+.wxParse .pre,
+.wxParse .tt,
+.wxParse .code,
+.wxParse .kbd,
+.wxParse .samp {
+  font-family: monospace;
+}
+.wxParse .pre {
+  overflow: auto;
+  background: #f5f5f5;
+  padding: 8px;
+  white-space: pre;
+  margin: 1em 0px;
+}
+.wxParse .code {
+  display: inline;
+  background: #f5f5f5;
+}
+
+.wxParse .big {
+  font-size: 1.17em;
+}
+
+.wxParse .small,
+.wxParse .sub,
+.wxParse .sup {
+  font-size: 0.83em;
+}
+
+.wxParse .sub {
+  vertical-align: sub;
+}
+.wxParse .sup {
+  vertical-align: super;
+}
+
+.wxParse .s,
+.wxParse .strike,
+.wxParse .del {
+  text-decoration: line-through;
+}
+
+.wxParse .strong,
+.wxParse .s {
+  display: inline;
+}
+
+.wxParse .a {
+  color: deepskyblue;
+}
+
+.wxParse .video {
+  text-align: center;
+  margin: 10px 0;
+}
+
+.wxParse .video-video {
+  width: 100%;
+}
+
+.wxParse .img {
+  display: inline-block;
+  width: 0;
+  height: 0;
+  max-width: 100%;
+  overflow: hidden;
+}
+
+.wxParse .blockquote {
+  margin: 5px 0;
+  padding: 10px 0 10px 10px;
+  font-family: Courier, Calibri, "\5B8B\4F53";
+  background: #f5f5f5;
+  border-left: 3px solid #dbdbdb;
+}
+.wxParse .blockquote .p {
+  margin: 0;
+}
+
+.wxParse .ul, .wxParse .ol {
+  display: block;
+  margin: 1em 0;
+  padding-left: 16px;
+}
+.wxParse .ol {
+  list-style-type: disc;
+}
+.wxParse .ol {
+  list-style-type: decimal;
+}
+.wxParse .li {
+  display: list-item;
+  align-items: baseline;
+  text-align: match-parent;
+}
+.wxParse .ul .ul, .wxParse .ol .ul {
+  list-style-type: circle;
+}
+.wxParse .ol .ol .ul, .wxParse .ol .ul .ul, .wxParse .ul .ol .ul, .wxParse .ul .ul .ul {
+    list-style-type: square;
+}
+
+.wxParse .u {
+  text-decoration: underline;
+}
+.wxParse .hide {
+  display: none;
+}
+.wxParse .del {
+  display: inline;
+}
+.wxParse .figure {
+  overflow: hidden;
+}
+
+.wxParse .table {
+  width: 100%;
+}
+.wxParse .thead, .wxParse .tfoot, .wxParse .tr {
+  display: flex;
+  flex-direction: row;
+}
+.wxParse .tr {
+  width:100%;
+  display: flex;
+  border-right: 1px solid #e0e0e0;
+  border-bottom: 1px solid #e0e0e0;
+}
+.wxParse .th,
+.wxParse .td {
+  display: flex;
+  width: 580px;
+  overflow: auto;
+  flex: 1;
+  padding: 5px;
+  border-left: 1px solid #e0e0e0;
+}
+.wxParse .td:last {
+  border-top: 1px solid #e0e0e0;
+}
+.wxParse .th {
+  background: #f0f0f0;
+  border-top: 1px solid #e0e0e0;
+}
+
+@charset "UTF-8";
+.singleAnswer {
+  font-size: 28rpx;
+}
+.singleAnswer .wxParse {
+  word-wrap: break-word;
+}
+.singleAnswer ._h4 {
+  font-weight: bold;
+}
+.singleAnswer .vip {
+  width: 30rpx !important;
+  height: 30rpx !important;
+  position: absolute;
+  top: 40rpx;
+  left: 50rpx;
+}
+.singleAnswer .mint-popup-top {
+  width: 100%;
+  height: 100rpx;
+  line-height: 100rpx;
+  text-align: center;
+  color: #fa9813;
+}
+.singleAnswer ._header {
+  position: fixed;
+  z-index: 111;
+  background: white;
+  top: 0;
+  height: 90rpx;
+  width: 100%;
+  border-bottom: 10rpx solid #eaeaea;
+}
+.singleAnswer ._header .icon-bzh_more {
+  width: 10%;
+  text-align: center;
+}
+.singleAnswer ._header ._div {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+.singleAnswer ._header ._p {
+  float: left;
+  height: 100%;
+  width: 10%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.singleAnswer ._header .icon-ss {
+  position: absolute;
+  left: 100rpx;
+  top: 30rpx;
+}
+.singleAnswer ._header ._input {
+  font-size: 28.000000000000004rpx;
+  width: 80%;
+  height: 57.99999999999999rpx;
+  float: left;
+  border-radius: 30rpx;
+  padding-left: 100rpx;
+  margin-left: 0rpx;
+  border: none;
+  color: #888888;
+  background: #f5f5f5;
+  border-radius: 28.999999999999996rpx;
+}
+.singleAnswer ._header .icon-arrow_left:before {
+  color: #99999a;
+}
+.singleAnswer .isShow {
+  top: 90rpx;
+}
+.singleAnswer .noShow {
+  top: 0;
+}
+.singleAnswer ._article {
+  position: absolute;
+  top: 110rpx;
+  width: 100%;
+  padding-bottom: 0 !important;
+  overflow: auto;
+  bottom: 90rpx;
+  background: white;
+}
+.singleAnswer ._article .topic {
+  background: #eaeaea;
+  padding: 10rpx 20rpx;
+  border-radius: 20rpx;
+  margin: 0 0 10rpx 20rpx;
+  display: inline-block;
+}
+.singleAnswer ._article .topicP {
+  overflow-x: auto;
+  white-space: nowrap;
+}
+.singleAnswer ._article ::-webkit-scrollbar {
+  display: none;
+}
+.singleAnswer ._article .Internet {
+  font-size: 40rpx;
+  top: 200rpx;
+  left: 50%;
+  margin-left: -200rpx;
+  color: gray;
+  position: absolute;
+}
+.singleAnswer ._article .mint-radio-input:checked + .mint-radio-core {
+  background-color: #fa9813;
+  border-color: #fa9813;
+}
+.singleAnswer ._article .mint-radiolist {
+  height: 400rpx;
+  overflow-y: scroll;
+  width: 100%;
+}
+.singleAnswer ._article .mint-radiolist .mint-cell {
+  width: 100%;
+}
+.singleAnswer ._article .mint-radiolist .mint-cell .mint-cell-wrapper {
+  width: 100%;
+}
+.singleAnswer ._article .mint-cell-title {
+  width: 100%;
+}
+.singleAnswer ._article .saveBottom {
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  text-align: center;
+  height: 88rpx;
+  line-height: 88rpx;
+  z-index: 100;
+  border-top: 4rpx solid #eaeaea;
+  font-size: 34rpx;
+}
+.singleAnswer ._article .showShare {
+  width: 100%;
+  height: 200rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.singleAnswer ._article .showShare ._img {
+  width: 50%;
+}
+.singleAnswer ._article .showShare ._div {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+.singleAnswer ._article .showSave {
+  width: 100%;
+  height: 600rpx;
+}
+.singleAnswer ._article .showSave .saveTop {
+  width: 100%;
+  height: 100rpx;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+.singleAnswer ._article .showSave .saveTop ._p:nth-of-type(1) {
+  color: #fa9813;
+  font-size: 32rpx;
+}
+.singleAnswer ._article .showSave .saveTop ._p:nth-of-type(2) {
+  color: #444444;
+  font-size: 34rpx;
+}
+.singleAnswer ._article .showSave .saveTop ._p:nth-of-type(3) {
+  color: #000;
+  font-size: 26rpx;
+}
+.singleAnswer ._article .overHiden {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  color: #99999a;
+  font-size: 28.000000000000004rpx;
+}
+.singleAnswer ._article .isSave {
+  color: #99999a;
+  border: 2rpx solid #99999a;
+}
+.singleAnswer ._article .isSave .icon-gzwt:before {
+  color: #99999a;
+}
+.singleAnswer ._article .noSave {
+  color: #ee781b;
+  border: 2rpx solid #ee781b;
+}
+.singleAnswer ._article .noSave .icon-gzwt:before {
+  color: #ee781b;
+}
+.singleAnswer ._article .answer {
+  padding: 30rpx;
+  box-sizing: border-box;
+  overflow-x: hidden;
+  word-wrap: break-word;
+}
+.singleAnswer ._article .answer ._div {
+  font-size: 32rpx;
+  max-width: 100%;
+}
+.singleAnswer ._article .answer ._h1,
+.singleAnswer ._article .answer ._h2,
+.singleAnswer ._article .answer ._h3,
+.singleAnswer ._article .answer ._h4,
+.singleAnswer ._article .answer ._h5,
+.singleAnswer ._article .answer ._img,
+.singleAnswer ._article .answer ._p {
+  margin: 20rpx 0;
+}
+.singleAnswer ._article .answer ._img {
+  max-width: 100%;
+  max-height: 600rpx;
+}
+.singleAnswer ._article .title {
+  padding: 30rpx;
+  border-bottom: 10rpx solid #eaeaea;
+}
+.singleAnswer ._article .title ._h4 {
+  font-size: 32rpx;
+  word-wrap: break-word;
+}
+.singleAnswer ._article .title .answerC {
+  color: #99999a;
+  font-size: 28.000000000000004rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20rpx;
+}
+.singleAnswer ._article .title .answerC .writeAnswer {
+  border: 2rpx solid #99999a;
+  border-radius: 8rpx;
+  height: 57.99999999999999rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 2rpx solid #646464;
+  padding: 0 10rpx;
+}
+.singleAnswer ._article .title .icon-arrow {
+  margin-left: 10rpx;
+  font-size: 24rpx;
+  display: inline;
+}
+.singleAnswer ._article .icon-gzwt {
+  padding-right: 10rpx;
+}
+.singleAnswer ._article .introduce {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 30rpx;
+  width: 100%;
+  height: 90rpx;
+  box-sizing: border-box;
+  border-bottom: 2rpx solid #eaeaea;
+}
+.singleAnswer ._article .introduce .introduceLeft {
+  display: inline-flex;
+  align-items: center;
+  width: 70%;
+}
+.singleAnswer ._article .introduce .introduceLeft ._span {
+  font-size: 24rpx;
+  color: #99999a;
+}
+.singleAnswer ._article .introduce ._img {
+  width: 64rpx;
+  height: 64rpx;
+  border-radius: 50%;
+  margin-right: 20rpx;
+}
+.singleAnswer ._article .attention {
+  height: 60rpx;
+  border-radius: 10rpx;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 28.000000000000004rpx;
+  padding-left: 10rpx;
+  padding-right: 10rpx;
+}
+.singleAnswer ._footer {
+  width: 100%;
+  height: 90rpx;
+  background: white;
+  position: fixed;
+  bottom: 0;
+  z-index: 100;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-sizing: border-box;
+  border-top: 2rpx solid #eaeaea;
+}
+.singleAnswer ._footer ._p {
+  border-right: 6rpx solid #eaeaea;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 32%;
+}
+.singleAnswer ._footer .noBorder {
+  border-right: none;
+}
+.singleAnswer ._footer ._span {
+  padding-left: 20rpx;
+}
+.singleAnswer ._footer .orange:before {
+  color: #fe9500;
+}
+.userDeatil {
+  width: 85%;
+}
+.userDeatil ._h5 {
+  font-size: 32rpx;
+}

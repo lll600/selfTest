@@ -1,0 +1,512 @@
+@import "/static/css/vendor.wxss";
+/**
+ * author: Di (微信小程序开发工程师)
+ * organization: WeAppDev(微信小程序开发论坛)(http://weappdev.com)
+ *         垂直微信小程序开发交流社区
+ *
+ * github地址: https://github.com/icindy/wxParse
+ *
+ * for: 微信小程序富文本解析
+ * detail : http://weappdev.com/t/wxparse-alpha0-1-html-markdown/184
+ */
+
+.wxParse {
+  width: 100%;
+  font-family: Helvetica, sans-serif;
+  font-size: 14px;
+  color: #666;
+  line-height: 1.8;
+}
+
+.wxParse view {
+  word-break: hyphenate;
+}
+
+.wxParse .inline {
+  display: inline;
+  margin: 0;
+  padding: 0;
+}
+
+.wxParse .div {
+  margin: 0;
+  padding: 0;
+}
+
+.wxParse .h1 {
+  font-size: 2em;
+  margin: 0.67em 0;
+}
+.wxParse .h2 {
+  font-size: 1.5em;
+  margin: 0.83em 0;
+}
+.wxParse .h3 {
+  font-size: 1.17em;
+  margin: 1em 0;
+}
+.wxParse .h4 {
+  margin: 1.33em 0;
+}
+.wxParse .h5 {
+  font-size: 0.83em;
+  margin: 1.67em 0;
+}
+.wxParse .h6 {
+  font-size: 0.67em;
+  margin: 2.33em 0;
+}
+
+.wxParse .h1,
+.wxParse .h2,
+.wxParse .h3,
+.wxParse .h4,
+.wxParse .h5,
+.wxParse .h6,
+.wxParse .b,
+.wxParse .strong {
+  font-weight: bolder;
+}
+
+.wxParse .p {
+  margin: 1em 0;
+}
+
+.wxParse .i,
+.wxParse .cite,
+.wxParse .em,
+.wxParse .var,
+.wxParse .address {
+  font-style: italic;
+}
+
+.wxParse .pre,
+.wxParse .tt,
+.wxParse .code,
+.wxParse .kbd,
+.wxParse .samp {
+  font-family: monospace;
+}
+.wxParse .pre {
+  overflow: auto;
+  background: #f5f5f5;
+  padding: 8px;
+  white-space: pre;
+  margin: 1em 0px;
+}
+.wxParse .code {
+  display: inline;
+  background: #f5f5f5;
+}
+
+.wxParse .big {
+  font-size: 1.17em;
+}
+
+.wxParse .small,
+.wxParse .sub,
+.wxParse .sup {
+  font-size: 0.83em;
+}
+
+.wxParse .sub {
+  vertical-align: sub;
+}
+.wxParse .sup {
+  vertical-align: super;
+}
+
+.wxParse .s,
+.wxParse .strike,
+.wxParse .del {
+  text-decoration: line-through;
+}
+
+.wxParse .strong,
+.wxParse .s {
+  display: inline;
+}
+
+.wxParse .a {
+  color: deepskyblue;
+}
+
+.wxParse .video {
+  text-align: center;
+  margin: 10px 0;
+}
+
+.wxParse .video-video {
+  width: 100%;
+}
+
+.wxParse .img {
+  display: inline-block;
+  width: 0;
+  height: 0;
+  max-width: 100%;
+  overflow: hidden;
+}
+
+.wxParse .blockquote {
+  margin: 5px 0;
+  padding: 10px 0 10px 10px;
+  font-family: Courier, Calibri, "\5B8B\4F53";
+  background: #f5f5f5;
+  border-left: 3px solid #dbdbdb;
+}
+.wxParse .blockquote .p {
+  margin: 0;
+}
+
+.wxParse .ul, .wxParse .ol {
+  display: block;
+  margin: 1em 0;
+  padding-left: 16px;
+}
+.wxParse .ol {
+  list-style-type: disc;
+}
+.wxParse .ol {
+  list-style-type: decimal;
+}
+.wxParse .li {
+  display: list-item;
+  align-items: baseline;
+  text-align: match-parent;
+}
+.wxParse .ul .ul, .wxParse .ol .ul {
+  list-style-type: circle;
+}
+.wxParse .ol .ol .ul, .wxParse .ol .ul .ul, .wxParse .ul .ol .ul, .wxParse .ul .ul .ul {
+    list-style-type: square;
+}
+
+.wxParse .u {
+  text-decoration: underline;
+}
+.wxParse .hide {
+  display: none;
+}
+.wxParse .del {
+  display: inline;
+}
+.wxParse .figure {
+  overflow: hidden;
+}
+
+.wxParse .table {
+  width: 100%;
+}
+.wxParse .thead, .wxParse .tfoot, .wxParse .tr {
+  display: flex;
+  flex-direction: row;
+}
+.wxParse .tr {
+  width:100%;
+  display: flex;
+  border-right: 1px solid #e0e0e0;
+  border-bottom: 1px solid #e0e0e0;
+}
+.wxParse .th,
+.wxParse .td {
+  display: flex;
+  width: 580px;
+  overflow: auto;
+  flex: 1;
+  padding: 5px;
+  border-left: 1px solid #e0e0e0;
+}
+.wxParse .td:last {
+  border-top: 1px solid #e0e0e0;
+}
+.wxParse .th {
+  background: #f0f0f0;
+  border-top: 1px solid #e0e0e0;
+}
+
+@charset "UTF-8";
+.problemDetail {
+  font-size: 28rpx;
+}
+.problemDetail ._h4 {
+  font-weight: bold;
+}
+.problemDetail .wxParse {
+  word-wrap: break-word;
+}
+.problemDetail .isShow {
+  top: 90rpx;
+}
+.problemDetail .noShow {
+  top: 0;
+}
+.problemDetail ._article {
+  position: absolute;
+  top: 104rpx;
+  width: 100%;
+  bottom: 0;
+  width: 100%;
+}
+.problemDetail ._article .showList {
+  height: 100%;
+  overflow: auto;
+}
+.problemDetail ._article .topic {
+  background: #eaeaea;
+  padding: 10rpx 20rpx;
+  border-radius: 20rpx;
+  margin: 0 20rpx 10rpx 0;
+  display: inline-block;
+}
+.problemDetail ._article .topicP {
+  overflow-x: auto;
+  white-space: nowrap;
+}
+.problemDetail ._article ::-webkit-scrollbar {
+  display: none;
+}
+.problemDetail ._article .invite {
+  display: inline-flex;
+  justify-content: space-between;
+  width: 100%;
+  align-items: center;
+  font-size: 26rpx;
+}
+.problemDetail ._article .inviteAnswer {
+  width: 150rpx;
+  height: 40rpx;
+  border: 2rpx solid #c4c4c4;
+  padding: 10rpx 0;
+  text-align: center;
+  line-height: 40rpx;
+  border-radius: 10rpx;
+  font-size: 28.000000000000004rpx;
+}
+.problemDetail ._article .Internet {
+  font-size: 40rpx;
+  top: 400rpx;
+  left: 50%;
+  margin-left: -200rpx;
+  color: gray;
+  position: absolute;
+}
+.problemDetail ._article .orange {
+  color: #fe9500;
+}
+.problemDetail ._article .orange:before {
+  color: #fe9500;
+}
+.problemDetail ._article .divFixed {
+  position: fixed;
+  z-index: 100;
+  background: white;
+  width: 100%;
+}
+.problemDetail ._article .proDescibe {
+  padding: 20rpx;
+  background: white;
+  z-index: 100;
+}
+.problemDetail ._article .proDescibe ._a {
+  text-decoration: underline;
+}
+.problemDetail ._article .user ._span {
+  font-weight: bold;
+  font-size: 28rpx;
+}
+.problemDetail ._article .pro ._img {
+  width: 100%;
+  height: 300rpx;
+}
+.problemDetail ._article .pro ._p ._span {
+  padding-right: 40rpx;
+  font-size: 28.000000000000004rpx;
+  color: #9a9a9a;
+}
+.problemDetail ._article .attention {
+  top: 240rpx;
+  z-index: 100;
+  display: flex;
+  display: -webkit-flex;
+  -webkit-justify-content: space-around;
+  -webkit-align-items: center;
+  width: 100%;
+  height: 76rpx;
+  background: white;
+  border-top: 6rpx solid #eaeaea;
+}
+.problemDetail ._article .attention ._div {
+  height: 100%;
+  border: 2rpx solid  #eaeaea;
+}
+.problemDetail ._article .attention ._p {
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.problemDetail ._article .attention ._i:before {
+  padding-right: 20rpx;
+}
+.problemDetail ._article .mint-loadmore {
+  margin-top: -20rpx;
+}
+.problemDetail .answerList {
+  position: absolute;
+}
+.problemDetail .answerList ._li {
+  padding-top: 20rpx;
+}
+.icon-home_active:before {
+  color: #ee781b;
+}
+.proDescibe .pro {
+  margin-bottom: 20rpx;
+}
+.proDescibe .pro .describe {
+  font-size: 32rpx;
+  word-wrap: break-word;
+}
+.proDescibe .pro ._h4 {
+  font-size: 32rpx;
+  word-wrap: break-word;
+}
+.icon-arrow_left:before {
+  color: #99999a;
+}
+.pro.lastLine {
+  color: #99999a;
+  padding-bottom: 20rpx;
+}
+.pro.lastLine ._span {
+  font-weight: inherit !important;
+}
+@charset "UTF-8";
+.answerDetailList .niming {
+  display: flex;
+}
+.answerDetailList .user {
+  margin-top: 20rpx;
+}
+.answerDetailList .sortType {
+  text-align: right;
+  padding-right: 0;
+}
+.answerDetailList .vip {
+  width: 25rpx !important;
+  height: 25rpx !important;
+  position: absolute;
+  top: 34rpx;
+  left: 28.000000000000004rpx;
+}
+.answerDetailList {
+  width: 100%;
+}
+.boxs {
+  width: 10rpx;
+  height: 10rpx;
+  background: #99999a;
+  border-radius: 50%;
+  display: block;
+}
+.answerDetailList .answerTotal .submenu {
+  position: absolute;
+  top: 50rpx;
+  right: 20rpx;
+  background: #fff;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  -webkit-box-shadow: 2rpx 2rpx 6rpx rgba(0, 0, 0, 0.1), -2rpx -2rpx 6rpx rgba(0, 0, 0, 0.1);
+  box-shadow: 2rpx 2rpx 6rpx rgba(0, 0, 0, 0.1), -2rpx -2rpx 6rpx rgba(0, 0, 0, 0.1);
+}
+.answerDetailList .answerTotal .submenu ._p {
+  padding: 0 20rpx;
+}
+.answerDetailList .answerTotal ._i.icon-arrow_left {
+  display: inline-block;
+  -ms-transform: rotate(-90deg);
+  padding: 10rpx 10rpx 10rpx 10rpx;
+  -moz-transform: rotate(-90deg);
+  -webkit-transform: rotate(-90deg);
+  -o-transform: rotate(-90deg);
+}
+.answerDetailList .list ._li {
+  background: white;
+  margin-top: -20rpx;
+  padding-left: 20rpx;
+  padding-right: 20rpx;
+  box-sizing: border-box;
+  padding-bottom: 20rpx;
+}
+.answerDetailList .list .content ._p {
+  max-height: 160rpx;
+  font-size: 28rpx;
+  word-break: break-all;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
+  overflow: hidden;
+}
+.answerDetailList .list .content ._p ._img {
+  float: right;
+  width: 100rpx;
+  height: 100rpx;
+}
+.answerDetailList .list .lastLine {
+  display: flex;
+  justify-content: space-between;
+}
+.answerDetailList .list .lastLine ._span {
+  padding-right: 10rpx !important;
+}
+.answerDetailList .list .lastLine P {
+  font-size: 28.000000000000004rpx;
+  color: #99999a;
+  display: flex;
+  align-items: center;
+}
+.answerDetailList .list .pro {
+  padding-top: 20rpx;
+}
+.answerDetailList .list .pro .userPic {
+  width: 40rpx;
+  height: 40rpx;
+  border-radius: 30rpx;
+  margin-right: 20rpx;
+}
+.answerDetailList .list .pro .icon-tw {
+  float: right;
+  padding-top: 20rpx;
+}
+.answerDetailList .list .operate {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 20rpx;
+}
+.answerDetailList .list .operate ._i {
+  margin-right: 20rpx;
+}
+.answerDetailList .mint-loadmore {
+  margin-top: 0 !important;
+}
+.answerDetailList .mint-loadmore-top {
+  margin-top: -10rpx;
+}
+.answerTotal {
+  position: relative;
+  z-index: 100;
+  height: 60rpx;
+  width: 100%;
+  background: #eaeaea;
+  line-height: 60rpx;
+  display: flex;
+  justify-content: space-between;
+}
+.answerTotal ._span {
+  padding-left: 20rpx;
+  padding-right: 20rpx;
+  font-size: 24rpx;
+  color: #99999a;
+}

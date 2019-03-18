@@ -1,0 +1,295 @@
+@import "/static/css/vendor.wxss";
+
+.searchDetail-contain {
+  height: 100%;
+}
+.searchDetail-contain .tabs {
+  position: fixed;
+  top: 120rpx;
+  width: 100%;
+  display: flex;
+  z-index: 100;
+  height: 70rpx;
+}
+.searchDetail-contain .tabs ._span {
+  flex: 1;
+  display: inline-block;
+  padding: 20rpx;
+  font-size: 28rpx;
+  border-bottom: 4rpx solid transparent;
+  text-align: center;
+  height: 70rpx;
+  line-height: 70rpx;
+  background: white;
+}
+.searchDetail-contain .tabs .active {
+  border-bottom: 4rpx solid #ff7b00;
+  color: #ff7b00;
+}
+.searchDetail-contain ._article {
+  position: absolute;
+  top: 230rpx;
+  width: 100%;
+  overflow: auto;
+}
+.searchDetail-contain ._article .load-tips {
+  text-align: center;
+  font-size: 30rpx;
+  color: #bbb;
+  margin: 20rpx 0;
+}
+.problemList .has-nodata {
+  text-align: center;
+  padding-top: 50%;
+  font-size: 30rpx;
+}
+.problemList .has-nodata .has-nodata-img {
+  width: 26%;
+  height: 200rpx;
+  padding-bottom: 40rpx;
+}
+.problemList .user-img-container {
+  height: 170rpx;
+}
+.problemList .user-img-container .userPic1 {
+  width: 88rpx;
+  height: 88rpx;
+  border-radius: 50%;
+}
+.problemList .user-img-container .vip1 {
+  width: 25rpx;
+  height: 25rpx;
+  position: absolute;
+  top: 54rpx;
+  right: 28.000000000000004rpx;
+}
+.problemList .user-img-container .vip3 {
+  width: 32rpx;
+  height: 32rpx;
+  position: absolute;
+  top: 54rpx;
+  right: 28.000000000000004rpx;
+}
+.problemList .user-img-container .user-img-list {
+  background: #f5f5f5;
+  width: 100%;
+  height: 150rpx;
+  white-space: nowrap;
+  overflow-x: auto !important;
+  padding-top: 20rpx;
+}
+.problemList .user-img-container .user-img-list .user-img-item {
+  display: inline-block;
+  text-align: center;
+  width: 18%;
+}
+.problemList .user-img-container .user-img-list .user-img-item ._p {
+  width: 90%;
+  margin: 0 auto;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.problemList .vip {
+  width: 25rpx;
+  height: 25rpx;
+  position: absolute;
+  top: 34rpx;
+  left: 42rpx;
+}
+.list .spanPad {
+  padding-right: 10rpx;
+}
+.list .introduce {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20rpx;
+  width: 100%;
+  height: 113.99999999999999rpx;
+  box-sizing: border-box;
+  border-bottom: 2rpx solid #eaeaea;
+}
+.list .introduce .isSave {
+  color: #99999a;
+  border: 2rpx solid #99999a;
+  border-radius: 10rpx;
+  padding: 10rpx;
+}
+.list .introduce .isSave .icon-gzwt:before {
+  font-size: 30rpx;
+  color: #99999a;
+}
+.list .introduce .noSave {
+  color: #ee781b;
+  border: 2rpx solid #ee781b;
+  border-radius: 10rpx;
+  padding: 10rpx;
+}
+.list .introduce .noSave .icon-gzwt:before {
+  color: #ee781b;
+}
+.list .introduce .icon-gzwt {
+  display: inline;
+  font-size: 30rpx;
+}
+.list .introduce .attention-tips {
+  font-size: 30rpx;
+}
+.list .introduce .introduceLeft {
+  width: 80%;
+  display: inline-flex;
+  align-items: center;
+}
+.list .introduce .introduceLeft ._h5 {
+  font-size: 28.000000000000004rpx;
+}
+.list .introduce .introduceLeft ._span {
+  font-size: 26rpx;
+  color: #99999a;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+}
+.list .introduce ._img {
+  width: 90rpx;
+  height: 90rpx;
+  margin-right: 20rpx;
+  border-radius: 50%;
+}
+.list .attentionCount {
+  font-size: 24rpx;
+  color: #99999a;
+  padding-left: 20rpx;
+  height: 54rpx;
+  line-height: 54rpx;
+}
+.list ._li {
+  background: white;
+  margin-top: 12rpx;
+  padding-left: 20rpx;
+  padding-right: 20rpx;
+  padding-top: 20rpx;
+  margin-left: 8rpx;
+  margin-right: 8rpx;
+  border-radius: 6rpx;
+  box-shadow: #7c7c7c;
+  box-sizing: border-box;
+}
+.list ._li .delete-div {
+  padding-top: 10rpx;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.list .pro .icon-zkjt {
+  float: right;
+  padding-top: 10rpx;
+  font-size: 24rpx;
+}
+.list .pro .title-line {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+.list .pro ._span {
+  font-size: 32rpx;
+  font-family: "Helvetica Neue";
+  font-weight: bold;
+  word-wrap: break-word;
+}
+.list .user .user-img {
+  float: left;
+  height: 57.99999999999999rpx;
+  line-height: 57.99999999999999rpx;
+}
+.list .user .user-img .userPic {
+  width: 57.99999999999999rpx;
+  height: 57.99999999999999rpx;
+  border-radius: 50%;
+  margin-right: 20rpx;
+}
+.list .user .user-name {
+  font-size: 28.000000000000004rpx;
+  float: left;
+  width: 200rpx;
+}
+.list .marRight {
+  padding-left: 10rpx;
+  padding-right: 10rpx;
+  padding-top: 5rpx;
+  padding-bottom: 1rpx;
+  font-size: 28.000000000000004rpx;
+}
+.list .operate {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 15rpx;
+  padding-bottom: 20rpx;
+  height: 57.99999999999999rpx;
+  color: #929292;
+  font-size: 30rpx;
+}
+.list .operate ._i {
+  margin-right: 10rpx;
+}
+.list .iconFont {
+  font-size: 28.000000000000004rpx;
+  background-color: #eaeaea;
+  border-radius: 10rpx;
+  padding-left: 10rpx;
+  padding-right: 10rpx;
+  padding-top: 5rpx;
+  padding-bottom: 1rpx;
+}
+.list .remark1 {
+  font-size: 30rpx;
+  margin-top: 10rpx;
+}
+.list .remark1 ._p {
+  color: #636363;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  word-wrap: break-word;
+}
+.art {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+.articleLeft {
+  flex: 1;
+  width: 100%;
+}
+.articleRight {
+  width: 210rpx;
+  height: 210rpx;
+  margin-left: 20rpx;
+}
+.articleRight ._img {
+  width: 100%;
+  height: 100%;
+  border-radius: 10rpx;
+}
+.user {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  width: 300rpx;
+}
+.user .user-name {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.orange:before {
+  color: #fe9500;
+}

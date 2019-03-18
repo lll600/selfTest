@@ -1,0 +1,76 @@
+<template name="index$09c579e9">
+  <view class="_div data-v-df5e1dcc message-contain">
+    <view class="_div data-v-df5e1dcc more-mes-list" bindtap="handleProxy" data-eventid="{{'0'}}" data-comkey="{{$k}}">
+      <view class="_div data-v-df5e1dcc icon-div">
+        <label class="_span data-v-df5e1dcc icon-huida">
+          <label class="_span data-v-df5e1dcc path1"></label>
+          <label class="_span data-v-df5e1dcc path2"></label>
+          <label class="_span data-v-df5e1dcc path3"></label>
+          <label class="_span data-v-df5e1dcc path4"></label>
+        </label>
+      </view>
+      <view class="_div data-v-df5e1dcc word-div">
+        <view class="_div data-v-df5e1dcc word">回答</view>
+        <view class="_div data-v-df5e1dcc number">
+          <label wx:if="{{answerCount == 0}}" class="_span data-v-df5e1dcc icon-arrow"></label>
+          <view wx:else class="_div data-v-df5e1dcc msg-box">{{answerCount}}</view>
+        </view>
+      </view>
+    </view>
+    <view class="_div data-v-df5e1dcc more-mes-list" bindtap="handleProxy" data-eventid="{{'1'}}" data-comkey="{{$k}}">
+      <view class="_div data-v-df5e1dcc icon-div">
+        <label class="_span data-v-df5e1dcc icon-guanzhu">
+          <label class="_span data-v-df5e1dcc path1"></label>
+          <label class="_span data-v-df5e1dcc path2"></label>
+        </label>
+      </view>
+      <view class="_div data-v-df5e1dcc word-div">
+        <view class="_div data-v-df5e1dcc word">关注</view>
+        <view class="_div data-v-df5e1dcc number">
+          <label wx:if="{{attentionCount == 0}}" class="_span data-v-df5e1dcc icon-arrow"></label>
+          <view wx:else class="_div data-v-df5e1dcc msg-box">{{attentionCount}}</view>
+        </view>
+      </view>
+    </view>
+    <view class="_div data-v-df5e1dcc more-mes-list" bindtap="handleProxy" data-eventid="{{'2'}}" data-comkey="{{$k}}">
+      <view class="_div data-v-df5e1dcc icon-div">
+        <label class="_span data-v-df5e1dcc icon-mes_dz">
+          <label class="_span data-v-df5e1dcc path1"></label>
+          <label class="_span data-v-df5e1dcc path2"></label>
+        </label>
+      </view>
+      <view class="_div data-v-df5e1dcc word-div">
+        <view class="_div data-v-df5e1dcc word">赞</view>
+        <view class="_div data-v-df5e1dcc number">
+          <label wx:if="{{supportCount == 0}}" class="_span data-v-df5e1dcc icon-arrow"></label>
+          <view wx:else class="_div data-v-df5e1dcc msg-box">{{supportCount}}</view>
+        </view>
+      </view>
+    </view>
+    <view class="_div data-v-df5e1dcc more-mes-list" bindtap="handleProxy" data-eventid="{{'3'}}" data-comkey="{{$k}}">
+      <view class="_div data-v-df5e1dcc icon-div">
+        <label class="_span data-v-df5e1dcc icon-mes_pl">
+          <label class="_span data-v-df5e1dcc path1"></label>
+          <label class="_span data-v-df5e1dcc path2"></label>
+        </label>
+      </view>
+      <view class="_div data-v-df5e1dcc word-div">
+        <view class="_div data-v-df5e1dcc word">评论</view>
+        <view class="_div data-v-df5e1dcc number">
+          <label wx:if="{{revertCount == 0}}" class="_span data-v-df5e1dcc icon-arrow"></label>
+          <view wx:else class="_div data-v-df5e1dcc msg-box">{{revertCount}}</view>
+        </view>
+      </view>
+    </view>
+    <view class="_div data-v-df5e1dcc more-mes-list" bindtap="handleProxy" ref="messageNotify" data-eventid="{{'4'}}" data-comkey="{{$k}}">
+      <image src="../../../static/img/tongzhi.png" class="_img data-v-df5e1dcc noticeImg" alt></image>
+      <view class="_div data-v-df5e1dcc word-div no-border">
+        <view class="_div data-v-df5e1dcc word">通知</view>
+        <view class="_div data-v-df5e1dcc number">
+          <label wx:if="{{noticeCount == 0}}" class="_span data-v-df5e1dcc icon-arrow"></label>
+          <view wx:else class="_div data-v-df5e1dcc msg-box">{{noticeCount}}</view>
+        </view>
+      </view>
+    </view>
+  </view>
+</template>

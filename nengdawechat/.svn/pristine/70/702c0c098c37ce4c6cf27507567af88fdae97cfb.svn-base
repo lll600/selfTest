@@ -1,0 +1,30 @@
+<import src="searchBar$99f8a31e" />
+<template name="index$52277da2">
+  <view class="_div data-v-1ac67d0b search">
+    <template bindtotalTopHeightStyles="handleProxy" bindsearchKeyWords="handleProxy" data-eventid="{{'0'}}" data-comkey="{{$k}}" data="{{...$root[$kk+'0'], $root}}" is="searchBar$99f8a31e"></template>
+    <view class="_article data-v-1ac67d0b" style=" {{totalTopHeightStyles2}}">
+      <scroll-view class="_scroll-view data-v-1ac67d0b showList" scroll-y="true">
+        <view style="min-height:800px" class="_div data-v-1ac67d0b">
+          <view wx:if="{{showHot}}" class="_div data-v-1ac67d0b">
+            <view class="_div data-v-1ac67d0b list hotlist">
+              <view class="_h3 data-v-1ac67d0b">热搜</view>
+              <view class="_p data-v-1ac67d0b hotName" wx:key="index" key="{{index}}" bindtap="handleProxy" data-eventid="{{'1-'+index}}" data-comkey="{{$k}}" wx:for="{{hotList}}" wx:for-index="index" wx:for-item="hot">{{hot.keyword}}</view>
+            </view>
+          </view>
+          <view class="_ul data-v-1ac67d0b">
+            <view class="_li data-v-1ac67d0b searchAll" wx:key="index" key="{{index}}" bindtap="handleProxy" data-eventid="{{'2-'+index}}" data-comkey="{{$k}}" wx:for="{{serarchList}}" wx:for-index="index" wx:for-item="item">
+              <view class="_p data-v-1ac67d0b">{{item.dataName}}</view>
+              <label class="_span data-v-1ac67d0b">{{item.chioce}}</label>
+            </view>
+          </view>
+          <view class="_div data-v-1ac67d0b moreSearch" wx:if="{{searchValue!=''&&serarchList}}" bindtap="handleProxy" data-eventid="{{'3'}}" data-comkey="{{$k}}">
+            <view class="_p data-v-1ac67d0b">查看更多搜索记录</view>
+          </view>
+          <view class="_div data-v-1ac67d0b moreSearch" wx:elif="{{searchValue!=''}}">
+            <view class="_p data-v-1ac67d0b">暂无搜索记录</view>
+          </view>
+        </view>
+      </scroll-view>
+    </view>
+  </view>
+</template>

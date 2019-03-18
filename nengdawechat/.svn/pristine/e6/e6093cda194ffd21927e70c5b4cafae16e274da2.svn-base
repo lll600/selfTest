@@ -1,0 +1,5 @@
+<template name="wxParseVideo$7d145c7c">
+  <view class="_view data-v-3bc15f2c {{node.classStr}}" style=" {{node.styleStr}}">
+    <video class="_video data-v-3bc15f2c video-video {{node.classStr}}" src="{{node.attr.src}}"></video>
+  </view>
+</template>

@@ -1,0 +1,1048 @@
+global.webpackJsonp([9],{
+
+/***/ 56:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__index__ = __webpack_require__(57);
+
+
+
+var app = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a(__WEBPACK_IMPORTED_MODULE_1__index__["a" /* default */]);
+app.$mount();
+/* harmony default export */ __webpack_exports__["default"] = ({
+    config: {
+        //   navigationBarTitleText: '能答'
+    }
+});
+
+/***/ }),
+
+/***/ 57:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_mpvue_loader_lib_selector_type_script_index_0_index_vue__ = __webpack_require__(59);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_mpvue_loader_lib_template_compiler_index_id_data_v_940b3ce0_hasScoped_false_transformToRequire_video_src_source_src_img_src_image_xlink_href_node_modules_mpvue_loader_lib_selector_type_template_index_0_index_vue__ = __webpack_require__(63);
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(58)
+}
+var normalizeComponent = __webpack_require__(0)
+/* script */
+
+/* template */
+
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_mpvue_loader_lib_selector_type_script_index_0_index_vue__["a" /* default */],
+  __WEBPACK_IMPORTED_MODULE_1__node_modules_mpvue_loader_lib_template_compiler_index_id_data_v_940b3ce0_hasScoped_false_transformToRequire_video_src_source_src_img_src_image_xlink_href_node_modules_mpvue_loader_lib_selector_type_template_index_0_index_vue__["a" /* default */],
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "src\\pages\\allAnswerList\\index.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] index.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-940b3ce0", Component.options)
+  } else {
+    hotAPI.reload("data-v-940b3ce0", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+/* harmony default export */ __webpack_exports__["a"] = (Component.exports);
+
+
+/***/ }),
+
+/***/ 58:
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+
+/***/ 59:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_searchBar__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_download__ = __webpack_require__(12);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+// import { support ,getNowFormatDate,IsVisitor,translate} from '@/common/common.js';
+// import index from 'vue';
+// import {Toast} from 'mint-ui'
+// import { MessageBox } from 'mint-ui';
+
+
+/* harmony default export */ __webpack_exports__["a"] = ({
+    data: function data() {
+        return {
+            replyPerson: '',
+            placeholder: '请输入评论',
+            supportClick: true,
+            searchCondition: { //分页属性 
+                pageNo: "1",
+                pageSize: "10"
+            },
+            pageList: [],
+            pageList2: [],
+            total: 0,
+            allLoaded: false, //是否可以上拉属性，false可以上拉，true为禁止上拉，就是不让往上划加载数据了 
+            scrollMode: "auto", //移动端弹性滚动效果，touch为弹性滚动，auto是非弹性滚动 
+            userId: wx.getStorageSync('userId') ? wx.getStorageSync('userId') : 0,
+            titleId: '',
+            revertID: '',
+            value: '',
+            flag: '',
+            showAlls: false,
+            questionPerID: '',
+            // revertPerId:this.$route.query.authorId,
+            // isFromComment:this.$route.query.isFromComment,
+            isHasRevert: false,
+            revertZhedieCount: 0,
+            showModal: false
+        };
+    },
+    components: {
+        "search-bar": __WEBPACK_IMPORTED_MODULE_0__components_searchBar__["a" /* default */],
+        'down-load': __WEBPACK_IMPORTED_MODULE_1__components_download__["a" /* default */]
+        //  'v-loadmore':Loadmore // 为组件起别名，vue转换template标签时不会区分大小写，例如：loadMore这种标签转换完就会变成loadmore，容易出现一些匹配问题 
+        // 推荐应用组件时用a-b形式起名 
+    },
+    mounted: function mounted() {
+        this.titleId = this.$root.$mp.query.titleId;
+        this.revertID = this.$root.$mp.query.revertID;
+        this.flag = this.$root.$mp.query.flag;
+        this.questionPerID = this.$root.$mp.query.questionPerID;
+        //     document.getElementById("release").height=document.getElementById("release").scrollHeight;
+        //  document.getElementById("release").addEventListener("keyup", function(){
+        //     document.getElementById("release").height=this.scrollHeight+'px';
+        //     console.log(document.getElementById("release").height)
+        // })
+        //  var text = document.getElementById("release");  
+        //            this.autoTextarea(text,'',100); // 调用  
+        this.loadPageList(); //初次访问查询列表 
+    },
+
+    //转发
+    onShareAppMessage: function onShareAppMessage(tr) {
+        var that = this;
+        var pages = getCurrentPages(); //获取加载的页面
+        var currentPage = pages[pages.length - 1]; //获取当前页面的对象
+        var url = currentPage.route; //当前页面url
+        console.log(url);
+        return {
+            title: '能答', // 转发后 所显示的title
+            path: url, // 相对的路径
+            success: function success(res) {
+                // 成功后要做的事情
+                console.log(res.shareTickets[0]);
+                // console.log
+
+                wx.getShareInfo({
+                    shareTicket: res.shareTickets[0],
+                    success: function success(res) {
+                        that.setData({
+                            isShow: true
+                        });
+                        console.log(that.setData.isShow);
+                    },
+                    fail: function fail(res) {
+                        console.log(res);
+                    },
+                    complete: function complete(res) {
+                        console.log(res);
+                    }
+                });
+            },
+            fail: function fail(res) {
+                // 分享失败
+                console.log(res);
+            }
+        };
+    },
+    methods: {
+        hideModal: function hideModal() {
+            this.showModal = false;
+        },
+        reply: function reply(m) {
+            $('#release').focus();
+            this.placeholder = m.IsAnon == true ? '回复匿名用户' : '回复' + m.accountnumber;
+            this.replyPerson = m.ID;
+        },
+        reply2: function reply2(m) {
+            $('#release').focus();
+            this.placeholder = m.IsAnon == true ? '回复匿名用户' : '回复' + m.accountnumber;
+            this.replyPerson = m.userID;
+            this.revertID = m.revertID;
+        },
+        reply3: function reply3(m) {
+            $('#release').focus();
+            this.placeholder = m.IsAnon == true ? '回复匿名用户' : '回复' + m.accountnumber;
+            this.replyPerson = m.ID;
+            this.revertID = m.revertID;
+        },
+        toArticle: function toArticle() {
+            this.$router.push({ path: '/ArticleDetail', query: { titleId: this.titleId, flag: 2, authorID: this.userId } });
+        },
+        toQUestion: function toQUestion() {
+            this.$router.push({ path: '/SingleAnswer', query: { titleId: this.titleId, flag: 1, authorID: this.userId, revertID: this.revertID, questionPerID: this.questionPerID } });
+        },
+        deleteRevert: function deleteRevert(m) {
+            var _this = this;
+
+            var deleteUrl = '';
+            var data = '';
+            if (this.flag == 1) {
+                deleteUrl = '/ForumList/RevertsublistDelete';
+                data = { 'sublistID': m,
+                    'id': this.userId };
+            } else {
+                deleteUrl = '/ForumList/RevertDelete';
+                data = { 'revertID': m,
+                    'id': this.userId };
+            }
+            MessageBox.confirm(translate('确定删除该评论?'), translate('提示')).then(function (action) {
+                _this.$http({
+                    method: 'delete',
+                    url: deleteUrl,
+                    params: data
+                }).then(function (response) {
+                    if (response.status == 1) {
+                        Toast({
+                            message: translate('删除成功'),
+                            position: 'middle',
+                            duration: 1000
+                        });
+                        _this.loadPageList();
+                    } else {
+                        Toast({
+                            message: translate('删除失败'),
+                            position: 'middle',
+                            duration: 1000
+                        });
+                    }
+                }).catch(function (error) {});
+            }).catch(function (err) {});
+        },
+        deleteRevert2: function deleteRevert2(m) {
+            var _this2 = this;
+
+            var deleteUrl = '';
+            var data = '';
+            deleteUrl = '/ForumList/RevertsublistDelete';
+            data = { 'sublistID': m,
+                'id': this.userId };
+            MessageBox.confirm(translate('确定删除该评论?'), translate('提示')).then(function (action) {
+                _this2.$http({
+                    method: 'delete',
+                    url: deleteUrl,
+                    params: data
+                }).then(function (response) {
+                    if (response.status == 1) {
+                        Toast({
+                            message: translate('删除成功'),
+                            position: 'middle',
+                            duration: 1000
+                        });
+                        _this2.loadPageList();
+                    } else {
+                        Toast({
+                            message: translate('删除失败'),
+                            position: 'middle',
+                            duration: 1000
+                        });
+                    }
+                }).catch(function (error) {});
+            }).catch(function (err) {});
+        },
+        showAll: function showAll(m) {
+            m.result.showAll = !m.result.showAll;
+            console.log(this.pageList);
+        },
+        showAll2: function showAll2(m) {
+            m.showAll = !m.showAll;
+            console.log(this.pageList);
+        },
+        autoTextarea: function autoTextarea(elem, extra, maxHeight) {
+            extra = extra || 0;
+            var isFirefox = !!document.getBoxObjectFor || 'mozInnerScreenX' in window,
+                isOpera = !!window.opera && !!window.opera.toString().indexOf('Opera'),
+                addEvent = function addEvent(type, callback) {
+                elem.addEventListener ? elem.addEventListener(type, callback, false) : elem.attachEvent('on' + type, callback);
+            },
+                getStyle = elem.currentStyle ? function (name) {
+                var val = elem.currentStyle[name];
+                if (name === 'height' && val.search(/px/i) !== 1) {
+                    var rect = elem.getBoundingClientRect();
+                    return rect.bottom - rect.top - parseFloat(getStyle('paddingTop')) - parseFloat(getStyle('paddingBottom')) + 'px';
+                };
+                return val;
+            } : function (name) {
+                return getComputedStyle(elem, null)[name];
+            },
+                minHeight = parseFloat(getStyle('height'));
+            elem.style.resize = 'none';
+            var change = function change() {
+                var scrollTop,
+                    height,
+                    padding = 0,
+                    style = elem.style;
+                if (elem._length === elem.value.length) return;
+                elem._length = elem.value.length;
+                if (!isFirefox && !isOpera) {
+                    padding = parseInt(getStyle('paddingTop')) + parseInt(getStyle('paddingBottom'));
+                };
+                scrollTop = document.body.scrollTop || document.documentElement.scrollTop;
+                elem.style.height = minHeight + 'px';
+                if (elem.scrollHeight > minHeight) {
+                    if (maxHeight && elem.scrollHeight > maxHeight) {
+                        height = maxHeight - padding;
+                        style.overflowY = 'auto';
+                    } else {
+                        height = elem.scrollHeight - padding;
+                        style.overflowY = 'hidden';
+                    };
+                    style.height = height + extra + 'px';
+                    scrollTop += parseInt(style.height) - elem.currHeight;
+                    document.body.scrollTop = scrollTop;
+                    document.documentElement.scrollTop = scrollTop;
+                    elem.currHeight = parseInt(style.height);
+                };
+            };
+            addEvent('propertychange', change);
+            addEvent('input', change);
+            addEvent('focus', change);
+            change();
+        },
+        toPersonal: function toPersonal(m) {
+            if (this.flag == 2) {
+                var url = "/pages/mine/main?userID=" + (m.userID ? m.userID : m.ID);
+                wx.navigateTo({ url: url });
+            } else {
+                var url = "/pages/mine/main?userID=" + m.ID;
+                wx.navigateTo({ url: url });
+            }
+        },
+        putAnswer: function putAnswer() {
+            var _this3 = this;
+
+            $('#release').focus();
+            if (this.userId == '0') {
+                MessageBox({
+                    title: translate('还未登录'),
+                    message: translate('请先登录，再进行操作'),
+                    showCancelButton: true
+                });
+                MessageBox.confirm(translate('请先登录，再进行操作'), translate('还未登录')).then(function (action) {
+                    console.log(action);
+                    _this3.$router.push('/login');
+                });
+                localStorage.setItem('toPath', this.$route.fullPath);
+            } else {
+                if (this.value == '') {
+                    MessageBox(translate('提示'), translate('评论不能为空！'));
+                    return;
+                } else if (this.value.length < 3) {
+                    MessageBox(translate('提示'), translate('评论长度不能小于3！'));
+                    return;
+                }
+                if (this.flag == '1' || this.replyPerson) {
+                    this.$http({
+                        method: 'put',
+                        url: '/ForumList/RevertsublistAdd',
+                        data: {
+                            'sublistID': 0,
+                            'revertID': this.revertID,
+                            'ID': this.userId,
+                            'content': this.value,
+                            'datetime': getNowFormatDate(),
+                            'remark1': '',
+                            'remark2': this.placeholder == '请输入评论' ? '' : this.replyPerson
+                        }
+                    }).then(function (response) {
+                        Toast({
+                            message: translate('发布成功'),
+                            position: 'middle',
+                            duration: 1000
+                        });
+                        _this3.placeholder = '请输入评论';
+                        _this3.replyPerson = '';
+                        _this3.value = '';
+                        _this3.loadPageList();
+                        document.getElementById("release").style.height = '30px';
+                    }).catch(function (error) {});
+                } else {
+                    this.$http({
+                        method: 'put',
+                        url: '/ForumList/RevertAdd',
+                        data: {
+                            'revertID': 0,
+                            'userID': this.userId,
+                            'titleID': this.titleId,
+                            'content': this.value,
+                            'datetime': getNowFormatDate(),
+                            'remark1': '',
+                            'remark2': '',
+                            'ISwhether': 0
+                        }
+                    }).then(function (response) {
+                        Toast({
+                            message: translate('发布成功'),
+                            position: 'middle',
+                            duration: 1000
+                        });
+                        _this3.placeholder = '请输入评论';
+                        _this3.replyPerson = '';
+                        _this3.value = '';
+                        _this3.loadPageList();
+                        document.getElementById("release").style.height = '30px';
+                    }).catch(function (error) {});
+                }
+            }
+        },
+        release: function release() {
+            this.showModal = true;
+        },
+        supportAnswer: function supportAnswer(m) {
+            this.supportClick = false;
+            console.log(m);
+            var dataID = '';
+            var authorID = '';
+            if (this.flag == 1) {
+                m.tag = 1;
+                dataID = m.sublistID;
+                authorID = m.ID;
+            } else {
+                m.tag = 0;
+                dataID = m.revertID;
+                authorID = m.userID;
+            }
+
+            support(m, this.userId, dataID, authorID, this);
+        },
+        returnPre: function returnPre() {
+            console.log(this.titleId);
+            this.$router.back(-1);
+            //  this.$router.push({path:'/SingleAnswer',query: {titleId: this.titleId,flag:this.flag,authorID:this.userId,revertID:this.revertID}})
+        },
+
+        loadTop: function loadTop() {
+            //组件提供的下拉触发方法 
+            //下拉加载 
+            this.loadPageList();
+            this.$refs.loadmore.onTopLoaded(); // 固定方法，查询完要调用一次，用于重新定位 
+        },
+        loadBottom: function loadBottom() {
+            // 上拉加载 
+            this.more(); // 上拉触发的分页查询 
+            this.$refs.loadmore.onBottomLoaded(); // 固定方法，查询完要调用一次，用于重新定位 
+        },
+        loadPageList: function loadPageList() {
+            var _this4 = this;
+
+            // 查询数据 
+            // this.api.PageList(this.searchCondition).then(data =>{ 
+            //  // 是否还有下一页，加个方法判断，没有下一页要禁止上拉 
+            //  this.isHaveMore(data.result.haveMore); 
+            //  this.pageList = data.result.pageList; 
+            //  this.$nextTick(function () { 
+            //   // 原意是DOM更新循环结束时调用延迟回调函数，大意就是DOM元素在因为某些原因要进行修改就在这里写，要在修改某些数据后才能写， 
+            //   // 这里之所以加是因为有个坑，iphone在使用-webkit-overflow-scrolling属性，就是移动端弹性滚动效果时会屏蔽loadmore的上拉加载效果， 
+            //   // 花了好久才解决这个问题，就是用这个函数，意思就是先设置属性为auto，正常滑动，加载完数据后改成弹性滑动，安卓没有这个问题，移动端弹性滑动体验会更好 
+            //   this.scrollMode = "touch"; 
+            //  });  
+            // }); 
+            if (this.flag == 2) {
+                this.$http.get('/ForumList/Revert', {
+                    titleID: this.titleId,
+                    'ID': this.userId
+                }).then(function (response) {
+                    _this4.revertZhedieCount = response.data.msg;
+                    if (response.data.status == 1) {
+                        for (var i in response.result) {
+                            response.data.result[i].result.datetime = response.data.result[i].result.datetime.replace('T', ' ');
+                            response.data.result[i].result.showAll = false;
+                        }
+                        _this4.pageList = response.data.result;
+                        if (_this4.pageList.length > 0) {
+                            _this4.isHasRevert = false;
+                        }
+                    } else {
+                        _this4.pageList = [];
+                        _this4.isHasRevert = true;
+                    }
+                    console.log(_this4.pageList, '还未发表评论');
+                }).catch(function (error) {});
+            } else {
+                this.$http.get('/ForumList/revertsublist', {
+                    revertID: this.revertID,
+                    'ID': this.userId
+                }).then(function (response) {
+                    _this4.revertZhedieCount = response.data.msg;
+                    if (response.data.status == 1) {
+                        console.log(response.result);
+                        for (var i in response.result) {
+                            response.data.result[i].datetime = response.data.result[i].datetime.replace('T', ' ');
+                            response.data.result[i].showAll = false;
+                        }
+                        _this4.pageList2 = response.data.result;
+                        if (_this4.pageList2.length > 0) {
+                            _this4.isHasRevert = false;
+                        }
+                    } else if (response.data.status == 0) {
+                        _this4.pageList2 = [];
+                        _this4.isHasRevert = true;
+                    }
+                }).catch(function (error) {});
+            }
+        },
+        more: function more() {
+            var _this5 = this;
+
+            // 分页查询 
+            this.searchCondition.pageNo = parseInt(this.searchCondition.pageNo) + 1;
+            this.api.loadPageList(this.searchCondition).then(function (data) {
+                _this5.pageList = _this5.pageList.concat(data.result.pageList);
+                _this5.isHaveMore(data.result.haveMore);
+            });
+        },
+        isHaveMore: function isHaveMore(_isHaveMore) {
+            // 是否还有下一页，如果没有就禁止上拉刷新 
+            this.allLoaded = true; //true是禁止上拉加载 
+            if (_isHaveMore) {
+                this.allLoaded = false;
+            }
+        }
+    }
+});
+
+/***/ }),
+
+/***/ 63:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "Allanswer"
+  }, [_c('search-bar', {
+    attrs: {
+      "mpcomid": '0'
+    }
+  }), _vm._v(" "), _c('article', [_c('scroll-view', {
+    staticClass: "showList",
+    attrs: {
+      "scroll-y": "true"
+    }
+  }, [_vm._l((_vm.pageList), function(item, index) {
+    return (_vm.flag == '2') ? _c('ul', {
+      key: index,
+      staticClass: "list"
+    }, [_c('li', [_c('div', {
+      staticStyle: {
+        "float": "right"
+      }
+    }, [_c('i', {
+      directives: [{
+        name: "show",
+        rawName: "v-show",
+        value: (_vm.userId == item.result.userID),
+        expression: "userId==item.result.userID"
+      }],
+      staticClass: "icon-bzh_tc ",
+      attrs: {
+        "eventid": '0-' + index
+      },
+      on: {
+        "click": function($event) {
+          _vm.deleteRevert(item.result.revertID)
+        }
+      }
+    })], 1), _vm._v(" "), _c('div', {
+      staticClass: "pro user"
+    }, [_c('p', {
+      attrs: {
+        "eventid": '1-' + index
+      },
+      on: {
+        "click": function($event) {
+          _vm.toPersonal(item.result)
+        }
+      }
+    }, [_c('img', {
+      staticClass: "userPic",
+      attrs: {
+        "src": (item.result.pic && item.result.pic != '/forum/common/userPic.jpg') ? item.result.pic : '/static/img/user_pic.png',
+        "alt": ""
+      }
+    }), _c('span', [_vm._v(_vm._s(item.result.accountnumber))])]), _c('span', {
+      directives: [{
+        name: "show",
+        rawName: "v-show",
+        value: (_vm.isFromComment),
+        expression: "isFromComment"
+      }],
+      attrs: {
+        "eventid": '2-' + index
+      },
+      on: {
+        "click": _vm.toArticle
+      }
+    }, [_vm._v("前往文章")])], 1), _vm._v(" "), _c('div', {
+      staticClass: "pro",
+      class: item.result.showAll == true ? 'remark2' : 'remark1',
+      attrs: {
+        "eventid": '3-' + index
+      },
+      on: {
+        "click": function($event) {
+          _vm.showAll(item)
+        }
+      }
+    }, [_c('p', [_vm._v(_vm._s(item.result.content))])], 1), _vm._v(" "), _c('div', {
+      staticClass: "pro operated"
+    }, [_c('p', [_c('i', {
+      staticClass: "icon-pl  ",
+      attrs: {
+        "eventid": '4-' + index
+      },
+      on: {
+        "click": function($event) {
+          _vm.reply2(item.result)
+        }
+      }
+    }), _vm._v(" "), _c('i', {
+      staticClass: "icon-dz",
+      class: item.result.IsSupport == 1 ? 'orange' : '',
+      attrs: {
+        "eventid": '5-' + index
+      },
+      on: {
+        "click": function($event) {
+          _vm.supportClick && _vm.supportAnswer(item.result)
+        }
+      }
+    }), _vm._v(_vm._s(item.result.supportCounts ? item.result.supportCounts : 0))], 1), _vm._v(" "), _c('p', [_vm._v(_vm._s(item.result.datetime))])], 1)]), _vm._v(" "), _vm._l((item.items), function(item2, index2) {
+      return _c('li', {
+        key: index2
+      }, [_c('div', {
+        staticStyle: {
+          "float": "right"
+        }
+      }, [_c('i', {
+        directives: [{
+          name: "show",
+          rawName: "v-show",
+          value: (_vm.userId == item2.ID),
+          expression: "userId==item2.ID"
+        }],
+        staticClass: "icon-bzh_tc ",
+        attrs: {
+          "eventid": '6-' + index + '-' + index2
+        },
+        on: {
+          "click": function($event) {
+            _vm.deleteRevert2(item2.sublistID)
+          }
+        }
+      })], 1), _vm._v(" "), _c('div', {
+        staticClass: "pro user"
+      }, [_c('p', [_c('img', {
+        staticClass: "userPic",
+        attrs: {
+          "src": (item2.pic && item2.pic != '/forum/common/userPic.jpg') ? item2.pic : '/static/img/user_pic.png',
+          "alt": "",
+          "eventid": '7-' + index + '-' + index2
+        },
+        on: {
+          "click": function($event) {
+            _vm.toPersonal(item2)
+          }
+        }
+      }), _c('span', {
+        attrs: {
+          "eventid": '8-' + index + '-' + index2
+        },
+        on: {
+          "click": function($event) {
+            _vm.toPersonal(item2)
+          }
+        }
+      }, [_vm._v(_vm._s(item2.accountnumber))]), _vm._v(" "), _c('span', {
+        staticClass: "reply"
+      }, [_vm._v("回复")]), _vm._v(" "), _c('span', {
+        directives: [{
+          name: "show",
+          rawName: "v-show",
+          value: (!item.IsAnond),
+          expression: "!item.IsAnond"
+        }]
+      }, [_vm._v(_vm._s(item2.revertAccount))]), _c('span', {
+        directives: [{
+          name: "show",
+          rawName: "v-show",
+          value: (item.IsAnond),
+          expression: "item.IsAnond"
+        }]
+      }, [_vm._v("匿名用户")])]), _c('span', {
+        directives: [{
+          name: "show",
+          rawName: "v-show",
+          value: (_vm.isFromComment),
+          expression: "isFromComment"
+        }],
+        attrs: {
+          "eventid": '9-' + index + '-' + index2
+        },
+        on: {
+          "click": _vm.toArticle
+        }
+      }, [_vm._v("前往文章")])], 1), _vm._v(" "), _c('div', {
+        staticClass: "pro",
+        class: item2.showAll == true ? 'remark2' : 'remark1',
+        attrs: {
+          "eventid": '10-' + index + '-' + index2
+        },
+        on: {
+          "click": function($event) {
+            _vm.showAll(item2)
+          }
+        }
+      }, [_c('p', [_vm._v(_vm._s(item2.content))])], 1), _vm._v(" "), _c('div', {
+        staticClass: "pro operated"
+      }, [_c('p', [_c('i', {
+        staticClass: "icon-pl  ",
+        attrs: {
+          "eventid": '11-' + index + '-' + index2
+        },
+        on: {
+          "click": function($event) {
+            _vm.reply3(item2)
+          }
+        }
+      }), _vm._v(" "), _c('i', {
+        staticClass: "icon-dz",
+        class: item2.IsSupport == 1 ? 'orange' : '',
+        attrs: {
+          "eventid": '12-' + index + '-' + index2
+        },
+        on: {
+          "click": function($event) {
+            _vm.supportClick && _vm.supportAnswer(item2)
+          }
+        }
+      }), _vm._v(_vm._s(item2.supportCounts ? item2.supportCounts : 0))], 1), _vm._v(" "), _c('p', [_vm._v(_vm._s(item2.datetime))])], 1)])
+    })], 2) : _vm._e()
+  }), _vm._v(" "), _vm._l((_vm.pageList2), function(item, index) {
+    return (_vm.flag == '1') ? _c('ul', {
+      key: index,
+      staticClass: "list"
+    }, [_c('li', [_c('div', {
+      staticStyle: {
+        "float": "right"
+      }
+    }, [_c('i', {
+      directives: [{
+        name: "show",
+        rawName: "v-show",
+        value: (_vm.userId == item.ID),
+        expression: "userId==item.ID"
+      }],
+      staticClass: "icon-bzh_tc ",
+      attrs: {
+        "eventid": '13-' + index
+      },
+      on: {
+        "click": function($event) {
+          _vm.deleteRevert(item.sublistID)
+        }
+      }
+    })], 1), _vm._v(" "), _c('div', {
+      staticClass: "pro user"
+    }, [_c('p', [_c('img', {
+      directives: [{
+        name: "show",
+        rawName: "v-show",
+        value: (item.IsAnon && item.ID == _vm.revertPerId),
+        expression: "item.IsAnon&&item.ID==revertPerId"
+      }],
+      staticClass: "userPic",
+      attrs: {
+        "src": "/static/img/user_pic.png",
+        "alt": ""
+      }
+    }), _vm._v(" "), _c('span', {
+      directives: [{
+        name: "show",
+        rawName: "v-show",
+        value: (item.IsAnon && item.ID == _vm.revertPerId),
+        expression: "item.IsAnon&&item.ID==revertPerId"
+      }]
+    }, [_vm._v("匿名用户(答主)")]), _vm._v(" "), _c('img', {
+      directives: [{
+        name: "show",
+        rawName: "v-show",
+        value: (!item.IsAnon || item.ID != _vm.revertPerId),
+        expression: "!item.IsAnon||item.ID!=revertPerId"
+      }],
+      staticClass: "userPic",
+      attrs: {
+        "src": (item.pic && item.pic != '/forum/common/userPic.jpg') ? item.pic : '/static/img/user_pic.png',
+        "alt": "",
+        "eventid": '14-' + index
+      },
+      on: {
+        "click": function($event) {
+          _vm.toPersonal(item)
+        }
+      }
+    }), _vm._v(" "), _c('span', {
+      directives: [{
+        name: "show",
+        rawName: "v-show",
+        value: (!item.IsAnon || item.ID != _vm.revertPerId),
+        expression: "!item.IsAnon||item.ID!=revertPerId"
+      }],
+      attrs: {
+        "eventid": '15-' + index
+      },
+      on: {
+        "click": function($event) {
+          _vm.toPersonal(item)
+        }
+      }
+    }, [_vm._v(_vm._s(item.accountnumber))]), _vm._v(" "), _c('span', {
+      staticClass: "reply"
+    }, [_vm._v("回复")]), _vm._v(" "), _c('span', {
+      directives: [{
+        name: "show",
+        rawName: "v-show",
+        value: (!item.IsAnond || item.superiorID != _vm.revertPerId),
+        expression: "!item.IsAnond||item.superiorID!=revertPerId"
+      }]
+    }, [_vm._v(_vm._s(item.revertAccount))]), _vm._v(" "), _c('span', {
+      directives: [{
+        name: "show",
+        rawName: "v-show",
+        value: (item.IsAnond && item.superiorID == _vm.revertPerId),
+        expression: "item.IsAnond&&item.superiorID==revertPerId"
+      }]
+    }, [_vm._v("匿名用户(答主)")])]), _vm._v(" "), _c('span', {
+      directives: [{
+        name: "show",
+        rawName: "v-show",
+        value: (_vm.questionPerID),
+        expression: "questionPerID"
+      }],
+      attrs: {
+        "eventid": '16-' + index
+      },
+      on: {
+        "click": _vm.toQUestion
+      }
+    }, [_vm._v("前往问题")])], 1), _vm._v(" "), _c('div', {
+      staticClass: "pro",
+      class: item.showAll == true ? 'remark2' : 'remark1',
+      attrs: {
+        "eventid": '17-' + index
+      },
+      on: {
+        "click": function($event) {
+          _vm.showAll2(item)
+        }
+      }
+    }, [_c('p', [_vm._v(_vm._s(item.content))])], 1), _vm._v(" "), _c('div', {
+      staticClass: "pro operated"
+    }, [_c('p', [_c('i', {
+      staticClass: "icon-pl  ",
+      attrs: {
+        "eventid": '18-' + index
+      },
+      on: {
+        "click": function($event) {
+          _vm.reply(item)
+        }
+      }
+    }), _vm._v(" "), _c('i', {
+      staticClass: "icon-dz",
+      class: item.IsSupport == 1 ? 'orange' : '',
+      attrs: {
+        "eventid": '19-' + index
+      },
+      on: {
+        "click": function($event) {
+          _vm.supportClick && _vm.supportAnswer(item)
+        }
+      }
+    }), _vm._v(_vm._s(item.supportCounts ? item.supportCounts : 0))], 1), _vm._v(" "), _c('p', [_vm._v(_vm._s(item.datetime))])], 1)])], 1) : _vm._e()
+  }), _vm._v(" "), _c('p', {
+    staticClass: "revert-folded"
+  }, [_vm._v("共有 " + _vm._s(_vm.revertZhedieCount) + " 条评论被折叠")]), _vm._v(" "), (_vm.isHasRevert) ? _c('div', {
+    staticClass: "no-revert"
+  }, [_c('img', {
+    staticClass: "no-revert-img",
+    attrs: {
+      "src": "/static/img/no_data_page.png",
+      "alt": ""
+    }
+  }), _vm._v(" "), _c('p', [_vm._v("还未发表评论")])], 1) : _vm._e()], 2)], 1), _vm._v(" "), _c('footer', [_c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.value),
+      expression: "value"
+    }],
+    staticStyle: {
+      "overflow-y": "visible"
+    },
+    attrs: {
+      "id": "release",
+      "placeholder": _vm.placeholder,
+      "eventid": '20'
+    },
+    domProps: {
+      "value": (_vm.value)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.value = $event.target.value
+      }
+    }
+  }), _vm._v(" "), _c('span', {
+    attrs: {
+      "eventid": '21'
+    },
+    on: {
+      "click": function($event) {
+        _vm.release()
+      }
+    }
+  }, [_vm._v("发布")])]), _vm._v(" "), _c('down-load', {
+    attrs: {
+      "showModal": _vm.showModal,
+      "eventid": '22',
+      "mpcomid": '1'
+    },
+    on: {
+      "hideModal": _vm.hideModal
+    }
+  })], 1)
+}
+var staticRenderFns = []
+render._withStripped = true
+var esExports = { render: render, staticRenderFns: staticRenderFns }
+/* harmony default export */ __webpack_exports__["a"] = (esExports);
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-940b3ce0", esExports)
+  }
+}
+
+/***/ })
+
+},[56]);
+//# sourceMappingURL=main.js.map

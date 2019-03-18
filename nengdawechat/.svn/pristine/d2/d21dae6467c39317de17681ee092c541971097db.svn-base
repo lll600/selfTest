@@ -1,0 +1,714 @@
+<template>
+    <div class="Allanswer">
+          <search-bar></search-bar>
+      <!-- <header>
+        <p class="icon-arrow_left" @click="returnPre"></p>
+        <span>'评论' </span>
+        <p class="icon-ard " ></p>
+      </header> -->
+      <article>
+           <!-- <mt-loadmore :top-method="loadTop" :bottom-method="loadBottom" :bottom-all-loaded="allLoaded" :auto-fill="false" ref="loadmore">  -->
+    <ul class="list" v-for="(item, index) in pageList" :key='index' v-if="flag=='2'"> 
+        <li> 
+            <div style="float:right">
+                <i class="icon-bzh_tc " v-show="userId==item.result.userID" @click="deleteRevert(item.result.revertID)"></i>
+            </div>
+            <div class="pro user" ><p @click='toPersonal(item.result)'><img :src="(item.result.pic&&item.result.pic!='/forum/common/userPic.jpg')?item.result.pic:'/static/img/user_pic.png'" alt="" class='userPic'><span>{{item.result.accountnumber}}</span></p><span @click='toArticle' v-show='isFromComment'>前往文章</span></div> 
+            <div class="pro" :class="item.result.showAll==true?'remark2':'remark1'" @click="showAll(item)"><p>{{item.result.content}}</p></div> 
+            <!-- <div class="pro remark1"  ><p>{{item.result.content}}<span v-if="item.result.content.length>100" class="showAll" @click='showAll(item)'>点击展开</span></p></div>  -->
+
+            <div class="pro operated">
+                <p><i class="icon-pl  " @click="reply2(item.result)"></i> <i class="icon-dz" :class="item.result.IsSupport==1?'orange':''" @click="supportClick && supportAnswer(item.result)"></i>{{item.result.supportCounts?item.result.supportCounts:0}}</p>
+                <p>{{item.result.datetime}}</p>
+            </div> 
+        </li> 
+         <li v-for="(item2, index2) in item.items" :key='index2'> 
+            <div style="float:right">
+                <i class="icon-bzh_tc " v-show="userId==item2.ID" @click="deleteRevert2(item2.sublistID)"></i>
+            </div>
+            <div class="pro user" ><p ><img @click='toPersonal(item2)' :src="(item2.pic&&item2.pic!='/forum/common/userPic.jpg')?item2.pic:'/static/img/user_pic.png'" alt="" class='userPic'><span @click='toPersonal(item2)'>{{item2.accountnumber}}</span> <span class='reply'>回复</span> <span  v-show="!item.IsAnond">{{item2.revertAccount}}</span><span v-show="item.IsAnond">匿名用户</span></p><span @click='toArticle' v-show='isFromComment'>前往文章</span></div> 
+            <div class="pro" :class="item2.showAll==true?'remark2':'remark1'" @click="showAll(item2)"><p>{{item2.content}}</p></div> 
+            <!-- <div class="pro remark1"  ><p>{{item.result.content}}<span v-if="item.result.content.length>100" class="showAll" @click='showAll(item)'>点击展开</span></p></div>  -->
+
+            <div class="pro operated">
+                <p><i class="icon-pl  " @click="reply3(item2)"></i> <i class="icon-dz" :class="item2.IsSupport==1?'orange':''" @click="supportClick && supportAnswer(item2)"></i>{{item2.supportCounts?item2.supportCounts:0}}</p>
+                <p>{{item2.datetime}}</p>
+            </div> 
+        </li> 
+    </ul> 
+    <ul class="list" v-for="(item, index) in pageList2" :key='index' v-if="flag=='1'"> 
+        <li> 
+            <div style="float:right">
+                <i class="icon-bzh_tc " v-show="userId==item.ID" @click="deleteRevert(item.sublistID)"></i>
+            </div>
+        <!-- <div class="pro user" v-if="item.IsAnon==true"><p ></p><span v-show='questionPerID' @click='toQUestion'>{{'前往问题'|translate}}</span></div>  -->
+
+        <div class="pro user" ><p>
+            <img v-show="item.IsAnon&&item.ID==revertPerId" src="/static/img/user_pic.png" alt="" class='userPic'>
+            <span v-show="item.IsAnon&&item.ID==revertPerId">匿名用户(答主)</span>
+            <img v-show="!item.IsAnon||item.ID!=revertPerId" @click='toPersonal(item)' :src="(item.pic&&item.pic!='/forum/common/userPic.jpg')?item.pic:'/static/img/user_pic.png'" alt="" class='userPic'>
+            <span v-show="!item.IsAnon||item.ID!=revertPerId" @click='toPersonal(item)'>{{item.accountnumber}}</span> 
+            <span class='reply'>回复</span>
+             <span v-show="!item.IsAnond||item.superiorID!=revertPerId">{{item.revertAccount}}</span>
+             <span v-show="item.IsAnond&&item.superiorID==revertPerId">匿名用户(答主)</span></p>
+             <span v-show='questionPerID' @click='toQUestion'>前往问题</span></div> 
+        <!-- <div class="pro remark1"><p>{{item.content}}</p></div>  -->
+        <div class="pro" :class="item.showAll==true?'remark2':'remark1'" @click="showAll2(item)"><p>{{item.content}}</p></div> 
+            <div class="pro operated">
+            <p><i class="icon-pl  " @click="reply(item)"></i> <i class="icon-dz" :class="item.IsSupport==1?'orange':''" @click="supportClick && supportAnswer(item)"></i>{{item.supportCounts?item.supportCounts:0}}</p>
+            <p>{{item.datetime}}</p>
+            </div> 
+        </li> 
+    </ul>
+    <p class="revert-folded" >共有 {{revertZhedieCount}} 条评论被折叠</p>
+
+    <div v-if="isHasRevert" class="no-revert">
+        <img src="/static/img/no_data_page.png" alt="" class="no-revert-img">
+        <p>还未发表评论</p>
+    </div>
+    <!-- </mt-loadmore>  -->
+      </article>
+      <footer>
+       <!-- <input type="text" v-model='value' placeholder="请输入评论">      -->
+       <input id="release" v-model='value' :placeholder="placeholder" style="overflow-y: visible;" />            
+       <span @click="release()">发布</span> 
+    </footer>   
+    </div>
+</template>
+<script>
+// import { support ,getNowFormatDate,IsVisitor,translate} from '@/common/common.js';
+// import index from 'vue';
+// import {Toast} from 'mint-ui'
+// import { MessageBox } from 'mint-ui';
+ import searchBar from "@/components/searchBar";
+  import { downLoad} from '@/common.js';
+export default {
+   data:function() { 
+   return { 
+       replyPerson:'',
+       placeholder:'请输入评论',
+    supportClick: true,
+    searchCondition:{ //分页属性 
+     pageNo:"1", 
+     pageSize:"10" 
+    }, 
+    pageList:[], 
+    pageList2:[],
+    total: 0,
+    allLoaded: false, //是否可以上拉属性，false可以上拉，true为禁止上拉，就是不让往上划加载数据了 
+    scrollMode:"auto", //移动端弹性滚动效果，touch为弹性滚动，auto是非弹性滚动 
+    userId:wx.getStorageSync('userId')?wx.getStorageSync('userId'):0,
+    titleId: '',
+    revertID:'',
+    value:'',
+    flag:'',
+    showAlls:false,
+    questionPerID:'',
+    // revertPerId:this.$route.query.authorId,
+    // isFromComment:this.$route.query.isFromComment,
+    isHasRevert:false,
+    revertZhedieCount: 0
+   } 
+  }, 
+  components: { 
+        "search-bar": searchBar,
+  //  'v-loadmore':Loadmore // 为组件起别名，vue转换template标签时不会区分大小写，例如：loadMore这种标签转换完就会变成loadmore，容易出现一些匹配问题 
+               // 推荐应用组件时用a-b形式起名 
+  }, 
+  mounted(){ 
+      this.titleId=this.$root.$mp.query.titleId
+      this.revertID=this.$root.$mp.query.revertID
+      this.flag=this.$root.$mp.query.flag
+      this.questionPerID=this.$root.$mp.query.questionPerID
+//     document.getElementById("release").height=document.getElementById("release").scrollHeight;
+//  document.getElementById("release").addEventListener("keyup", function(){
+//     document.getElementById("release").height=this.scrollHeight+'px';
+//     console.log(document.getElementById("release").height)
+// })
+//  var text = document.getElementById("release");  
+//            this.autoTextarea(text,'',100); // 调用  
+   this.loadPageList(); //初次访问查询列表 
+
+  }, 
+     //转发
+  onShareAppMessage: function (tr) {
+    let that =this;
+    var pages = getCurrentPages() //获取加载的页面
+    var currentPage = pages[pages.length-1] //获取当前页面的对象
+    var url = currentPage.route //当前页面url
+    console.log(url)
+      return {
+        title: '能答', // 转发后 所显示的title
+        path: url, // 相对的路径
+        success: (res)=>{    // 成功后要做的事情
+          console.log(res.shareTickets[0])
+          // console.log
+         
+          wx.getShareInfo({
+            shareTicket: res.shareTickets[0],
+            success: (res)=> { 
+              that.setData({
+                isShow:true
+              }) 
+              console.log(that.setData.isShow)
+             },
+            fail: function (res) { console.log(res) },
+            complete: function (res) { console.log(res) }
+          })
+        },
+        fail: function (res) {
+          // 分享失败
+          console.log(res)
+        }
+      }
+    },
+  methods: { 
+      reply(m){
+          $('#release').focus()
+        this.placeholder=m.IsAnon==true?'回复匿名用户':'回复'+m.accountnumber
+        this.replyPerson=m.ID
+      },
+       reply2(m){
+            $('#release').focus()
+        this.placeholder=m.IsAnon==true?'回复匿名用户':'回复'+m.accountnumber
+        this.replyPerson=m.userID
+        this.revertID=m.revertID
+      },
+       reply3(m){
+            $('#release').focus()
+        this.placeholder=m.IsAnon==true?'回复匿名用户':'回复'+m.accountnumber
+        this.replyPerson=m.ID
+        this.revertID=m.revertID
+      },
+      toArticle(){
+       this.$router.push({path: '/ArticleDetail', query: {titleId: this.titleId,flag:2,authorID:this.userId}})
+
+      },
+      toQUestion(){
+         this.$router.push({path: '/SingleAnswer', query: {titleId: this.titleId,flag:1,authorID:this.userId,revertID:this.revertID,questionPerID:this.questionPerID}})
+      },
+      deleteRevert(m){
+          var deleteUrl=''
+          var data=''
+          if(this.flag==1){
+            deleteUrl='/ForumList/RevertsublistDelete'
+            data={ 'sublistID':m,
+                 'id':this.userId,}
+          }else{
+              deleteUrl='/ForumList/RevertDelete'
+                 data={ 'revertID':m,
+                 'id':this.userId,}
+          }
+             MessageBox.confirm(translate('确定删除该评论?'),translate('提示')).then(action => {
+          this.$http({
+          method: 'delete',
+          url: deleteUrl,
+              params: data
+                }).then((response) => {
+                    if(response.status==1){
+                    Toast({
+                    message: translate('删除成功'),
+                    position: 'middle',
+                    duration: 1000,
+                    });
+                       this.loadPageList();
+                    }else{
+                         Toast({
+                    message: translate('删除失败'),
+                    position: 'middle',
+                    duration: 1000,
+                    }); 
+                    }
+            
+                   
+               
+                }).catch((error) => {
+                  
+          })   
+                }).catch((err) => {});
+            
+
+      },
+        deleteRevert2(m){
+          var deleteUrl=''
+          var data=''
+            deleteUrl='/ForumList/RevertsublistDelete'
+            data={ 'sublistID':m,
+                 'id':this.userId,}
+             MessageBox.confirm(translate('确定删除该评论?'),translate('提示')).then(action => {
+          this.$http({
+          method: 'delete',
+          url: deleteUrl,
+              params: data
+                }).then((response) => {
+                    if(response.status==1){
+                    Toast({
+                    message: translate('删除成功'),
+                    position: 'middle',
+                    duration: 1000,
+                    });
+                       this.loadPageList();
+                    }else{
+                         Toast({
+                    message: translate('删除失败'),
+                    position: 'middle',
+                    duration: 1000,
+                    }); 
+                    }
+            
+                   
+               
+                }).catch((error) => {
+                  
+          })   
+                }).catch((err) => {});
+            
+
+      },
+      showAll(m){
+        m.result.showAll=!m.result.showAll
+        console.log(this.pageList)
+      },
+        showAll2(m){
+        m.showAll=!m.showAll
+        console.log(this.pageList)
+      },
+       autoTextarea (elem, extra, maxHeight) {  
+                extra = extra || 0;  
+                var isFirefox = !!document.getBoxObjectFor || 'mozInnerScreenX' in window,  
+                    isOpera = !!window.opera && !!window.opera.toString().indexOf('Opera'),  
+                    addEvent = function(type, callback) {  
+                        elem.addEventListener ?  
+                            elem.addEventListener(type, callback, false) :  
+                            elem.attachEvent('on' + type, callback);  
+                    },  
+                    getStyle = elem.currentStyle ? function(name) {  
+                        var val = elem.currentStyle[name];  
+                        if (name === 'height' && val.search(/px/i) !== 1) {  
+                            var rect = elem.getBoundingClientRect();  
+                            return rect.bottom - rect.top -  
+                                parseFloat(getStyle('paddingTop')) -  
+                                parseFloat(getStyle('paddingBottom')) + 'px';  
+                        };  
+                        return val;  
+                    } : function(name) {  
+                        return getComputedStyle(elem, null)[name];  
+                    },  
+                    minHeight = parseFloat(getStyle('height'));  
+                elem.style.resize = 'none';  
+                var change = function() {  
+                    var scrollTop, height,  
+                        padding = 0,  
+                        style = elem.style;  
+                    if (elem._length === elem.value.length) return;  
+                    elem._length = elem.value.length;  
+                    if (!isFirefox && !isOpera) {  
+                        padding = parseInt(getStyle('paddingTop')) + parseInt(getStyle('paddingBottom'));  
+                    };  
+                    scrollTop = document.body.scrollTop || document.documentElement.scrollTop;  
+                    elem.style.height = minHeight + 'px';  
+                    if (elem.scrollHeight > minHeight) {  
+                        if (maxHeight && elem.scrollHeight > maxHeight) {  
+                            height = maxHeight - padding;  
+                            style.overflowY = 'auto';  
+                        } else {  
+                            height = elem.scrollHeight - padding;  
+                            style.overflowY = 'hidden';  
+                        };  
+                        style.height = height + extra + 'px';  
+                        scrollTop += parseInt(style.height) - elem.currHeight;  
+                        document.body.scrollTop = scrollTop;  
+                        document.documentElement.scrollTop = scrollTop;  
+                        elem.currHeight = parseInt(style.height);  
+                    };  
+                };  
+                addEvent('propertychange', change);  
+                addEvent('input', change);  
+                addEvent('focus', change);  
+                change();  
+            },
+     toPersonal(m) {
+         if(this.flag==2)
+         {
+            var url = "/pages/mine/main?userID=" +( m.userID?m.userID:m.ID)
+             wx.navigateTo({url})
+         }else{
+             var url = "/pages/mine/main?userID=" + m.ID
+            wx.navigateTo({url})
+         }
+      
+   } ,
+    putAnswer() {
+          $('#release').focus()
+     if(this.userId=='0')
+            {
+                MessageBox({
+                    title: translate('还未登录'),
+                    message:translate( '请先登录，再进行操作'),
+                    showCancelButton: true
+                });
+                MessageBox.confirm(translate('请先登录，再进行操作'),translate('还未登录')).then(action => {
+                    console.log(action)
+                this.$router.push('/login')
+                });
+                     localStorage.setItem('toPath',this.$route.fullPath)
+            }else{
+        if(this.value=='')
+        {
+         MessageBox(translate('提示'), translate('评论不能为空！'));
+         return
+        }else if(this.value.length<3){
+        MessageBox(translate('提示'), translate('评论长度不能小于3！'));
+         return 
+        }
+ if(this.flag=='1'|| this.replyPerson)
+        {
+        this.$http({
+          method: 'put',
+          url: '/ForumList/RevertsublistAdd',
+              data: {
+                 'sublistID': 0,
+                 'revertID':this.revertID,
+                 'ID':this.userId,
+                  'content':this.value,
+                  'datetime':getNowFormatDate(),
+                  'remark1': '',
+                  'remark2':this.placeholder=='请输入评论'?'': this.replyPerson          
+                  }
+                }).then((response) => {
+                      Toast({
+                    message: translate('发布成功'),
+                    position: 'middle',
+                    duration: 1000,
+                    });
+                    this.placeholder='请输入评论'
+                    this.replyPerson=''
+                    this.value='';
+                    this.loadPageList(); 
+                      document.getElementById("release").style.height='30px'
+               
+                }).catch((error) => {
+                  
+          })   
+
+        }else{
+         this.$http({
+          method: 'put',
+          url: '/ForumList/RevertAdd',
+              data: {
+                 'revertID': 0,
+                 'userID':this.userId,
+                 'titleID':this.titleId,
+                  'content':this.value,
+                  'datetime':getNowFormatDate(),
+                  'remark1': '',
+                  'remark2': '',
+                  'ISwhether':0              
+                  }
+                }).then((response) => {
+                      Toast({
+                    message: translate('发布成功'),
+                    position: 'middle',
+                    duration: 1000,
+                    });
+                    this.placeholder='请输入评论'
+                    this.replyPerson=''
+                    this.value='';
+                     this.loadPageList(); 
+                   document.getElementById("release").style.height='30px'
+                }).catch((error) => {
+                  
+          })   
+
+        }
+            }
+     
+    },
+    release() {
+      downLoad()
+    },
+    supportAnswer (m) {
+        this.supportClick = false
+        console.log(m)
+         var dataID='';
+        var authorID='';
+        if(this.flag==1)
+        {
+        m.tag=1;
+        dataID=m.sublistID;
+        authorID=m.ID;
+        }else{
+        m.tag=0;
+        dataID=m.revertID;
+        authorID=m.userID;
+        }
+   
+      
+     support(m,this.userId,dataID,authorID, this)
+   },
+   returnPre () {
+     console.log(this.titleId)
+        this.$router.back(-1);
+        //  this.$router.push({path:'/SingleAnswer',query: {titleId: this.titleId,flag:this.flag,authorID:this.userId,revertID:this.revertID}})
+      },
+   loadTop:function() { //组件提供的下拉触发方法 
+    //下拉加载 
+    this.loadPageList(); 
+    this.$refs.loadmore.onTopLoaded();// 固定方法，查询完要调用一次，用于重新定位 
+   }, 
+   loadBottom:function() { 
+    // 上拉加载 
+    this.more();// 上拉触发的分页查询 
+    this.$refs.loadmore.onBottomLoaded();// 固定方法，查询完要调用一次，用于重新定位 
+   }, 
+   loadPageList:function (){ 
+     // 查询数据 
+    // this.api.PageList(this.searchCondition).then(data =>{ 
+    //  // 是否还有下一页，加个方法判断，没有下一页要禁止上拉 
+    //  this.isHaveMore(data.result.haveMore); 
+    //  this.pageList = data.result.pageList; 
+    //  this.$nextTick(function () { 
+    //   // 原意是DOM更新循环结束时调用延迟回调函数，大意就是DOM元素在因为某些原因要进行修改就在这里写，要在修改某些数据后才能写， 
+    //   // 这里之所以加是因为有个坑，iphone在使用-webkit-overflow-scrolling属性，就是移动端弹性滚动效果时会屏蔽loadmore的上拉加载效果， 
+    //   // 花了好久才解决这个问题，就是用这个函数，意思就是先设置属性为auto，正常滑动，加载完数据后改成弹性滑动，安卓没有这个问题，移动端弹性滑动体验会更好 
+    //   this.scrollMode = "touch"; 
+    //  });  
+    // }); 
+    if(this.flag==2)
+    {
+         this.$http.get('/ForumList/Revert',{
+            titleID:this.titleId,
+            'ID':this.userId
+            }).then((response) => {
+                    this.revertZhedieCount=response.data.msg
+                    if(response.data.status == 1){
+                        for(let i in response.result){
+                            response.data.result[i].result.datetime=response.data.result[i].result.datetime.replace('T',' ')
+                            response.data.result[i].result.showAll=false
+                        }
+                        this.pageList=response.data.result
+                        if(this.pageList.length>0){
+                            this.isHasRevert = false
+                        }
+                    }else{
+                        this.pageList = []
+                        this.isHasRevert = true
+                    }
+                    console.log(this.pageList,'还未发表评论');
+                }).catch((error) => {
+                    
+    })
+    }else{
+         this.$http.get('/ForumList/revertsublist',{
+            revertID:this.revertID,
+            'ID':this.userId
+            }).then((response) => {
+                    this.revertZhedieCount=response.data.msg
+                    if(response.data.status == 1){
+                        console.log(response.result)
+                        for(let i in response.result)
+                        {
+                            response.data.result[i].datetime=response.data.result[i].datetime.replace('T',' ')
+                            response.data.result[i].showAll=false
+                        }
+                            this.pageList2=response.data.result
+                            if(this.pageList2.length>0){
+                                this.isHasRevert = false
+                            }
+                    }else if(response.data.status == 0){
+                        this.pageList2 = []
+                        this.isHasRevert = true
+                    }
+                   
+
+
+                }).catch((error) => {
+                    
+    })
+    }
+      
+   }, 
+   more:function (){ 
+     // 分页查询 
+    this.searchCondition.pageNo = parseInt(this.searchCondition.pageNo) + 1; 
+    this.api.loadPageList(this.searchCondition).then(data=>{ 
+     this.pageList = this.pageList.concat(data.result.pageList); 
+     this.isHaveMore(data.result.haveMore); 
+    }); 
+   }, 
+   isHaveMore:function(isHaveMore){ 
+    // 是否还有下一页，如果没有就禁止上拉刷新 
+    this.allLoaded = true; //true是禁止上拉加载 
+    if(isHaveMore){ 
+     this.allLoaded = false; 
+    } 
+   } 
+  } 
+}
+</script>
+<style lang="scss" >
+.Allanswer{
+    font-size: 28rpx;
+    h4{
+        font-weight: bold;
+    }
+}
+    // @import '../../style/common.less';
+   .Allanswer header{
+    position: fixed;
+    z-index: 111;
+    background: white;
+    top: 0;
+    min-height:45px;
+    width: 100%;
+    border-bottom: 5px solid #eaeaea;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #99999a;
+    padding: 0 10px;
+    box-sizing: border-box
+   }  
+   .Allanswer article{
+       position: absolute;
+       padding-bottom: 40px;
+       top:60px;
+       height:100;
+       width:100%;
+       .reply{
+           margin: 0 10px;
+       }
+    .list .pro span {
+        font-size: 0.26rem;
+        font-family: 'Helvetica Neue';
+        font-weight: bold;
+    }
+    .revert-folded{
+        text-align:center;
+        color:#307d74;
+        margin: 10px 0;
+        font-size: 14px;
+    }
+       .showAll{
+           color:#99999a;
+           font-size: 0.26rem;
+           padding-left: 10px;
+       }
+        .userPic{
+        width: 0.4rem;
+        height: 0.4rem;
+        border-radius: 50%;
+        margin-right: 10px;
+        }
+         li{
+        background: white;
+        margin-top:10px;
+         padding-left: 10px;
+        padding-right: 10px;
+        box-sizing: border-box;
+        padding-bottom: 10px;
+        .pro{
+            padding-top: 10px;
+            width: 100%;
+            // padding-top: 0px;
+        }
+        .operated{
+            display: flex;
+            justify-content: space-between;
+            color: #99999a;
+            font-size: 0.28rem;
+            i{
+                display: inline;
+            }
+        }
+        .remark1{
+         max-height:80px;
+         font-size: 14px;
+         word-break: break-all;
+        text-overflow: ellipsis;
+        display: -webkit-box; /** 对象作为伸缩盒子模型显示 **/
+        -webkit-box-orient: vertical; /** 设置或检索伸缩盒对象的子元素的排列方式 **/
+        -webkit-line-clamp: 4; /** 显示的行数 **/
+        overflow: hidden;  /** 隐藏超出的内容 **/
+        }
+        .remark2{
+            font-size: 14px;
+            p{
+                word-wrap: break-word;
+                word-break: normal;     
+            }
+        }
+        .icon-dz,.icon-pl{
+            padding-right: 10px;
+        }
+      }
+    //   .mint-loadmore{
+    //     padding-bottom: 20px;
+    //   }
+      .mint-loadmore-top {
+       margin-top: -50px;
+      }
+       .orange:before{
+    color:#fe9500
+    }
+    .no-revert{
+        padding-top: 50%;
+        text-align: center;
+        font-size: 0.3rem;
+        .no-revert-img{
+           width: 26%;
+           height: 100px;
+           margin-bottom: 0.4rem;
+        }
+    }
+   }
+   .Allanswer footer{
+       background: white;
+       position: fixed;
+       bottom: 0;
+       width:100%;
+       height:auto;
+       display: flex;
+       justify-content: center;
+       align-items: center;
+    //     input{
+    //     font-size: 0.28rem;
+    //     width:80%;
+    //     height: 30px;
+    //     float: left;
+    //     // text-align: center;
+    //     border-radius: 5px;
+    //     margin: 8px 10px;
+    //     border: 1px solid #d9d9d9;
+    //     background:#eaeaea;
+    // }
+   }
+   .Allanswer footer input {
+    font-size: 0.28rem;
+    width: 80%;
+    height: 30px;
+    float: left;
+    border-radius: 5px;
+    margin: 8px 10px;
+    border: 1px solid #d9d9d9;
+    background: #eaeaea;
+    line-height: 30px;
+    outline: none;  
+    // max-height: 100px;
+}
+ .Allanswer .user {
+    display: flex;
+    -webkit-box-pack: justify;
+    -webkit-box-align: center;
+    align-items: center;
+    justify-content: space-between;
+    p{
+        display: inline-flex;
+        align-items: center;
+    }
+}
+
+
+</style>
+
+

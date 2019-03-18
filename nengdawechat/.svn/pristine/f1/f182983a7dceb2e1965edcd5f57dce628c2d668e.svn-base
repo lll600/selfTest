@@ -1,0 +1,20 @@
+<import src="searchBar$2bd1e3a8" />
+<import src="articleList$3eaa7351" />
+<import src="answerList$9de3bd22" />
+<template name="index$ed5977c6">
+  <view class="_div data-v-c1a30de4 index-contain">
+    <template data="{{...$root[$kk+'0'], $root}}" is="searchBar$2bd1e3a8"></template>
+    <view class="_div data-v-c1a30de4 tabs">
+      <label bindtap="handleProxy" data-eventid="{{'0'}}" data-comkey="{{$k}}" class="_span data-v-c1a30de4 {{isShow == 0 ? 'active' : ''}}">最新</label>
+      <label bindtap="handleProxy" data-eventid="{{'1'}}" data-comkey="{{$k}}" class="_span data-v-c1a30de4 {{isShow == 1 ? 'active' : ''}}">热门</label>
+      <label bindtap="handleProxy" data-eventid="{{'2'}}" data-comkey="{{$k}}" class="_span data-v-c1a30de4 {{isShow == 2 ? 'active' : ''}}">回答</label>
+      <label bindtap="handleProxy" data-eventid="{{'3'}}" data-comkey="{{$k}}" class="_span data-v-c1a30de4 {{isShow == 3 ? 'active' : ''}}">关注</label>
+    </view>
+    <view class="_article data-v-c1a30de4">
+      <view class="_div data-v-c1a30de4">
+        <template wx:if="{{isShow==0||isShow==1}}" data="{{...$root[$kk+'2'], $root}}" is="articleList$3eaa7351"></template>
+        <template wx:elif="{{isShow==2}}" data="{{...$root[$kk+'1'], $root}}" is="answerList$9de3bd22"></template>
+      </view>
+    </view>
+  </view>
+</template>

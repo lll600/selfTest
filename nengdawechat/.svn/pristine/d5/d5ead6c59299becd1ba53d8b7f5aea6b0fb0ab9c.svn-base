@@ -1,0 +1,14 @@
+<template name="searchBar$2bd1e3a8">
+  <view class="_div data-v-07b2c084 searchBar">
+    <view class="_div data-v-07b2c084 searchContain {{[[isFixed ? 'searchFixed' : ''], [isShadow ? 'isShadow' : '']]}}">
+      <view class="_div data-v-07b2c084 search-left">
+        <view class="_i data-v-07b2c084 iconfont icon-ss"></view>
+        <input type="text" value="{{keyWords}}" bindinput="handleProxy" placeholder="搜索" data-eventid="{{'0'}}" data-comkey="{{$k}}" class="_input data-v-07b2c084" />
+        <view wx:if="{{keyWords.length > 0}}" bindtap="handleProxy" class="_i data-v-07b2c084 iconfont icon-clear" data-eventid="{{'1'}}" data-comkey="{{$k}}"></view>
+      </view>
+      <view class="_div data-v-07b2c084 search-right">
+        <label class="_span data-v-07b2c084">发布</label>
+      </view>
+    </view>
+  </view>
+</template>
